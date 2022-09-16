@@ -1,8 +1,17 @@
 import './App.css';
+import StartGame from './setup/StartGame';
+import SignInPage from './setup/SignInPage';
 
 function App() {
+  // 
+  const isUserLoggedIn = () => {
+    return true;
+  }
+
   return (
-    <p>hi</p>
+    <>
+      {isUserLoggedIn() ? (<StartGame />) : (<SignInPage />)}
+    </>
   );
 }
 

@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Directory Structure
+
+
+## src/api
+
+All files related to making api calls.
+## src/chess
+
+All files related to the actual chess game.
+
+## src/setup
+
+All files related to the website that are not related to the viewable page when actually playing a game.
+
 ## Available Scripts
 
 In the project directory, you can run:

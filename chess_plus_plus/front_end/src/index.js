@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import SignInPage from './setup/SignInPage';
+import HomePage from './setup/HomePage';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path='/login' element={<SignInPage />} />
+        <Route path='/home' element={<HomePage />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );

@@ -9,11 +9,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<SignInPage />} />
-        <Route path='/home' element={<HomePage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
-      </Routes>
       <App />
     </BrowserRouter>
   </React.StrictMode>

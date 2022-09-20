@@ -1,5 +1,10 @@
 import './App.css';
 import {  Link} from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import SignInPage from './setup/SignInPage';
+import HomePage from './setup/HomePage';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 // import Game from './chess/ui/game'
 
 function App() {
@@ -10,9 +15,15 @@ function App() {
 
   return (
     <>
-        <Link to="/"><p>/</p></Link>
-        <Link to="/login"><p>login</p></Link>
-        <Link to="/home"><p>home</p></Link>
+    <Routes>
+        <Route path='/login' element={<SignInPage />} />
+        <Route path='/home' element={<HomePage />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+      <Link to="/"><p>/</p></Link>
+      <Link to="/login"><p>login</p></Link>
+      <Link to="/home"><p>home</p></Link>
+      
     </>
   );
 }

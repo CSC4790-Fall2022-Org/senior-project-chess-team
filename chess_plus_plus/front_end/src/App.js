@@ -1,10 +1,9 @@
 import './App.css';
 import {  Link} from 'react-router-dom';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 // import Game from './chess/ui/game'
 
 function App() {

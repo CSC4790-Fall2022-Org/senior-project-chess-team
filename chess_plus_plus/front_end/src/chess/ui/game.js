@@ -1,10 +1,10 @@
 import React from 'react'
-import Board from '../model/board'
+// import Board from '../model/board'
 import '../ui/game.css'
 
 class Game extends React.Component {
     state = {
-        gameState: new Board(props.isWhite),
+        // gameState: new Board(props.isWhite),
         whiteKingCheck: false,
         blackKingCheck: false
     }
@@ -13,7 +13,7 @@ class Game extends React.Component {
         return (
             // Put all the pieces in here...
             <div class="background">
-                
+                <p> Chess game </p>
             </div>
         )
     }

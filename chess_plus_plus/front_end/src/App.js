@@ -1,6 +1,6 @@
 import './App.css';
 import {  Link} from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
 import { Route, Routes, Navigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ function App() {
     return false;
   }
 
+
   return (
     <>
     <Routes>
@@ -22,7 +23,6 @@ function App() {
       <Link to="/"><p>/</p></Link>
       <Link to="/login"><p>login</p></Link>
       <Link to="/home"><p>home</p></Link>
-      
     </>
   );
 }

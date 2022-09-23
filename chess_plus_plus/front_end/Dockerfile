@@ -8,7 +8,9 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+ENV PORT=3000
+ENV PROXY_URL="http://server:5001/"
+EXPOSE ${PORT}
 
 CMD ["npm", "start"] 
 

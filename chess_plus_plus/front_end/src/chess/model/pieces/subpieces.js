@@ -48,7 +48,41 @@ class Pawn extends Piece {
 }
 
 class Rook extends Piece {
+    constructor() {
+        super();
+        if (this.isWhite) {
+            this.imageUrl = 'https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent#/media/File:Chess_rlt60.png';
+            }
+        else {
+            this.imageUrl = 'https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent#/media/File:Chess_rdt60.png';
+        }
+    }
+    updatePossibleMoves(i, j, board) {
+        // up
+        moves = Set();
+        // moving logic?
+        if (i > 0) {
+            if (board[i - 1][j] == null) {
+                moves.add([i - 1, j]);
+            }
+        }
+        // INCLUDE EN PASSANT LATER? how tf we do that
 
+        // check for capture
+            // top left
+            if (i > 0 && j > 0) {
+                if (board[i - 1][j - 1].getPiece() != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
+                    moves.add([i - 1, j - 1]);
+                }
+            }
+            // top right
+            if (i > 0 && j < board.length - 1) {
+                if (board[i + 1][j + 1] != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
+                    moves.add([i + 1, j + 1]);
+                }
+            }
+        this.possibleMoves = moves;
+    }
 }
 
 class Knight extends Piece {

@@ -4,7 +4,7 @@ import '../ui/game.css'
 
 class Game extends React.Component {
     state = {
-        // gameState: new Board(props.isWhite),
+        gameState: new Board(props.isWhite),
         whiteKingCheck: false,
         blackKingCheck: false
     }

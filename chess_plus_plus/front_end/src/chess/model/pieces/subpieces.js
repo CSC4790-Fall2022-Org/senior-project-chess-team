@@ -25,7 +25,7 @@ class Pawn extends Piece {
         // check for starting pawn
         if (i == 6) {
             if (board[i - 2][j] == null) {
-                moves.add([i + 1, j]);
+                moves.add([i - 2, j]);
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that

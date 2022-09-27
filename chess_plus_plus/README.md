@@ -5,4 +5,5 @@
 # To run without Docker
 Simply start the server and the frontend as usual.
 
+# Ports
 Currently, the frontend is available at port 3000 and the backend is at port 5001.

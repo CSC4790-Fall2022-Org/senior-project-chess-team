@@ -1,6 +1,6 @@
 import {Piece} from '../piece.js'
 
-// Moves will be represented as a tuple containing row, col
+// Moves will be represented as a string tuple containing row,col
 
 export class Pawn extends Piece {
     constructor(isWhite) {
@@ -19,15 +19,20 @@ export class Pawn extends Piece {
     updatePossibleMoves(i, j, board) {
         // up
         var moves = new Set();
+        console.log(i, j);
         if (i > 0) {
             if (board[i - 1][j] == null) {
-                moves.add([i - 1, j]);
+                var move_str = ""
+                move_str += String(i - 1) + ',' + String(j)
+                moves.add(move_str);
             }
         }
         // check for starting pawn
         if (i === 6) {
             if (board[i - 2][j] == null) {
-                moves.add([i - 2, j]);
+                var move_str = ""
+                move_str += String(i - 2) + ',' + String(j)
+                moves.add(move_str);
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
@@ -35,16 +40,21 @@ export class Pawn extends Piece {
         // check for capture
             // top left
             if (i > 0 && j > 0) {
-                if (board[i - 1][j - 1].getPiece() !== null && (this.isWhtie !== board[i - 1][j - 1].getPiece().getIsWhite())) {
-                    moves.add([i - 1, j - 1]);
+                if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
+                    var move_str = ""
+                    move_str += String(i - 1) + ',' + String(j - 1)
+                    moves.add(move_str);
                 }
             }
             // top right
             if (i > 0 && j < board.length - 1) {
-                if (board[i + 1][j + 1] !== null && (this.isWhtie !== board[i - 1][j - 1].getPiece().getIsWhite())) {
-                    moves.add([i + 1, j + 1]);
+                if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
+                    var move_str = ""
+                    move_str += String(i - 1) + ',' + String(j + 1)
+                    moves.add(move_str);
                 }
             }
+        console.log(moves);
         this.possibleMoves = moves;
     }
 }

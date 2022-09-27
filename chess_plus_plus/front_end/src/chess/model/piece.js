@@ -6,21 +6,8 @@ export class Piece {
         this.type = 'none'
     }
 
-    getImageUrl() {
-        return this.imageUrl;
-    }
-
-    getIsWhite() {
-        return this.isWhite;
-    }
-
     updatePossibleMoves() {
         // Template for subclass
-    }
-
-    getPossibleMoves() {
-        // Don't make a generic piece
-        return this.possibleMoves;
     }
 
 }

@@ -36,7 +36,7 @@ function makeInitialBoard(playerIsWhite) {
         for (let j = 0; j < 8; j++) {
             var piece = initBoard[i][j]
             if (initBoard[i][j] != null) {
-                piece.updatePossibleMoves();
+                piece.updatePossibleMoves(i, j, initBoard);
             }
         }
     }
@@ -45,20 +45,34 @@ function makeInitialBoard(playerIsWhite) {
 
 export class Board {
     constructor(playerIsWhite) {
-        this.playerIsWhite = playerIsWhite
-        this.board = makeInitialBoard(playerIsWhite)
+        this.playerIsWhite = playerIsWhite;
+        this.board = makeInitialBoard(playerIsWhite);
     }
 
-    getPiece(i, j) {
-        return this.board[i][j];
+    // src and dest are strings
+    canMovePiece(src, dest) {
+        console.log(this.board, src, dest);
+        console.log(this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves)
+        if (this.board[parseInt(dest[0])][parseInt(dest[2])] == null || 
+            this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
+            if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    setPiece(piece, i, j) {
-        this.board[i][j] = piece;
-    }
-
-    movePiece(startSquare, destSquare) {
-
+    movePiece(src, dest) {
+        if (!this.canMovePiece(src, dest)) {
+            console.log("invalid move");
+            return false
+        }
+        let src_piece = this.board[parseInt(src[0])][parseInt(src[2])];
+        this.board[parseInt(dest[0])][parseInt(dest[2])] = src_piece;
+        this.board[parseInt(src[0])][parseInt(src[2])] = null;
+        this.board[parseInt(dest[0])][parseInt(dest[2])].updatePossibleMoves(parseInt(dest[0]), parseInt(dest[2]), this.board);
+        console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
+        return true;
     }
 
 }

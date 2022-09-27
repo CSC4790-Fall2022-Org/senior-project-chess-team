@@ -11,23 +11,23 @@ export default function Piece(props) {
     let isWhite = 'None';
     let piece = props.piece;
     if (piece !== null) {
-        imageUrl = piece.getImageUrl();
+        imageUrl = piece.imageUrl;
         type = piece.type;
         isWhite = piece.isWhite;
     }
-    const [, drag, preview] = useDrag({
-        item: { id: `${type}_${isWhite}`},
-        type: type,
+    const [{isDragging}, drag, preview] = useDrag({
+        item: { id: `${props.pos}_${type}_${isWhite}`},
+        type: 'Piece',
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging()
           })
     })
-//<DragPreviewImage connect={preview} src={imageUrl}/>
+
     return (
         <>
         <DndProvider backend={HTML5Backend}>
             <DragPreviewImage connect={preview} src={imageUrl}/>
-            <div class='piece' style={{backgroundImage: `url(${imageUrl})`}} ref={drag}></div>
+            <div class='piece' style={{backgroundImage: `url(${imageUrl})`, opacity: `${isDragging ? 0 : 1}`}} ref={drag}></div>
         </DndProvider>
         </>
     )

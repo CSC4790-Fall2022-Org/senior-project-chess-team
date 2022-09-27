@@ -1,25 +1,42 @@
 import React from 'react'
 import Piece from '../ui/piece.js'
+import {useDrop} from 'react-dnd'
+import {Board} from '../model/board.js'
 import '../ui/game.css'
 
-export class Square extends React.Component {
-  constructor(props) {
-    super();
-  }
+export default function Square({piece, pos, state, updateGame}) {
 
-  render() {
-    if (this.props.piece !== null) {
+  // When piece is dropped, check if it can be moved there, then move it
+  // and send to backend
+  const [, drop] = useDrop({
+    accept: 'Piece',
+    drop: (item) => {
+      const src_pos = item.id.split("_")[0];
+      let isWhite = item.id.split("_")[2];
+      isWhite = isWhite === "true" ? true : false;
+      if (isWhite != state.boardState.playerIsWhite) {
+        return;
+      }
+      const dest_pos= pos;
+      console.log(src_pos + " to " + dest_pos);
+      const validMove = state.boardState.movePiece(src_pos, dest_pos);
+      if (validMove) {
+        updateGame(state.boardState);
+      }
+    }
+  })
+console.log(state.boardState.playerIsWhite);
+  if (piece !== null) {
       return (
-        <div class='square'>
-          <Piece piece={this.props.piece} pos = {this.props.pos}></Piece>
+        <div class='square' ref={drop}>
+          <Piece piece={piece} pos = {pos}></Piece>
         </div>
       )
-    }
-    else {
-      return (
-        <div class='square'>
-        </div>
-      )
-    }
+  }
+  else {
+    return (
+      <div class='square' ref={drop}>
+      </div>
+    )
   }
 }

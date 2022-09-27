@@ -1,6 +1,6 @@
-class Piece {
+export class Piece {
     constructor(isWhite) {
-        this.possibleMoves = Set()
+        this.possibleMoves = new Set()
         this.isWhite = isWhite
         this.imageUrl = null
     }

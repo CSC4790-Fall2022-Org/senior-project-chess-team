@@ -1,29 +1,29 @@
-import Piece from '../piece'
+import {Piece} from '../piece.js'
 
 // Moves will be represented as a tuple containing row, col
 
-class Pawn extends Piece {
+export class Pawn extends Piece {
     constructor() {
         super();
         if (this.isWhite) {
-            this.imageUrl = 'https://commons.wikimedia.org/wiki/File:Chess_plt60.png';
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png';
         }
         else {
-            this.imageUrl = 'https://commons.wikimedia.org/wiki/File:Chess_pdt60.png';
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png';
         }
     }
 
     // Call this function after a piece is moved
     updatePossibleMoves(i, j, board) {
         // up
-        moves = Set();
+        var moves = new Set();
         if (i > 0) {
             if (board[i - 1][j] == null) {
                 moves.add([i - 1, j]);
             }
         }
         // check for starting pawn
-        if (i == 6) {
+        if (i === 6) {
             if (board[i - 2][j] == null) {
                 moves.add([i - 2, j]);
             }
@@ -33,13 +33,13 @@ class Pawn extends Piece {
         // check for capture
             // top left
             if (i > 0 && j > 0) {
-                if (board[i - 1][j - 1].getPiece() != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
+                if (board[i - 1][j - 1].getPiece() !== null && (this.isWhtie !== board[i - 1][j - 1].getPiece().getIsWhite())) {
                     moves.add([i - 1, j - 1]);
                 }
             }
             // top right
             if (i > 0 && j < board.length - 1) {
-                if (board[i + 1][j + 1] != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
+                if (board[i + 1][j + 1] !== null && (this.isWhtie !== board[i - 1][j - 1].getPiece().getIsWhite())) {
                     moves.add([i + 1, j + 1]);
                 }
             }

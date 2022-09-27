@@ -25,9 +25,22 @@
     align-items: center;
 }
 
-.piece {
+.my-piece {
     z-index: 2;
     cursor: grab;
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.opp-piece {
+    z-index: 2;
+    cursor: pointer;
     width: 80px;
     height: 80px;
     background-size: cover;

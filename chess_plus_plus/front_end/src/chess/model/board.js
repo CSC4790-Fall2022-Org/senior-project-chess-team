@@ -51,8 +51,6 @@ export class Board {
 
     // src and dest are strings
     canMovePiece(src, dest) {
-        console.log(this.board, src, dest);
-        console.log(this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves)
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] == null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {

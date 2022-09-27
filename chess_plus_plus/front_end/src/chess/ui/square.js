@@ -14,7 +14,7 @@ export default function Square({piece, pos, state, updateGame}) {
       const src_pos = item.id.split("_")[0];
       let isWhite = item.id.split("_")[2];
       isWhite = isWhite === "true" ? true : false;
-      if (isWhite != state.boardState.playerIsWhite) {
+      if (isWhite !== state.boardState.playerIsWhite) {
         return;
       }
       const dest_pos= pos;
@@ -25,11 +25,10 @@ export default function Square({piece, pos, state, updateGame}) {
       }
     }
   })
-console.log(state.boardState.playerIsWhite);
   if (piece !== null) {
       return (
         <div class='square' ref={drop}>
-          <Piece piece={piece} pos = {pos}></Piece>
+          <Piece piece={piece} pos = {pos} state= {state}></Piece>
         </div>
       )
   }

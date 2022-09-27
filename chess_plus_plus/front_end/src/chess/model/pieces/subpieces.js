@@ -19,10 +19,10 @@ export class Pawn extends Piece {
     updatePossibleMoves(i, j, board) {
         // up
         var moves = new Set();
-        console.log(i, j);
+        var move_str = ""
         if (i > 0) {
             if (board[i - 1][j] == null) {
-                var move_str = ""
+                move_str = ""
                 move_str += String(i - 1) + ',' + String(j)
                 moves.add(move_str);
             }
@@ -30,7 +30,7 @@ export class Pawn extends Piece {
         // check for starting pawn
         if (i === 6) {
             if (board[i - 2][j] == null) {
-                var move_str = ""
+                move_str = ""
                 move_str += String(i - 2) + ',' + String(j)
                 moves.add(move_str);
             }
@@ -41,7 +41,7 @@ export class Pawn extends Piece {
             // top left
             if (i > 0 && j > 0) {
                 if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
-                    var move_str = ""
+                    move_str = ""
                     move_str += String(i - 1) + ',' + String(j - 1)
                     moves.add(move_str);
                 }
@@ -49,12 +49,11 @@ export class Pawn extends Piece {
             // top right
             if (i > 0 && j < board.length - 1) {
                 if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
-                    var move_str = ""
+                    move_str = ""
                     move_str += String(i - 1) + ',' + String(j + 1)
                     moves.add(move_str);
                 }
             }
-        console.log(moves);
         this.possibleMoves = moves;
     }
 }

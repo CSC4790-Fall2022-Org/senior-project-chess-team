@@ -3,9 +3,11 @@ import {Piece} from '../piece.js'
 // Moves will be represented as a tuple containing row, col
 
 export class Pawn extends Piece {
-    constructor() {
+    constructor(isWhite) {
         super();
-        if (this.isWhite) {
+        this.isWhite = isWhite;
+        this.type = 'Pawn';
+        if (this.isWhite === true) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png';
         }
         else {

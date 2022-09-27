@@ -17,6 +17,19 @@
 }
 
 .square {
+    cursor: grab;
+    width: 80px;
+    height: 80px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-square {
+    cursor: pointer;
     width: 80px;
     height: 80px;
     background-size: cover;

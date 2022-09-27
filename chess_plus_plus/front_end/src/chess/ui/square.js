@@ -1,14 +1,25 @@
 import React from 'react'
+import Piece from '../ui/piece.js'
 import '../ui/game.css'
 
 export class Square extends React.Component {
-  
+  constructor(props) {
+    super();
+  }
+
   render() {
-    // Get the image for the piece here...
-    return (
-    <div class='square'>
-      hello
-    </div>
-    )
+    if (this.props.piece !== null) {
+      return (
+        <div>
+          <Piece piece={this.props.piece} pos = {this.props.pos}></Piece>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div class='empty-square'>
+        </div>
+      )
+    }
   }
 }

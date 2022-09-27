@@ -22,8 +22,8 @@ function makeInitialBoard(playerIsWhite) {
     for (let j = 0; j < 8; j++) {
         var pawnOpp = new Pawn(!playerIsWhite);
         var pawnClose = new Pawn(playerIsWhite);
-        initBoard[6][j] = pawnOpp;
-        initBoard[1][j] = pawnClose;
+        initBoard[6][j] = pawnClose;
+        initBoard[1][j] = pawnOpp;
     }
 
     // Make other pieces

@@ -3,6 +3,7 @@ export class Piece {
         this.possibleMoves = new Set()
         this.isWhite = isWhite
         this.imageUrl = null
+        this.type = 'none'
     }
 
     getImageUrl() {

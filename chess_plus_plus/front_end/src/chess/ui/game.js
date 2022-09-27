@@ -11,6 +11,11 @@ export class Game extends React.Component {
         blackKingCheck: false
     }
 
+    grabPiece(e) {
+        let board = this.gameState;
+        console.log(e.target);
+    };
+
     render() {
         let board = [];
         let boardState = this.state.gameState;
@@ -21,7 +26,7 @@ export class Game extends React.Component {
         }
         return (
             // Put all the pieces in here...
-            <div class='chessboard'>
+            <div onMouseDown={e => this.grabPiece(e)} class='chessboard'>
                 {board}
             </div>
         )

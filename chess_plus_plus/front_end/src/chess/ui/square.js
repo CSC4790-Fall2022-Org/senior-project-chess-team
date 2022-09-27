@@ -10,14 +10,14 @@ export class Square extends React.Component {
   render() {
     if (this.props.piece !== null) {
       return (
-        <div>
+        <div class='square'>
           <Piece piece={this.props.piece} pos = {this.props.pos}></Piece>
         </div>
       )
     }
     else {
       return (
-        <div class='empty-square'>
+        <div class='square'>
         </div>
       )
     }

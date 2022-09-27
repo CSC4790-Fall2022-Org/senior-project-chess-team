@@ -27,11 +27,7 @@ export default function Piece(props) {
         <>
         <DndProvider backend={HTML5Backend}>
             <DragPreviewImage connect={preview} src={imageUrl}/>
-            <DndProvider backend={HTML5Backend}>
-            <div class='square' ref={drag}>
-                <img src={imageUrl} alt={imageUrl} />
-            </div>
-            </DndProvider>
+            <div class='piece' style={{backgroundImage: `url(${imageUrl})`}} ref={drag}></div>
         </DndProvider>
         </>
     )

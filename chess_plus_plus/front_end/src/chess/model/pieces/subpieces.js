@@ -62,8 +62,42 @@ class Rook extends Piece {
 
 }
 
-class Knight extends Piece {
+export class Knight extends Piece {
+    constructor(isWhite) {
+        super();
+        this.isWhite = isWhite;
+        this.type = 'Knight';
+        if (this.isWhite === true) {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png';
+        }
+        else {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png';
+        }
+    }
 
+    updatePossibleMoves(i, j, board) {
+        var moves = new Set();
+        var move_str = "";
+
+        let X = [ 2, 1, -1, -2, -2, -1, 1, 2 ];
+        let Y = [ 1, 2, 2, 1, -1, -2, -2, -1 ];
+
+        for (let k = 0; k < 8; k++) {
+            move_str = "";
+                
+            let x = i + X[k];
+            let y = j + Y[k];
+            
+            move_str += String(x) + ',' + String(y);
+            moves.add(move_str);       
+        }
+        console.log(board);
+        this.possibleMoves = moves;
+
+    }
+    
+
+    
 }
 
 class Bishop extends Piece {

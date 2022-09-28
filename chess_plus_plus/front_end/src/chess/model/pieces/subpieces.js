@@ -2,6 +2,11 @@ import {Piece} from '../piece.js'
 
 // Moves will be represented as a string tuple containing row,col
 
+function pairToMoveStr(x, y) {
+    let move_str = String(x) + ',' + String(y);
+    return move_str;
+}
+
 export class Pawn extends Piece {
     constructor(isWhite) {
         super();
@@ -19,20 +24,15 @@ export class Pawn extends Piece {
     updatePossibleMoves(i, j, board) {
         // up
         var moves = new Set();
-        var move_str = ""
         if (i > 0) {
             if (board[i - 1][j] === null) {
-                move_str = ""
-                move_str += String(i - 1) + ',' + String(j)
-                moves.add(move_str);
+                moves.add(pairToMoveStr(i - 1, j));
             }
         }
         // check for starting pawn
         if (i === 6) {
             if (board[i - 2][j] === null) {
-                move_str = ""
-                move_str += String(i - 2) + ',' + String(j)
-                moves.add(move_str);
+                moves.add(pairToMoveStr(i - 2, j));
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
@@ -41,17 +41,13 @@ export class Pawn extends Piece {
             // top left
             if (i > 0 && j > 0) {
                 if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
-                    move_str = ""
-                    move_str += String(i - 1) + ',' + String(j - 1)
-                    moves.add(move_str);
+                    moves.add(pairToMoveStr(i - 1, j - 1));
                 }
             }
             // top right
             if (i > 0 && j < board.length - 1) {
                 if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
-                    move_str = ""
-                    move_str += String(i - 1) + ',' + String(j + 1)
-                    moves.add(move_str);
+                    moves.add(pairToMoveStr(i - 1, j + 1));
                 }
             }
         this.possibleMoves = moves;
@@ -77,21 +73,17 @@ export class Knight extends Piece {
 
     updatePossibleMoves(i, j, board) {
         var moves = new Set();
-        var move_str = "";
 
         let X = [ 2, 1, -1, -2, -2, -1, 1, 2 ];
         let Y = [ 1, 2, 2, 1, -1, -2, -2, -1 ];
 
         for (let k = 0; k < 8; k++) {
-            move_str = "";
-                
             let x = i + X[k];
             let y = j + Y[k];
 
             if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
                 if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
-                    move_str += String(x) + ',' + String(y);
-                    moves.add(move_str);   
+                    moves.add(pairToMoveStr(x, y));   
                 }
             }    
         }

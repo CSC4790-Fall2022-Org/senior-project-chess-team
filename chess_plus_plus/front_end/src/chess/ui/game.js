@@ -15,11 +15,6 @@ export class Game extends React.Component {
         this.update = this.update.bind(this);
     }
 
-    grabPiece(e) {
-        let board = this.state.boardState.board;
-        console.log(e.target);
-    };
-
     update(board) {
         this.setState({boardState: board});
     }
@@ -36,7 +31,7 @@ export class Game extends React.Component {
         }
         return (
             // Put all the pieces in here...
-            <div onMouseDown={e => this.grabPiece(e)} class='chessboard'>
+            <div class='chessboard'>
                 {boardSquares}
             </div>
         )

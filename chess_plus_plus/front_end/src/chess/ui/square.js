@@ -23,6 +23,7 @@ export default function Square({piece, pos, state, updateGame}) {
       if (validMove) {
         updateGame(state.boardState);
       }
+      // SEND THE UPDATE TO THE BACKEND HERE
     }
   })
   if (piece !== null) {

@@ -1,13 +1,13 @@
-class Piece {
-    constructor(isAttacked, isWhite) {
-        this.possibleMoves = []
+export class Piece {
+    constructor(isWhite) {
+        this.possibleMoves = new Set()
         this.isWhite = isWhite
-        this.isAttacked = isAttacked
+        this.imageUrl = null
+        this.type = 'none'
     }
 
-    getPossibleMoves() {
-        // Don't make a generic piece
-        return null;
+    updatePossibleMoves() {
+        // Template for subclass
     }
 
 }

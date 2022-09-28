@@ -11,6 +11,12 @@ All files related to making api calls.
 ## src/chess
 
 All files related to the actual chess game.
+### chess/model
+All files related to chess logic, how pieces can move, checking for "check" and "check-mate" will be here
+### chess/files
+Asset files such as the board image file are stored here
+### chess/ui
+The react components and css files for creating the board, squares, and pieces are here
 
 ## src/setup
 

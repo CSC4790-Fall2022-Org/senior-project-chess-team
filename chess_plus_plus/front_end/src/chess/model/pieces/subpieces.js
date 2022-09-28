@@ -89,8 +89,10 @@ export class Knight extends Piece {
             let y = j + Y[k];
 
             if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
-                move_str += String(x) + ',' + String(y);
-                moves.add(move_str);    
+                if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
+                    move_str += String(x) + ',' + String(y);
+                    moves.add(move_str);   
+                }
             }    
         }
         this.possibleMoves = moves;

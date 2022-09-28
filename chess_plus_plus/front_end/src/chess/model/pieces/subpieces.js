@@ -67,7 +67,7 @@ class Rook extends Piece {
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
-
+        
         // check for capture
             // top left
             if (i > 0 && j > 0) {

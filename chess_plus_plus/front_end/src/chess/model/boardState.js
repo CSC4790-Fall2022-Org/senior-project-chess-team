@@ -36,7 +36,6 @@ function makeInitialBoard(playerIsWhite) {
     initBoard[0][1] = knightOpp1;
     initBoard[0][6] = knightOpp2;
 
-
     // Make Bishops
     var bishopOpp1 = new Bishop(!playerIsWhite);
     var bishopOpp2 = new Bishop(!playerIsWhite);
@@ -46,6 +45,12 @@ function makeInitialBoard(playerIsWhite) {
     initBoard[7][5] = bishopClose2;
     initBoard[0][2] = bishopOpp1;
     initBoard[0][5] = bishopOpp2;
+
+    //Make Kings
+    var kingOpp = new King(!playerIsWhite);
+    var kingClose = new King(playerIsWhite);
+    initBoard[0][3] = kingOpp;
+    initBoard[7][3] = kingClose;
 
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {

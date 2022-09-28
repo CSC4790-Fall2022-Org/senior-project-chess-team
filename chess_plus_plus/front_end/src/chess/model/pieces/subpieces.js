@@ -174,6 +174,36 @@ class Queen extends Piece {
 
 }
 
-class King extends Piece {
+export class King extends Piece {
+    constructor(isWhite) {
+        super();
+        this.isWhite = isWhite;
+        this.type = 'King';
+        if (this.isWhite === true) {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png';
+        }
+        else {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png';
+        }
+    }
+    
+    updatePossibleMoves(i, j, board) {
+        var moves = new Set();
+
+        let X = [ 1, 1, 1, 0, 0, -1, -1, -1 ];
+        let Y = [ -1, 0, 1, -1, 1, -1, 0, 1 ];
+        for (let k = 0; k < 8; k++) {
+            let x = i + X[k];
+            let y = j + Y[k];
+
+            if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
+                if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
+                    moves.add(pairToMoveStr(x, y));   
+                }
+            }    
+        }
+        this.possibleMoves = moves;
+
+    }
 
 }

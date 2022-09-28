@@ -14,7 +14,7 @@ function SignInPage({setIsLoggedIn}) {
         </p>
         <button onClick={doOtherThing}> login </button> 
         <br />
-        <a href={cognitoUrl} rel="noreferrer" target="_blank" > signin </a>
+        <a href={cognitoUrl} rel="noreferrer"> signin </a>
         </>
 
     )

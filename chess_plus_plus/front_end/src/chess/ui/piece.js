@@ -26,7 +26,7 @@ export default function Piece(props) {
     return (
         <>
         <DndProvider backend={HTML5Backend}>
-            <DragPreviewImage connect={preview} src={imageUrl}/>
+            <DragPreviewImage connect={preview} src={imageUrl} />
             <div class={props.state.boardState.playerIsWhite === piece.isWhite ? 'my-piece' : 'opp-piece'}
             style={{backgroundImage: `url(${imageUrl})`, opacity: `${isDragging ? 0 : 1}`}}
             ref={props.state.boardState.playerIsWhite === piece.isWhite ? drag : null}>

@@ -11,8 +11,9 @@ function SignInPage({setIsLoggedIn}) {
         <p>
             You need to be signed in to continue.
         </p>
-        <button onClick={doOtherThing}> login </button>
-        <a href={cognitoUrl} rel="noreferrer">signin</a>
+        <button onClick={doOtherThing}> login </button> 
+        <br />
+        <a href={cognitoUrl} rel="noreferrer"> signin </a>
         </>
 
     )

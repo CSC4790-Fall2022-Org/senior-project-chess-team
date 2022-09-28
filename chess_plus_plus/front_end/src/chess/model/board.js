@@ -27,13 +27,14 @@ function makeInitialBoard(playerIsWhite) {
     }
 
     // Make knights
-    var knightOpp = new Knight(!playerIsWhite);
-    var knightClose = new Knight(playerIsWhite);
-    initBoard[7][2] = knightClose
-    initBoard[7][5] = knightClose
-    initBoard[0][2] = knightOpp
-    initBoard[0][5] = knightOpp
-
+    var knightOpp1 = new Knight(!playerIsWhite);
+    var knightOpp2 = new Knight(!playerIsWhite);
+    var knightClose1 = new Knight(playerIsWhite);
+    var knightClose2 = new Knight(playerIsWhite);
+    initBoard[7][2] = knightClose1;
+    initBoard[7][5] = knightClose2;
+    initBoard[0][2] = knightOpp1;
+    initBoard[0][5] = knightOpp2;
 
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {

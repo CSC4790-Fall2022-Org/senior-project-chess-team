@@ -13,7 +13,7 @@ function HomePage({setIsLoggedIn}) {
     return (
         <>
         <h1>home </h1>
-        <button onClick={doThing}> login </button>
+        <button onClick={doThing}> logout </button>
         </>
     )
 }

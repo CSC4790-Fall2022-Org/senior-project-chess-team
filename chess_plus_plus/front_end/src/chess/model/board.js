@@ -26,10 +26,15 @@ function makeInitialBoard(playerIsWhite) {
         initBoard[1][j] = pawnOpp;
     }
 
-    // Make other pieces
-    for (let j = 0; j < 8; j++) {
-        // TODO
-    }
+    // Make knights
+    var knightOpp1 = new Knight(!playerIsWhite);
+    var knightOpp2 = new Knight(!playerIsWhite);
+    var knightClose1 = new Knight(playerIsWhite);
+    var knightClose2 = new Knight(playerIsWhite);
+    initBoard[7][2] = knightClose1;
+    initBoard[7][5] = knightClose2;
+    initBoard[0][2] = knightOpp1;
+    initBoard[0][5] = knightOpp2;
 
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {

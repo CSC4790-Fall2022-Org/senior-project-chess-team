@@ -21,7 +21,7 @@ export class Pawn extends Piece {
         var moves = new Set();
         var move_str = ""
         if (i > 0) {
-            if (board[i - 1][j] == null) {
+            if (board[i - 1][j] === null) {
                 move_str = ""
                 move_str += String(i - 1) + ',' + String(j)
                 moves.add(move_str);
@@ -29,7 +29,7 @@ export class Pawn extends Piece {
         }
         // check for starting pawn
         if (i === 6) {
-            if (board[i - 2][j] == null) {
+            if (board[i - 2][j] === null) {
                 move_str = ""
                 move_str += String(i - 2) + ',' + String(j)
                 moves.add(move_str);

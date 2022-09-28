@@ -48,6 +48,19 @@ function makeInitialBoard(playerIsWhite) {
     return initBoard;
 }
 
+function updatePossibleMovesAllPieces(board) {
+    // Update possible moves for all pieces
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            var piece = board[i][j];
+            if (piece !== null) {
+                piece.updatePossibleMoves(i, j, board);
+            }
+        }
+    }
+    return board;
+}
+
 export class Board {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
@@ -73,7 +86,7 @@ export class Board {
         let src_piece = this.board[parseInt(src[0])][parseInt(src[2])];
         this.board[parseInt(dest[0])][parseInt(dest[2])] = src_piece;
         this.board[parseInt(src[0])][parseInt(src[2])] = null;
-        this.board[parseInt(dest[0])][parseInt(dest[2])].updatePossibleMoves(parseInt(dest[0]), parseInt(dest[2]), this.board);
+        this.board = updatePossibleMovesAllPieces(this.board);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         return true;
     }

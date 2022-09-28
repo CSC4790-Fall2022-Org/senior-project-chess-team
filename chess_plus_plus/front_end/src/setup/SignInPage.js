@@ -1,10 +1,11 @@
 import serverURL from "../config/serverConfig";
 
 function SignInPage({setIsLoggedIn}) {
-    const cognitoUrl = 'https://chessplusplus.auth.us-east-1.amazoncognito.com/login?client_id=39i33g2381dako8dicf0nd5hdl&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/home'
+    const cognitoUrl = 'https://chessplusplus.auth.us-east-1.amazoncognito.com/login?client_id=39i33g2381dako8dicf0nd5hdl&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:3000/login'
 
     const doOtherThing = () => {
         setIsLoggedIn(true);
+        
     }
     return (
         <>
@@ -13,7 +14,7 @@ function SignInPage({setIsLoggedIn}) {
         </p>
         <button onClick={doOtherThing}> login </button> 
         <br />
-        <a href={cognitoUrl} rel="noreferrer"> signin </a>
+        <a href={cognitoUrl} rel="noreferrer" target="_blank" > signin </a>
         </>
 
     )

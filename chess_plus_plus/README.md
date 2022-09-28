@@ -1,6 +1,6 @@
 # Running the application
-1. From this directory, run docker-compose build. This will rebuild the images.
-2. From this directory, run docker-compose run. Will run the images that were just built.
+1. From this directory, run docker compose build. This will rebuild the images.
+2. From this directory, run docker compose up. Will run the images that were just built.
 
 # To run without Docker
 Simply start the server and the frontend as usual.

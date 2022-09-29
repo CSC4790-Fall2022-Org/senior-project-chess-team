@@ -4,6 +4,7 @@ import Base64Url from 'crypto-js/enc-base64url';
 import CryptoJS from "crypto-js";
 import { useSearchParams } from 'react-router-dom';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
+import LoginError from "./LoginError";
 
 
 function SignInPage({setIsLoggedIn}) {
@@ -24,12 +25,10 @@ function SignInPage({setIsLoggedIn}) {
     useEffect(() => {
         checkIfLoggedInThroughCognito();
         if (localStorage.getItem('oauth') !== null) {
-            console.log('success');
             setIsLoggedIn(true);
             window.location.replace('/');
         }
         else {
-            console.log('fail');
             setIsLoggedIn(false);
         }
     });
@@ -49,7 +48,8 @@ function SignInPage({setIsLoggedIn}) {
         sessionStorage.removeItem(verifierItem);
 
         if (codeVerifier == null) {
-            throw new Error("Code verifier was null.");
+            <LoginError message={'Could not verify login code. Try again'} />
+            return false;
         }
         try {
             const payload = verifier.verify(searchParams.get('code'));
@@ -69,7 +69,6 @@ function SignInPage({setIsLoggedIn}) {
         sessionStorage.setItem(`codeVerifier-${state}`, codeVerifier);
         
         const codeChallenge = Base64Url.stringify(SHA256(codeVerifier));
-        console.log('how did i get here');
         window.location.replace(`${cognitoDomainName}/login?client_id=${clientId}&state=${state}&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=http://localhost:3000/login`);
     }
     return (

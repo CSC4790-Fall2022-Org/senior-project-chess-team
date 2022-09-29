@@ -95,7 +95,7 @@ export class Knight extends Piece {
     
 }
 
-class Bishop extends Piece {
+export class Bishop extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -116,7 +116,7 @@ class Bishop extends Piece {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
             }
-            else if (board[r][c].isWhite !== board.playerIsWhite) {
+            else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
             }
@@ -130,7 +130,7 @@ class Bishop extends Piece {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
             }
-            else if (board[r][c].isWhite !== board.playerIsWhite) {
+            else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
             }
@@ -140,25 +140,27 @@ class Bishop extends Piece {
         }
 
         // btm left TODO
-        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
+        for (let r = i + 1, c = j - 1; r < board.length && c >= 0; r++, c--) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
             }
-            else if (board[r][c].isWhite !== board.playerIsWhite) {
+            else if (board[r][c].isWhite !== this.isWhite) {
+                console.log(board[r][c].isWhite + " " + board.playerIsWhite + "hi");
                 moves.add(pairToMoveStr(r, c));
                 break;
             }
             else {
+                console.log(board[r][c].isWhite + " " + board.playerIsWhite);
                 break;
             }
         }
 
         // btm right TODO
-        for (let r = i + 1, c = j + 1; r >= 0 && c < board[0].length; r++, c++) {
+        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
             }
-            else if (board[r][c].isWhite !== board.playerIsWhite) {
+            else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
             }
@@ -166,6 +168,7 @@ class Bishop extends Piece {
                 break;
             }
         }
+        this.possibleMoves = moves;
     }
 }
 

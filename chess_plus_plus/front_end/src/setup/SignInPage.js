@@ -5,13 +5,14 @@ import CryptoJS from "crypto-js";
 import { useSearchParams } from 'react-router-dom';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 
-const USER_POOL_ID = 'fakeIdstringUntilWeAddDotEnv'
 
 function SignInPage({setIsLoggedIn}) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const SHA256 = require('crypto-js/sha256');
-    const clientId = '39i33g2381dako8dicf0nd5hdl'; // lets extract these to config files
+    const clientId = '39i33g2381dako8dicf0nd5hdl'; 
+    const USER_POOL_ID = 'us-east-1_AAixkhVH9'
+
 
     const verifier = CognitoJwtVerifier.create({
         userPoolId: `${USER_POOL_ID}`,

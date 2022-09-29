@@ -36,6 +36,16 @@ function makeInitialBoard(playerIsWhite) {
     initBoard[0][2] = knightOpp1;
     initBoard[0][5] = knightOpp2;
 
+    // Make rooks
+    var rookOpp1 = new Rook(!playerIsWhite);
+    var rookOpp2 = new Rook(!playerIsWhite);
+    initBoard[0][0] = rookOpp1;
+    initBoard[0][7] = rookOpp2;
+    var rookOopCloes1 = new Rook(playerIsWhite);
+    var rookOopCloes2 = new Rook(playerIsWhite);
+    initBoard[4][4] = rookOopCloes1;
+    initBoard[5][5] = rookOopCloes2;
+
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {

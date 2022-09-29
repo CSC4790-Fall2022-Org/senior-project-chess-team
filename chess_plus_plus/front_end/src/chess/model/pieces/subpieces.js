@@ -54,40 +54,77 @@ export class Pawn extends Piece {
     }
 }
 
-class Rook extends Piece {
-    constructor() {
+export class Rook extends Piece {
+    
+    constructor(isWhite) {
         super();
+        this.isWhite = isWhite;
+        this.type = 'Rook';
         if (this.isWhite) {
-            this.imageUrl = 'https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent#/media/File:Chess_rlt60.png';
-            }
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png'
+        }
         else {
-            this.imageUrl = 'https://commons.wikimedia.org/wiki/Category:PNG_chess_pieces/Standard_transparent#/media/File:Chess_rdt60.png';
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png';
         }
     }
     updatePossibleMoves(i, j, board) {
         // up
-        moves = Set();
+        var moves = new Set();
         // moving logic?
-        if (i > 0) {
-            if (board[i - 1][j] == null) {
-                moves.add([i - 1, j]);
+        // up
+        // var flag = true;
+        // if(i===7){
+        //     flag = false;
+        // }
+
+        // up
+        for(let k = i-1; k >= 0; k--){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
+            }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
             }
         }
-        // INCLUDE EN PASSANT LATER? how tf we do that
-        
-        // check for capture
-            // top left
-            if (i > 0 && j > 0) {
-                if (board[i - 1][j - 1].getPiece() != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
-                    moves.add([i - 1, j - 1]);
-                }
+        // down
+        for(let k = i+1; k <= 7; k++){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
             }
-            // top right
-            if (i > 0 && j < board.length - 1) {
-                if (board[i + 1][j + 1] != null && (this.isWhtie != board[i - 1][j - 1].getPiece().getIsWhite())) {
-                    moves.add([i + 1, j + 1]);
-                }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
             }
+        }
+        // left
+        for(let k = j-1; k >= 0; k--){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }
+        // right
+        for(let k = j+1; k <= 7; k++){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }   
         this.possibleMoves = moves;
     }
 }

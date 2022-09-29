@@ -3,7 +3,7 @@ import moveSafeFromCheck from '../boardState.js'
 
 // Moves will be represented as a string tuple containing row,col
 
-function pairToMoveStr(x, y) {
+export function pairToMoveStr(x, y) {
     let move_str = String(x) + ',' + String(y);
     return move_str;
 }

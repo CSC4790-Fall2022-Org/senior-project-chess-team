@@ -4,6 +4,7 @@ import {Bishop} from './pieces/subpieces.js'
 import {Queen} from './pieces/subpieces.js'
 import {King} from './pieces/subpieces.js'
 import {Knight} from './pieces/subpieces.js'
+import {pairToMoveStr} from './pieces/subpieces.js'
 
 function makeInitialBoard(playerIsWhite) {
     var initBoard = [];
@@ -95,7 +96,7 @@ function getWhiteKingPosStr(board) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j] !== null) {
                 if (board[i][j].type === 'King' && board[i][j].isWhite) {
-                    return String(i) + ',' + String(j);
+                    return pairToMoveStr(i, j);
                 }
             }
         }
@@ -107,7 +108,7 @@ function getBlackKingPosStr(board) {
         for (let j = 0; j < board[0].length; j++) {
             if (board[i][j] !== null) {
                 if (board[i][j].type === 'King' && !board[i][j].isWhite) {
-                    return String(i) + ',' + String(j)
+                    return pairToMoveStr(i, j);
                 }
             }
         }
@@ -142,7 +143,7 @@ function blackKingInCheck(board) {
     return false;
 }
 
-function moveSafeFromCheck(board, playerIsWhite, src, dest) {
+function moveSafeFromCheck(board, src, dest, playerIsWhite) {
     let dest_piece = board[parseInt(dest[0])][parseInt(dest[2])];
     board = movePieceHelper(board, src, dest);
     board = updatePossibleMovesAllPieces(board, playerIsWhite);
@@ -165,8 +166,8 @@ function moveSafeFromCheck(board, playerIsWhite, src, dest) {
 export class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
-        this.meInCheck = false;
-        this.oppInCheck = false;
+        this.whiteKingInCheck = false;
+        this.blackKingInCheck = false;
         this.board = makeInitialBoard(playerIsWhite);
     }
 
@@ -175,7 +176,7 @@ export class BoardState {
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
-                if (moveSafeFromCheck(this.board, this.playerIsWhite, src, dest)) {
+                if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
                     return true;
                 }
                 return false;
@@ -184,11 +185,87 @@ export class BoardState {
         return false;
     }
 
-    movePiece(src, dest) {  
+    movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
+        this.postMoveCheckUpdate();
+        console.log(this.whiteKingInCheck + " " + this.blackKingInCheck);
+        if (this.blackKingInCheck) {
+            this.playerCanMove();
+        }
         return true;
+    }
+
+    postMoveCheckUpdate() {
+        if (whiteKingInCheck(this.board)) {
+            this.whiteKingInCheck = true;
+        }
+        else {
+            this.whiteKingInCheck = false;
+        }
+        if (blackKingInCheck(this.board)) {
+            this.blackKingInCheck = true;
+        }
+        else {
+            this.blackKingInCheck = false;
+        }
+    }
+
+    // Check for checkmate after recieving boardState update from opponent move
+    /* Steps:
+        1. Recieve updated board state from backend
+        2. Check if player's king is in check from board attribute
+        3. If it is in check, make sure playerCanMove(), if not, they lose
+    */
+    playerCanMove() {
+        if (this.playerIsWhite) {
+            for (let i = 0; i < this.board.length; i++) {
+                for (let j = 0; j < this.board[0].length; j++) {
+                    if (this.board[i][j] !== null) {
+                        if (this.board[i][j].isWhite && this.board[i][j].possibleMoves.size > 0) {
+                            let canMove = false;
+                            this.board[i][j].possibleMoves.forEach(dest => {
+                                let src = pairToMoveStr(i, j);
+                                if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
+                                    console.log(this.board[i][j]);
+                                    console.log(src + " " + dest);
+                                    canMove = true;
+                                }
+                            })
+                            if (canMove) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            for (let i = 0; i < this.board.length; i++) {
+                for (let j = 0; j < this.board[0].length; j++) {
+                    if (this.board[i][j] !== null) {
+                        if (!this.board[i][j].isWhite && this.board[i][j].possibleMoves.size > 0) {
+                            let canMove = false;
+                            this.board[i][j].possibleMoves.forEach(dest => {
+                                let src = pairToMoveStr(i, j);
+                                if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
+                                    console.log(this.board[i][j]);
+                                    console.log(src + " " + dest);
+                                    canMove = true;
+                                }
+                            })
+                            if (canMove) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // Handle win here or where the function returns false to
+        console.log("checkmate!!");
+        return false;
     }
 
 }

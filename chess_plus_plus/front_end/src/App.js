@@ -2,10 +2,8 @@ import './App.css';
 import React, { useEffect, useState  } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
-import { Route, Routes, Navigate, } from 'react-router-dom';
 
-
-// import Game from './chess/ui/game'
+import { Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
 
@@ -16,6 +14,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem('authentication', JSON.stringify(isLoggedIn));
   }, [isLoggedIn]);
+
+  // const isWhite = ...figure out is player is white or not
+
 
   return (
     <>

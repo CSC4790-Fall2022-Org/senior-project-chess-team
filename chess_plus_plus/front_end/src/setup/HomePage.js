@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import {Game} from '../chess/ui/game.js'
 
 function HomePage({setIsLoggedIn}) {
 
@@ -10,6 +11,7 @@ function HomePage({setIsLoggedIn}) {
         <>
         <h1>home </h1>
         <button onClick={pseudoLogout}> logout </button>
+        <Game isWhite={true}></Game>
         </>
     )
 }

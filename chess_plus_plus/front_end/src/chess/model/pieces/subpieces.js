@@ -96,7 +96,77 @@ export class Knight extends Piece {
 }
 
 class Bishop extends Piece {
+    constructor(isWhite) {
+        super();
+        this.isWhite = isWhite;
+        this.type = 'Bishop';
+        if (this.isWhite === true) {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png';
+        }
+        else {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png';
+        }
+    }
 
+    updatePossibleMoves(i, j, board) {
+        let moves = new Set();
+
+        // top right
+        for (let r = i - 1, c = j + 1; r >= 0 && c < board[0].length; r--, c++) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== board.playerIsWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // top left
+        for (let r = i - 1, c = j - 1; r >= 0 && c >= 0; r--, c--) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== board.playerIsWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // btm left TODO
+        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== board.playerIsWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // btm right TODO
+        for (let r = i + 1, c = j + 1; r >= 0 && c < board[0].length; r++, c++) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== board.playerIsWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+    }
 }
 
 class Queen extends Piece {

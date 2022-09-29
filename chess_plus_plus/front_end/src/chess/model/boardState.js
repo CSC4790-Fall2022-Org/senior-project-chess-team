@@ -57,20 +57,20 @@ function makeInitialBoard(playerIsWhite) {
         for (let j = 0; j < 8; j++) {
             var piece = initBoard[i][j];
             if (piece != null) {
-                piece.updatePossibleMoves(i, j, initBoard);
+                piece.updatePossibleMoves(i, j, initBoard, playerIsWhite);
             }
         }
     }
     return initBoard;
 }
 
-function updatePossibleMovesAllPieces(board) {
+function updatePossibleMovesAllPieces(board, playerIsWhite) {
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             var piece = board[i][j];
             if (piece !== null) {
-                piece.updatePossibleMoves(i, j, board);
+                piece.updatePossibleMoves(i, j, board, playerIsWhite);
             }
         }
     }
@@ -90,6 +90,78 @@ function undoMoveHelper(board, src, dest, dest_piece) {
     return board;
 }
 
+function getWhiteKingPosStr(board) {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] !== null) {
+                if (board[i][j].type === 'King' && board[i][j].isWhite) {
+                    return String(i) + ',' + String(j);
+                }
+            }
+        }
+    }
+}
+
+function getBlackKingPosStr(board) {
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] !== null) {
+                if (board[i][j].type === 'King' && !board[i][j].isWhite) {
+                    return String(i) + ',' + String(j)
+                }
+            }
+        }
+    }
+}
+
+function whiteKingInCheck(board) {
+    let kingPos = getWhiteKingPosStr(board);
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] !== null) {
+                if (!board[i][j].isWhite && board[i][j].possibleMoves.has(kingPos)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function blackKingInCheck(board) {
+    let kingPos = getBlackKingPosStr(board);
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[0].length; j++) {
+            if (board[i][j] !== null) {
+                if (board[i][j].isWhite && board[i][j].possibleMoves.has(kingPos)) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+function moveSafeFromCheck(board, playerIsWhite, src, dest) {
+    let dest_piece = board[parseInt(dest[0])][parseInt(dest[2])];
+    board = movePieceHelper(board, src, dest);
+    board = updatePossibleMovesAllPieces(board, playerIsWhite);
+    let ret = true;
+    if (playerIsWhite) {
+        if (whiteKingInCheck(board)) {
+            ret = false;
+        }
+    }
+    else {
+        if (blackKingInCheck(board)) {
+            ret = false;
+        }
+    }
+    board = undoMoveHelper(board, src, dest, dest_piece);
+    board = updatePossibleMovesAllPieces(board, playerIsWhite);
+    return ret
+}
+
 export class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
@@ -98,95 +170,23 @@ export class BoardState {
         this.board = makeInitialBoard(playerIsWhite);
     }
 
-    getWhiteKingPosStr(board) {
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[0].length; j++) {
-                if (board[i][j] !== null) {
-                    if (board[i][j].type === 'King' && board[i][j].isWhite) {
-                        return [i, j]
-                    }
-                }
-            }
-        }
-    }
-
-    getBlackKingPosStr(board) {
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[0].length; j++) {
-                if (board[i][j] !== null) {
-                    if (board[i][j].type === 'King' && !board[i][j].isWhite) {
-                        return String(i) + ',' + String(j)
-                    }
-                }
-            }
-        }
-    }
-
-    whiteKingInCheck(board) {
-        let kingPos = this.getWhiteKingPosStr(board);
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[0].length; j++) {
-                if (board[i][j] !== null) {
-                    if (!board[i][j].isWhite && board[i][j].possibleMoves.has(kingPos)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    blackKingInCheck(board) {
-        let kingPos = this.getBlackKingPosStr(board);
-        for (let i = 0; i < board.length; i++) {
-            for (let j = 0; j < board[0].length; j++) {
-                if (board[i][j] !== null) {
-                    if (board[i][j].isWhite && board[i][j].possibleMoves.has(kingPos)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     // src and dest are strings
     canMovePiece(src, dest) {
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
-                if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
-                    if (this.moveSafeFromCheck(src, dest)) {
-                        return true;
-                    }
+            if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
+                if (moveSafeFromCheck(this.board, this.playerIsWhite, src, dest)) {
+                    return true;
+                }
                 return false;
             }
         }
         return false;
     }
 
-    moveSafeFromCheck(src, dest) {
-        let dest_piece = this.board[parseInt(dest[0])][parseInt(dest[2])];
-        this.board = movePieceHelper(this.board, src, dest);
-        this.board = updatePossibleMovesAllPieces(this.board);
-        let ret = true;
-        if (this.playerIsWhite) {
-            if (this.whiteKingInCheck(this.board)) {
-                ret = false;
-            }
-        }
-        else {
-            if (this.blackKingInCheck(this.board)) {
-                ret = false;
-            }
-        }
-        this.board = undoMoveHelper(this.board, src, dest, dest_piece);
-        this.board = updatePossibleMovesAllPieces(this.board);
-        return ret
-    }
-
     movePiece(src, dest) {  
         this.board = movePieceHelper(this.board, src, dest);
-        this.board = updatePossibleMovesAllPieces(this.board);
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         return true;
     }

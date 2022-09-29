@@ -1,4 +1,5 @@
-import {Piece} from '../piece.js'
+import {Piece} from '../piece.js';
+import moveSafeFromCheck from '../boardState.js'
 
 // Moves will be represented as a string tuple containing row,col
 
@@ -21,35 +22,64 @@ export class Pawn extends Piece {
     }
 
     // Call this function after a piece is moved
-    updatePossibleMoves(i, j, board) {
+    updatePossibleMoves(i, j, board, playerIsWhite) {
         // up
         var moves = new Set();
-        if (i > 0) {
-            if (board[i - 1][j] === null) {
-                moves.add(pairToMoveStr(i - 1, j));
-            }
-        }
-        // check for starting pawn
-        if (i === 6) {
-            if (board[i - 2][j] === null) {
-                moves.add(pairToMoveStr(i - 2, j));
-            }
-        }
-        // INCLUDE EN PASSANT LATER? how tf we do that
-
-        // check for capture
-            // top left
-            if (i > 0 && j > 0) {
-                if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
-                    moves.add(pairToMoveStr(i - 1, j - 1));
+        if (playerIsWhite === this.isWhite) {
+            if (i > 0) {
+                if (board[i - 1][j] === null) {
+                    moves.add(pairToMoveStr(i - 1, j));
                 }
             }
-            // top right
-            if (i > 0 && j < board.length - 1) {
-                if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
-                    moves.add(pairToMoveStr(i - 1, j + 1));
+            // check for starting pawn
+            if (i === 6) {
+                if (board[i - 2][j] === null) {
+                    moves.add(pairToMoveStr(i - 2, j));
                 }
             }
+            // INCLUDE EN PASSANT LATER? how tf we do that
+    
+            // check for capture
+                // top left
+                if (i > 0 && j > 0) {
+                    if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
+                        moves.add(pairToMoveStr(i - 1, j - 1));
+                    }
+                }
+                // top right
+                if (i > 0 && j < board[0].length - 1) {
+                    if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
+                        moves.add(pairToMoveStr(i - 1, j + 1));
+                    }
+                }
+        }
+        else {
+            if (i < board.length) {
+                if (board[i + 1][j] === null) {
+                    moves.add(pairToMoveStr(i + 1, j));
+                }
+            }
+            // check for starting pawn
+            if (i === 1) {
+                if (board[i + 2][j] === null) {
+                    moves.add(pairToMoveStr(i + 2, j));
+                }
+            }
+    
+            // check for capture
+                // top left
+                if (i < board.length - 1 && j > 0) {
+                    if (board[i + 1][j - 1] !== null && (this.isWhite !== board[i + 1][j - 1].isWhite)) {
+                        moves.add(pairToMoveStr(i + 1, j - 1));
+                    }
+                }
+                // top right
+                if (i < board.length - 1 && j < board[0].length - 1) {
+                    if (board[i + 1][j + 1] !== null && (this.isWhite !== board[i + 1][j + 1].isWhite)) {
+                        moves.add(pairToMoveStr(i + 1, j + 1));
+                    }
+                }
+        }
         this.possibleMoves = moves;
     }
 }
@@ -71,7 +101,7 @@ export class Knight extends Piece {
         }
     }
 
-    updatePossibleMoves(i, j, board) {
+    updatePossibleMoves(i, j, board, playerIsWhite) {
         var moves = new Set();
 
         let X = [ 2, 1, -1, -2, -2, -1, 1, 2 ];
@@ -108,7 +138,7 @@ export class Bishop extends Piece {
         }
     }
 
-    updatePossibleMoves(i, j, board) {
+    updatePossibleMoves(i, j, board, playerIsWhite) {
         let moves = new Set();
 
         // top right
@@ -187,7 +217,7 @@ export class King extends Piece {
         }
     }
     
-    updatePossibleMoves(i, j, board) {
+    updatePossibleMoves(i, j, board, playerIsWhite) {
         var moves = new Set();
 
         let X = [ 1, 1, 1, 0, 0, -1, -1, -1 ];
@@ -198,7 +228,7 @@ export class King extends Piece {
 
             if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
                 if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
-                    moves.add(pairToMoveStr(x, y));   
+                    moves.add(pairToMoveStr(x, y));
                 }
             }    
         }

@@ -1,9 +1,8 @@
 import './App.css';
-import {  Link, useFetcher, useSearchParams} from 'react-router-dom';
 import React, { useEffect, useState  } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
-import { Route, Routes, Navigate, Redirect } from 'react-router-dom';
+import { Route, Routes, Navigate, } from 'react-router-dom';
 
 
 // import Game from './chess/ui/game'
@@ -16,7 +15,6 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem('authentication', JSON.stringify(isLoggedIn));
-    console.log(JSON.parse(localStorage.getItem('authentication')))
   }, [isLoggedIn]);
 
   return (

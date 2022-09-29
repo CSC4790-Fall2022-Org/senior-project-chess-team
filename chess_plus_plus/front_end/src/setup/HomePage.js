@@ -2,18 +2,14 @@ import { useSearchParams } from "react-router-dom";
 
 function HomePage({setIsLoggedIn}) {
 
-
-    let [searchParams, setSearchParams] = useSearchParams();
-    // 
-
-      
-    const doThing = () => {
+    const pseudoLogout = () => {
         setIsLoggedIn(false);
+        localStorage.removeItem('oauth');
     }
     return (
         <>
         <h1>home </h1>
-        <button onClick={doThing}> logout </button>
+        <button onClick={pseudoLogout}> logout </button>
         </>
     )
 }

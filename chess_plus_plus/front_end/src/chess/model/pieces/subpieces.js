@@ -145,12 +145,10 @@ export class Bishop extends Piece {
                 moves.add(pairToMoveStr(r, c));
             }
             else if (board[r][c].isWhite !== this.isWhite) {
-                console.log(board[r][c].isWhite + " " + board.playerIsWhite + "hi");
                 moves.add(pairToMoveStr(r, c));
                 break;
             }
             else {
-                console.log(board[r][c].isWhite + " " + board.playerIsWhite);
                 break;
             }
         }

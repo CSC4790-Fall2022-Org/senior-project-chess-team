@@ -1,7 +1,7 @@
 import React from 'react'
 import Piece from '../ui/piece.js'
 import {useDrop} from 'react-dnd'
-import {Board} from '../model/board.js'
+//import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
 
 export default function Square({piece, pos, state, updateGame}) {

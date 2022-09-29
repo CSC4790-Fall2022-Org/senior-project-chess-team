@@ -1,9 +1,9 @@
-import {Pawn} from '../model/pieces/subpieces.js'
-import {Rook} from '../model/pieces/subpieces.js'
-import {Bishop} from '../model/pieces/subpieces.js'
-import {Queen} from '../model/pieces/subpieces.js'
-import {King} from '../model/pieces/subpieces.js'
-import {Knight} from '../model/pieces/subpieces.js'
+import {Pawn} from './pieces/subpieces.js'
+import {Rook} from './pieces/subpieces.js'
+import {Bishop} from './pieces/subpieces.js'
+import {Queen} from './pieces/subpieces.js'
+import {King} from './pieces/subpieces.js'
+import {Knight} from './pieces/subpieces.js'
 
 function makeInitialBoard(playerIsWhite) {
     var initBoard = [];
@@ -72,9 +72,11 @@ function updatePossibleMovesAllPieces(board) {
     return board;
 }
 
-export class Board {
+export class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
+        this.meInCheck = false;
+        this.oppInCheck = false;
         this.board = makeInitialBoard(playerIsWhite);
     }
 

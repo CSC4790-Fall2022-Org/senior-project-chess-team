@@ -54,7 +54,7 @@ export class Pawn extends Piece {
     }
 }
 
-class Rook extends Piece {
+export class Rook extends Piece {
 
 }
 
@@ -170,7 +170,7 @@ export class Bishop extends Piece {
     }
 }
 
-class Queen extends Piece {
+export class Queen extends Piece {
 
 }
 

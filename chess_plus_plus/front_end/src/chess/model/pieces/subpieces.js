@@ -271,7 +271,129 @@ export class Bishop extends Piece {
 }
 
 export class Queen extends Piece {
+    constructor(isWhite) {
+        super();
+        this.isWhite = isWhite;
+        this.type = 'Queen';
+        if (this.isWhite) {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png'
+        }
+        else {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png';
+        }
+    }
+    updatePossibleMoves(i, j, board, playerIsWhite) {
+        // up
+        var moves = new Set();
 
+        // BISHOP CODE
+        // top right
+        for (let r = i - 1, c = j + 1; r >= 0 && c < board[0].length; r--, c++) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // top left
+        for (let r = i - 1, c = j - 1; r >= 0 && c >= 0; r--, c--) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // btm left TODO
+        for (let r = i + 1, c = j - 1; r < board.length && c >= 0; r++, c--) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+
+        // btm right TODO
+        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
+            if (board[r][c] === null) {
+                moves.add(pairToMoveStr(r, c));
+            }
+            else if (board[r][c].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(r, c));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+        
+        // ROOK CODE
+        // up
+        for(let k = i-1; k >= 0; k--){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
+            }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
+            }
+        }
+        // down
+        for(let k = i+1; k <= 7; k++){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
+            }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
+            }
+        }
+        // left
+        for(let k = j-1; k >= 0; k--){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }
+        // right
+        for(let k = j+1; k <= 7; k++){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }   
+        this.possibleMoves = moves;
+    }
 }
 
 export class King extends Piece {

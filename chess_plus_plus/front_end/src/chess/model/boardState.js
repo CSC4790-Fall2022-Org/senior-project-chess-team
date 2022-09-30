@@ -63,6 +63,12 @@ function makeInitialBoard(playerIsWhite) {
     initBoard[0][4] = kingOpp;
     initBoard[7][4] = kingClose;
 
+    // Make Queens
+    var queenOpp = new Queen(!playerIsWhite);
+    var queenClose = new Queen(playerIsWhite);
+    initBoard[0][3] = queenOpp;
+    initBoard[7][3] = queenClose;
+
     // Update possible moves for all pieces
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {

@@ -1,5 +1,4 @@
 import {Piece} from '../piece.js';
-import moveSafeFromCheck from '../boardState.js'
 
 // Moves will be represented as a string tuple containing row,col
 
@@ -85,7 +84,78 @@ export class Pawn extends Piece {
 }
 
 export class Rook extends Piece {
+    
+    constructor(isWhite) {
+        super();
+        this.isWhite = isWhite;
+        this.type = 'Rook';
+        if (this.isWhite) {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png'
+        }
+        else {
+            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png';
+        }
+    }
+    updatePossibleMoves(i, j, board, playerIsWhite) {
+        // up
+        var moves = new Set();
+        // moving logic?
+        // up
+        // var flag = true;
+        // if(i===7){
+        //     flag = false;
+        // }
 
+        // up
+        for(let k = i-1; k >= 0; k--){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
+            }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
+            }
+        }
+        // down
+        for(let k = i+1; k <= 7; k++){
+            if (board[k][j] === null){
+                moves.add(pairToMoveStr(k,j));
+            }
+            else if(board[k][j].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(k,j));
+                break;
+            }else{
+                break;
+            }
+        }
+        // left
+        for(let k = j-1; k >= 0; k--){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }
+        // right
+        for(let k = j+1; k <= 7; k++){
+            if (board[i][k] === null){
+                moves.add(pairToMoveStr(i,k));
+            }
+            else if(board[i][k].isWhite !== this.isWhite){
+                moves.add(pairToMoveStr(i,k));
+                break;
+            }else{
+                break;
+            }
+        }   
+        this.possibleMoves = moves;
+    }
 }
 
 export class Knight extends Piece {

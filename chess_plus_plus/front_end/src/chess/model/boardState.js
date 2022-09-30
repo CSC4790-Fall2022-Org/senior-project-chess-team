@@ -47,6 +47,16 @@ function makeInitialBoard(playerIsWhite) {
     initBoard[0][2] = bishopOpp1;
     initBoard[0][5] = bishopOpp2;
 
+    // Make Rooks
+    var rookOpp1 = new Rook(!playerIsWhite);
+    var rookOpp2 = new Rook(!playerIsWhite);
+    var rookClose1 = new Rook(playerIsWhite);
+    var rookClose2 = new Rook(playerIsWhite);
+    initBoard[7][0] = rookClose1;
+    initBoard[7][7] = rookClose2;
+    initBoard[0][0] = rookOpp1;
+    initBoard[0][7] = rookOpp2;
+
     //Make Kings
     var kingOpp = new King(!playerIsWhite);
     var kingClose = new King(playerIsWhite);

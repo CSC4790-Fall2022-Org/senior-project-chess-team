@@ -1,29 +1,59 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import serverURL from '../config/serverConfig';
 import Base64Url from 'crypto-js/enc-base64url';
 import CryptoJS from "crypto-js";
-import { useSearchParams } from 'react-router-dom';
+import { json, useSearchParams } from 'react-router-dom';
 import { CognitoJwtVerifier } from 'aws-jwt-verify';
 import LoginError from "./LoginError";
+
+const SHA256 = require('crypto-js/sha256');
+const clientId = '39i33g2381dako8dicf0nd5hdl'; 
+const USER_POOL_ID = 'us-east-1_AAixkhVH9'
+const cognitoDomainName = 'https://chessplusplus.auth.us-east-1.amazoncognito.com';
 
 
 function SignInPage({setIsLoggedIn}) {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const SHA256 = require('crypto-js/sha256');
-    const clientId = '39i33g2381dako8dicf0nd5hdl'; 
-    const USER_POOL_ID = 'us-east-1_AAixkhVH9'
-
-
-    const verifier = CognitoJwtVerifier.create({
-        userPoolId: `${USER_POOL_ID}`,
-        tokenUse: 'access',
-        clientId: `${clientId}`,
-    });
-
-    const cognitoDomainName = 'https://chessplusplus.auth.us-east-1.amazoncognito.com';
+    const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
+        const checkIfLoggedInThroughCognito = async () => {
+            if (searchParams.get('code') == null) {
+                return false;
+            }
+    
+            window.history.replaceState({}, document.title, window.location.origin);
+            const state = searchParams.get('state');
+            const verifierItem = `codeVerifier-${state}`
+            const codeVerifier = sessionStorage.getItem(verifierItem);
+            sessionStorage.removeItem(verifierItem);
+    
+            if (codeVerifier == null) {
+                setErrorMessage('Could not verify user code. Try logging in again.')
+                return false;
+            }
+    
+            console.log('Validating login with backend')
+            await fetch(serverURL('/authenticate'), {
+                method: 'POST',
+                headers: new Headers({'content-type': 'application/json'}),
+                body: JSON.stringify({
+                    code: searchParams.get('code'),
+                    verifier: codeVerifier,
+                })
+            }).then((response) => response.json())
+              .then((data) => {
+                console.log(data.id_token)
+                localStorage.setItem('oauth', data.id_token)
+            }).catch((err) => {
+                setErrorMessage(err);
+            });
+    
+        }
+
         checkIfLoggedInThroughCognito();
+        setIsLoading(false);
         if (localStorage.getItem('oauth') !== null) {
             setIsLoggedIn(true);
             window.location.replace('/');
@@ -33,34 +63,29 @@ function SignInPage({setIsLoggedIn}) {
         }
     });
 
+    
+
+    const tokensAreValid = (tokens) => {
+        console.log('access token: ', tokens.access_token)
+        return true;
+        // TODO BY JAKE: Make a request to the backend server to verify the JWT.  https://stackoverflow.com/questions/40302349/how-to-verify-jwt-from-aws-cognito-in-the-api-backend derek soike answer
+        // 
+    }
+    
+
+    return (
+        <>
+        {isLoading && <p>Loading... please wait</p>}
+        {!isLoading && <NotLoggedIn errorMessage={errorMessage}/>}
+        </>
+
+    )
+}
+
+const NotLoggedIn = ({errorMessage}) => {
+
     const generateNonce = () => {
         return Base64Url.stringify(CryptoJS.lib.WordArray.random(16));
-    }
-
-    const checkIfLoggedInThroughCognito = () => {
-        if (searchParams.get('code') == null) {
-            return false;
-        }
-        window.history.replaceState({}, document.title, window.location.origin);
-        const state = searchParams.get('state');
-        const verifierItem = `codeVerifier-${state}`
-        const codeVerifier = sessionStorage.getItem(verifierItem);
-        sessionStorage.removeItem(verifierItem);
-
-        if (codeVerifier == null) {
-            <LoginError message={'Could not verify login code. Try again'} />
-            return false;
-        }
-        try {
-            const payload = verifier.verify(searchParams.get('code'));
-            console.log('Valid token. Payload: ', payload);
-            localStorage.setItem('oauth', searchParams.get('code'));
-            return true;
-        }
-        catch {
-            console.log('Invalid token.');
-            return false;
-        }
     }
 
     const sendUserToCognito = () => {
@@ -77,18 +102,8 @@ function SignInPage({setIsLoggedIn}) {
             You need to be signed in to continue.
         </p>
         <button onClick={sendUserToCognito}>login</button> {/*style this*/}
+        {errorMessage!=='' && <LoginError message={errorMessage} />}
         </>
-
     )
-}
-
-const makerequest = () => {
-    console.log('making request');
-    fetch(serverURL("/hello"))
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data)
-    })
-    .catch((err) => console.log(err));
 }
 export default SignInPage;

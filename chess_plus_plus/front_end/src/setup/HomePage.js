@@ -11,7 +11,7 @@ function HomePage({setIsLoggedIn}) {
         <>
         <h1>home </h1>
         <button onClick={pseudoLogout}> logout </button>
-        <Game isWhite={true}></Game>
+        <Game isWhite={false}></Game>
         </>
     )
 }

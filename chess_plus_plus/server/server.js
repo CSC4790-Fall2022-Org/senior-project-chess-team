@@ -1,7 +1,10 @@
 const express = require('express')
 
 const app = express()
+app.use(express.json()) // parses request body as JSON
 const port = process.env.PORT || 5001
+
+const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -12,7 +15,14 @@ app.use((req, res, next) => {
 
 app.get('/hello', (req, res) => {
   console.log("received request")
-  res.send({"text": 'Hello World!'})
+  res.status(200).send({"text": 'Hello World!'})
+})
+
+app.post('/authenticate', (req, res) => {
+  console.log('authenticating user')
+  requestBody = req.body
+  let text = checkAuthenticity.checkAuthenticity(requestBody);
+  return res.status(200).send({message: text})
 })
 
 app.listen(port, () => {

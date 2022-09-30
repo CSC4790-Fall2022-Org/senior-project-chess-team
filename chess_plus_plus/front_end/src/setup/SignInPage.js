@@ -18,60 +18,44 @@ function SignInPage({setIsLoggedIn}) {
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        const checkIfLoggedInThroughCognito = async () => {
-            if (searchParams.get('code') == null) {
-                return false;
-            }
-    
+        if (localStorage.getItem('oauth') !== null) {
+            setIsLoggedIn(true);
+            setIsLoading(false);
+            window.location.replace('/');
+        }
+        if (searchParams.get('code') != null) {
             window.history.replaceState({}, document.title, window.location.origin);
             const state = searchParams.get('state');
             const verifierItem = `codeVerifier-${state}`
             const codeVerifier = sessionStorage.getItem(verifierItem);
             sessionStorage.removeItem(verifierItem);
-    
+        
             if (codeVerifier == null) {
                 setErrorMessage('Could not verify user code. Try logging in again.')
-                return false;
+                return;
             }
-    
-            console.log('Validating login with backend')
-            await fetch(serverURL('/authenticate'), {
-                method: 'POST',
-                headers: new Headers({'content-type': 'application/json'}),
-                body: JSON.stringify({
-                    code: searchParams.get('code'),
-                    verifier: codeVerifier,
+
+            const verifyLogin = async () => {
+                console.log('Validating login with backend')
+                let response = await fetch(serverURL('/authenticate'), {
+                    method: 'POST',
+                    headers: new Headers({'content-type': 'application/json'}),
+                    body: JSON.stringify({
+                        code: searchParams.get('code'),
+                        verifier: codeVerifier,
+                    })
                 })
-            }).then((response) => response.json())
-              .then((data) => {
-                console.log(data.id_token)
-                localStorage.setItem('oauth', data.id_token)
-            }).catch((err) => {
-                setErrorMessage(err);
-            });
-    
+                response = await response.json()
+                return response 
+            }
+
+            const result = verifyLogin()
+            localStorage.setItem('oauth', result.id_token);
         }
 
-        checkIfLoggedInThroughCognito();
-        setIsLoading(false);
-        if (localStorage.getItem('oauth') !== null) {
-            setIsLoggedIn(true);
-            window.location.replace('/');
-        }
-        else {
-            setIsLoggedIn(false);
-        }
-    });
+        setIsLoading(false)
 
-    
-
-    const tokensAreValid = (tokens) => {
-        console.log('access token: ', tokens.access_token)
-        return true;
-        // TODO BY JAKE: Make a request to the backend server to verify the JWT.  https://stackoverflow.com/questions/40302349/how-to-verify-jwt-from-aws-cognito-in-the-api-backend derek soike answer
-        // 
-    }
-    
+    }, [searchParams, setIsLoggedIn]);
 
     return (
         <>

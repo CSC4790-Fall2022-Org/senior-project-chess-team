@@ -32,6 +32,7 @@ function SignInPage({setIsLoggedIn}) {
         
             if (codeVerifier == null) {
                 setErrorMessage('Could not verify user code. Try logging in again.')
+                setIsLoading(false);
                 return;
             }
 

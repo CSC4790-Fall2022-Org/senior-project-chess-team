@@ -18,13 +18,21 @@ app.get('/hello', (req, res) => {
   res.status(200).send({"text": 'Hello World!'})
 })
 
-app.post('/authenticate', (req, res) => {
-  console.log('authenticating user')
+app.post('/authenticate', async (req, res) => {
   requestBody = req.body
-  let text = checkAuthenticity.checkAuthenticity(requestBody);
-  return res.status(200).send({message: text})
+  let text = await checkAuthenticity.checkAuthenticity(requestBody);
+  await sleep(10000);
+  console.log('now')
+  return res.status(200).send(text)
 })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}

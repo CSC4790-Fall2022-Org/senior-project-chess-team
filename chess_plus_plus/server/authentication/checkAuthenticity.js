@@ -2,7 +2,6 @@ const axios = require('axios')
 
 const checkAuthenticity = async (body) => {
     let jwts = await fetchJwtFromAws(body);
-    console.log('jwts are', jwts);
     if (jwts == null) {
         return {'error': 'could not authenticate with AWS'}
     }

@@ -3,14 +3,34 @@ import {CognitoJwtVerifier} from "aws-jwt-verify";
 const axios = require('axios')
 
 const checkAuthenticity = async (body) => {
-    var jwt = require('jsonwebtoken');
-    var jwkToPem = require('jwk-to-pem');
-    var pem = jwkToPem(jwk);
-    jwt.verify(token, pem, { algorithms: ['RS256'] }, function(err, decodedToken) {});
+    
     let jwts = await fetchJwtFromAws(body);
     if (jwts == null) {
         return {'error': 'could not authenticate with AWS'}
     }
+    id_token = jwts.id_token
+
+    if (await validIdToken(id_token)) {
+        return {"id_token": jwts.id_token};
+    }
+
+    
+    return {"id_token": jwts.id_token};
+}
+
+const validIdToken = async id_token => {
+    
+    // TODO: Verify these JWT's with AWS. https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html
+    // https://stackoverflow.com/questions/40302349/how-to-verify-jwt-from-aws-cognito-in-the-api-backend
+    // https://aws.amazon.com/premiumsupport/knowledge-center/decode-verify-cognito-json-token/
+    // above may be useful
+
+    return true; // until below works
+    var jwt = require('jsonwebtoken');
+    var jwkToPem = require('jwk-to-pem');
+    var pem = jwkToPem(jwk);
+    jwt.verify(token, pem, { algorithms: ['RS256'] }, function(err, decodedToken) {});
+
     const verifier = CognitoJwtVerifier.create({
         userPoolId: "<user_pool_id>",
         tokenUse: "access",
@@ -18,20 +38,13 @@ const checkAuthenticity = async (body) => {
     });
     try {
         const payload = await verifier.verify(
-            "39i33g2381dako8dicf0nd5hdl" //JWT as string
+            id_token //JWT as string
         );
         console.log("Token Valid. Payload: ", payload);
     } catch {
         console.log("Invalid Token");
     }
-    // TODO: Verify these JWT's with AWS. https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-verifying-a-jwt.html
-    // https://stackoverflow.com/questions/40302349/how-to-verify-jwt-from-aws-cognito-in-the-api-backend
-    // https://aws.amazon.com/premiumsupport/knowledge-center/decode-verify-cognito-json-token/
-    // above may be useful
-    
-    return {"id_token": jwts.id_token};
 }
-
 const clientId = '39i33g2381dako8dicf0nd5hdl';
 const cognitoDomainName = 'https://chessplusplus.auth.us-east-1.amazoncognito.com';
 

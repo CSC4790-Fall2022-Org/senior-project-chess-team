@@ -1,4 +1,4 @@
-import {CognitoJwtVerifier} from "aws-jwt-verify";
+// import {CognitoJwtVerifier} from "aws-jwt-verify";
 
 const axios = require('axios')
 

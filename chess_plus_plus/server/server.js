@@ -18,17 +18,11 @@ app.get('/hello', (req, res) => {
   res.status(200).send({"text": 'Hello World!'})
 })
 
-var firstReq = true;
 app.post('/authenticate', async (req, res) => {
   requestBody = req.body
-  if (firstReq) {
-    await sleep (5000);
-    firstReq = false;
-  }
 
   let text = await checkAuthenticity.checkAuthenticity(requestBody);
 
-  console.log('now')
   return res.status(200).send(text)
 })
 

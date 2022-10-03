@@ -1,4 +1,4 @@
-import {CognitoJwtVerifier} from "aws-jwt-verify";
+// import {CognitoJwtVerifier} from "aws-jwt-verify";
 
 const axios = require('axios')
 
@@ -14,8 +14,8 @@ const checkAuthenticity = async (body) => {
         return {"id_token": jwts.id_token};
     }
 
-    
-    return {"id_token": jwts.id_token};
+    return {"error": 'could not validate JWT'}
+
 }
 
 const validIdToken = async id_token => {

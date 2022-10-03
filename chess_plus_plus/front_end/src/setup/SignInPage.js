@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import serverURL from "../config/serverConfig";
 import Base64Url from "crypto-js/enc-base64url";
 import CryptoJS from "crypto-js";
 import { useSearchParams } from "react-router-dom";
-import { CognitoJwtVerifier } from "aws-jwt-verify";
 
 function SignInPage({ setIsLoggedIn }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -26,18 +25,20 @@ function SignInPage({ setIsLoggedIn }) {
         ) {
             
             const verifyUserDetails = async () => {
-                console.log("started");
+                console.log("Checking if user has returned from Cognito");
                 window.history.replaceState({}, document.title, window.location.href);
                 const state = searchParams.get("state");
                 const verifierItem = `codeVerifier-${state}`;
                 const codeVerifier = sessionStorage.getItem(verifierItem);
                 if (codeVerifier == null) {
-                    console.log('she null')
+                    console.log('null code verifier')
                     setVerifyIsLoading(false)
                     // return () => {
                     //     ignore = true;
                     // }
                 }
+                console.log("Requesting tokens from cognito");
+
                 const response = await fetch(serverURL("/authenticate"), {
                     method: "POST",
                     headers: new Headers({
@@ -48,7 +49,7 @@ function SignInPage({ setIsLoggedIn }) {
                         verifier: codeVerifier,
                     }),
                 });
-                console.log("returned");
+                console.log("Received response from cognito");
                 if (response.ok) {
                     console.log("ok");
                     const body = await response.json();

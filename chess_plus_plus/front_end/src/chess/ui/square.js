@@ -1,7 +1,7 @@
 import React from 'react'
 import Piece from '../ui/piece.js'
 import {useDrop} from 'react-dnd'
-import {Board} from '../model/board.js'
+//import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
 
 export default function Square({piece, pos, state, updateGame}) {
@@ -14,8 +14,9 @@ export default function Square({piece, pos, state, updateGame}) {
       const src_pos = item.id.split("_")[0];
       const dest_pos= pos;
       console.log(src_pos + " to " + dest_pos);
-      const validMove = state.boardState.movePiece(src_pos, dest_pos);
+      const validMove = state.boardState.canMovePiece(src_pos, dest_pos);
       if (validMove) {
+        state.boardState.movePiece(src_pos, dest_pos);
         updateGame(state.boardState);
       }
       // SEND THE UPDATE TO THE BACKEND HERE

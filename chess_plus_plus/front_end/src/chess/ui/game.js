@@ -1,5 +1,5 @@
 import React from 'react'
-import {Board} from '../model/board.js'
+import {BoardState} from '../model/boardState.js'
 import Square from './square.js'
 import '../ui/game.css'
 
@@ -8,9 +8,7 @@ export class Game extends React.Component {
     constructor(props) {
         super();
         this.state = {
-            boardState: new Board(props.isWhite),
-            whiteKingCheck: false,
-            blackKingCheck: false
+            boardState: new BoardState(props.isWhite)
         }
         this.update = this.update.bind(this);
     }

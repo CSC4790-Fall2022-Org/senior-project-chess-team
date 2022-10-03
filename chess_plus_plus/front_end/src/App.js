@@ -1,16 +1,19 @@
 import './App.css';
-import {  Link} from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState  } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
+
 import { Route, Routes, Navigate } from 'react-router-dom';
-import {Game} from './chess/ui/game.js'
 
 function App() {
-  // 
-  const isUserLoggedIn = () => {
-    return false;
-  }
+
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => JSON.parse(localStorage.getItem('authentication')) || false
+  );
+
+  useEffect(() => {
+    localStorage.setItem('authentication', JSON.stringify(isLoggedIn));
+  }, [isLoggedIn]);
 
   // const isWhite = ...figure out is player is white or not
 
@@ -18,16 +21,11 @@ function App() {
   return (
     <>
     <Routes>
-        <Route path='/login' element={<SignInPage />} />
-        <Route path='/home' element={<HomePage />} />
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        <Route path='*' element={isLoggedIn ? <Navigate replace to='/' /> : <Navigate replace to='/login' />} />
+        <Route path='/' element={isLoggedIn ? <HomePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/login' />} />
+        <Route path='/login' element={isLoggedIn ? <Navigate replace to='/' /> : <SignInPage setIsLoggedIn={setIsLoggedIn} />} />
     </Routes>
-      <Link to="/"><p>/</p></Link>
-      <Link to="/login"><p>login</p></Link>
-      <Link to="/home"><p>home</p></Link>
-    <Game isWhite={true}></Game>
     </>
   );
-}
-
+} 
 export default App;

@@ -23,6 +23,9 @@ app.post('/authenticate', async (req, res) => {
 
   let text = await checkAuthenticity.checkAuthenticity(requestBody);
 
+  if (text?.error) {
+    return res.status(400).send(text) // should handle error differently, but okay for now
+  }
   return res.status(200).send(text)
 })
 

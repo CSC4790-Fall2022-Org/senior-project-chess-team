@@ -3,6 +3,7 @@ import serverURL from "../config/serverConfig";
 import Base64Url from "crypto-js/enc-base64url";
 import CryptoJS from "crypto-js";
 import { useSearchParams } from "react-router-dom";
+import { fetchTokensFromCognito } from '../api/authentication.js'
 
 function SignInPage({ setIsLoggedIn }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,16 +40,9 @@ function SignInPage({ setIsLoggedIn }) {
                 }
                 console.log("Requesting tokens from cognito");
 
-                const response = await fetch(serverURL("/authenticate"), {
-                    method: "POST",
-                    headers: new Headers({
-                        "content-type": "application/json",
-                    }),
-                    body: JSON.stringify({
-                        code: searchParams.get("code"),
-                        verifier: codeVerifier,
-                    }),
-                });
+                let code = searchParams.get('code')
+                const response = await fetchTokensFromCognito(code, codeVerifier);
+
                 console.log("Received response from cognito");
                 if (response.ok) {
                     console.log("ok");

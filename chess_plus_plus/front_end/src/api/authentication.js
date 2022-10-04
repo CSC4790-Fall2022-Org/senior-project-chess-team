@@ -1,6 +1,6 @@
 import serverURL from '../config/serverConfig'
 
-export const fetchTokensFromCognito = async (code, codeVerifier) => {
+export const verifyCognitoCredentials = async (code, codeVerifier) => {
     return await fetch(serverURL("/authenticate"), {
         method: "POST",
         headers: new Headers({

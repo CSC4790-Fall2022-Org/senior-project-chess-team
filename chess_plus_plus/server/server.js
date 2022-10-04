@@ -8,7 +8,7 @@ const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
 
 })
@@ -20,15 +20,17 @@ app.get('/hello', (req, res) => {
 
 app.post('/authenticate', async (req, res) => {
   requestBody = req.body
-
   let text = await checkAuthenticity.checkAuthenticity(requestBody);
-
   if (text?.error) {
     return res.status(400).send(text) // should handle error differently, but okay for now
   }
   return res.status(200).send(text)
 })
 
+app.post('/game', (req, res) => {
+  console.log('we start')
+  console.log(req.headers['authorization']) // todo : actually call from frontend
+})
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })

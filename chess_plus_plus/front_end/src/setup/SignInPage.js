@@ -62,6 +62,7 @@ function SignInPage({ setIsLoggedIn }) {
 
     useEffect(() => {
         if (idToken !== null && typeof idToken !== "undefined") {
+            localStorage.setItem('id_token', idToken);
             setIsLoggedIn(true);
             window.location.replace("/");
         } else {

@@ -5,7 +5,7 @@ function HomePage({setIsLoggedIn}) {
 
     const pseudoLogout = () => {
         setIsLoggedIn(false);
-        localStorage.removeItem('oauth');
+        localStorage.removeItem('id_token');
     }
     return (
         <>

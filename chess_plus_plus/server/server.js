@@ -18,6 +18,8 @@ app.use((req, res, next) => {
   next();
 })
 
+//TODO:  add middleware that splits bearer auth into id token and validates it
+
 app.post('/authenticate', async (req, res) => {
   requestBody = req.body
   let text = await checkAuthenticity.checkAuthenticity(requestBody);
@@ -45,5 +47,3 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
-
-// should probably add middleware to authenticate user once hitting the endpoint

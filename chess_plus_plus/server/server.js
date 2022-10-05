@@ -1,21 +1,21 @@
 const express = require('express')
+const http = require('http')
+const socketio = require('socket.io')
+const checkAuthenticity = require('./authentication/checkAuthenticity.js')
+const gameRoom = require('./gameroom/gameroom.js')
+
 
 const app = express()
-app.use(express.json()) // parses request body as JSON
+const server = http.createServer(app)
+const io = socketio(server)
+
 const port = process.env.PORT || 5001
 
-const checkAuthenticity = require('./authentication/checkAuthenticity.js')
-
+app.use(express.json()) // parses request body as JSON
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   next();
-
-})
-
-app.get('/hello', (req, res) => {
-  console.log("received request")
-  res.status(200).send({"text": 'Hello World!'})
 })
 
 app.post('/authenticate', async (req, res) => {
@@ -27,11 +27,15 @@ app.post('/authenticate', async (req, res) => {
   return res.status(200).send(text)
 })
 
+
 app.post('/game', (req, res) => {
-  console.log('we start')
-  console.log(req.headers['authorization']) // todo : actually call from frontend
+  console.log('Received request to create game')
+  const userId = req.headers['authorization']
+  const response = gameRoom.create(userId);
+  res.status(200).send(response); // todo : actually call from frontend
 })
-app.listen(port, () => {
+
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
@@ -41,3 +45,5 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+// should probably add middleware to authenticate user once hitting the endpoint

@@ -11,6 +11,8 @@ function HomePage({setIsLoggedIn}) {
 
     const createGame = async () => {
         const response = await createGameRoom();
+        console.log(response)
+        console.log('yo')
     }
 
     const joinGame = () => {

@@ -10,7 +10,7 @@ export const createGameRoom = async () => {
         }),
     })
 
-    console.log(response)
+    return await response.json()
 }
 
 export const joinGameRoom = async gameId => {

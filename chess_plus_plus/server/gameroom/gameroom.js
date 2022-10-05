@@ -4,6 +4,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.gameId = gameId;
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
+    // state???
 }
 
 const getRandomColor = () => {
@@ -19,7 +20,7 @@ const createGameRoom = userId => {
 
 const { v4: uuidv4 } = require('uuid');
 const generateGameId = () => {
-    return uuidv4();
+    return uuidv4(); // make this shorter
 }
 
 exports.create = createGameRoom

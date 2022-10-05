@@ -1,20 +1,31 @@
 const express = require('express')
 const http = require('http')
-const socketio = require('socket.io')
+// const io = require('socket.io')(http, { path: '/game/socket.io'})
+
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const gameRoom = require('./gameroom/gameroom.js')
 
 
 const app = express()
-const server = http.createServer(app)
-const io = socketio(server)
+const server = http.createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+})
+
+io.on('connection', () => {
+  console.log('woah')
+});
+
 
 const port = process.env.PORT || 5001
 
 app.use(express.json()) // parses request body as JSON
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, XMLHttpRequest, Content-Type, Accept, Authorization");
   next();
 })
 
@@ -37,8 +48,15 @@ app.post('/game', (req, res) => {
   res.status(200).send(response); // todo : actually call from frontend
 })
 
+io.on('connection', socket => {
+  console.log('connected')
+})
+
+io.on('connect_error', (err) => {
+  console.log(`connect error due to ${err.message}`);
+});
 server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`started server listening on port ${port}`)
 })
 
 

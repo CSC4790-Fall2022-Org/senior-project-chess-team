@@ -4,8 +4,17 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.gameId = gameId;
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
-    // state???
+    this.isWhiteTurn;
+    this.board = GameBoard();
 }
+
+function GameBoard() {
+    this.state = [[0]] // 2d array representing board;
+    this.whiteKingInCheck = false;
+    this.blackKingInCheck = false;
+}
+
+
 
 const getRandomColor = () => {
     return Math.floor(Math.random() * 2);

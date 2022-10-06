@@ -16,10 +16,16 @@ export default function GamePage() {
 
         socket.current = newSocket;
 
+        newSocket.on('disconnect', () => {
+            console.log('we disconnected for free');
+        });
+
+
         return () => {
             newSocket.close();
         }
         }, [socket])
+
 
     return (
         <>

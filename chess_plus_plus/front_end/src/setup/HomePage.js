@@ -1,9 +1,10 @@
-import { useSearchParams } from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
 import {Game} from '../chess/ui/game.js'
 
 function HomePage({setIsLoggedIn}) {
 
+    const navigate = useNavigate();
     const pseudoLogout = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('id_token');
@@ -11,8 +12,12 @@ function HomePage({setIsLoggedIn}) {
 
     const createGame = async () => {
         const response = await createGameRoom();
-        console.log(response)
-        console.log('yo')
+        console.log('response ', response.ok)
+        if (response.ok) {
+            const json = await response.json();
+            const game_id = json.game_id;
+            navigate(`/game/${game_id}`);
+        }
     }
 
     const joinGame = () => {

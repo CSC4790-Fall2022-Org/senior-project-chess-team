@@ -8,9 +8,9 @@ export const createGameRoom = async () => {
             "content-type": "application/json",
             'Authorization': `Bearer ${userId}`,
         }),
-    })
+    });
 
-    return await response.json()
+    return response;
 }
 
 export const joinGameRoom = async gameId => {

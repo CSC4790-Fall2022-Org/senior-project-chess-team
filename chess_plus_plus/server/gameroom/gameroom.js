@@ -25,6 +25,7 @@ const createGameRoom = userId => {
     let newGame = new Game(gameId, (playerIsWhite) ? userId : null,  (!playerIsWhite) ? userId : null)
      // otherId will come when user joins game w/ game id
     activeGames[gameId] = newGame;
+    return {'game_id': gameId};
 }
 
 const { v4: uuidv4 } = require('uuid');

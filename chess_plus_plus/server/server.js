@@ -12,13 +12,10 @@ const io = require('socket.io')(server, {
   cors: {
     origin: 'http://localhost:3000',
     methods: ['GET', 'POST']
-  }
+  },
+  path: '/game/socket.io'
+
 })
-
-io.on('connection', () => {
-  console.log('woah')
-});
-
 
 const port = process.env.PORT || 5001
 
@@ -49,12 +46,12 @@ app.post('/game', (req, res) => {
 })
 
 io.on('connection', socket => {
-  console.log('connected')
-})
-
-io.on('connect_error', (err) => {
-  console.log(`connect error due to ${err.message}`);
+  console.log('connected af')
+  socket.on('disconnect', () => {
+    console.log('disconnected')
+  })
 });
+
 server.listen(port, () => {
   console.log(`started server listening on port ${port}`)
 })

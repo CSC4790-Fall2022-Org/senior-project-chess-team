@@ -1,32 +1,32 @@
-import React , { useState, useEffect }from 'react'
+import React , { useState, useEffect, useRef }from 'react'
 import io from 'socket.io-client';
 import serverURL from '../config/serverConfig';
 
 
-const socket = io(serverURL());
+
 export default function GamePage() {
-    const [isConnected, setIsConnected] = useState(socket.connected)
+
+    const socket = useRef(null)
 
     useEffect(() => {
-        socket.on('connect', () => {
-            setIsConnected(true);
-          });
-      
-          socket.on('disconnect', () => {
-            setIsConnected(false);
-          });
-      
-          return () => {
-            socket.off('connect');
-            socket.off('disconnect');
-          };
-        }, []);
 
-      console.log(socket?.connected)
+        const newSocket = io(serverURL(), {
+            path: '/game/socket.io'
+        });
+
+        socket.current = newSocket;
+
+        return () => {
+            newSocket.close();
+        }
+        }, [socket])
 
     return (
         <>
-                <p>{isConnected ? 'yes' : 'no'}</p>
+                <p>{socket.current && socket.current.connected ? 'yes' : 'noo'}</p>
+                <button onClick={() => console.log(socket.current.connected)}>but</button>
+                <button onClick={() => socket.current.close()}>but</button>
+
         </>
     )
 }

@@ -4,8 +4,17 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.gameId = gameId;
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
-    this.isWhiteTurn;
+    this.isWhiteTurn = true;
     this.board = GameBoard();
+
+    this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
+    this.addPlayer = id => {
+        this.whiteUserId = this.whiteUserId || id;
+        this.blackUserId = this.blackUserId || id;
+    }
+    this.color = id => {
+        return id === this.whiteUserId ? 'white' : 'black';
+    }
 }
 
 function GameBoard() {
@@ -23,6 +32,7 @@ const createGameRoom = userId => {
     const gameId = generateGameId();
     const playerIsWhite = getRandomColor();
     let newGame = new Game(gameId, (playerIsWhite) ? userId : null,  (!playerIsWhite) ? userId : null)
+    console.log(newGame)
      // otherId will come when user joins game w/ game id
     activeGames[gameId] = newGame;
     return {'game_id': gameId};
@@ -33,4 +43,8 @@ const generateGameId = () => {
     return uuidv4(); // make this shorter
 }
 
-exports.create = createGameRoom
+const getById = id => {
+    return activeGames[id] ?? null;
+}
+exports.create = createGameRoom;
+exports.getById = getById;

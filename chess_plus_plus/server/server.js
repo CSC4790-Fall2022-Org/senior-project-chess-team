@@ -1,9 +1,10 @@
 const express = require('express')
 const http = require('http')
+const jwtDecode = require('jwt-decode')
 // const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
-const gameRoom = require('./gameroom/gameroom.js')
+const games = require('./games/games.js')
 
 
 const app = express()
@@ -14,7 +15,6 @@ const io = require('socket.io')(server, {
     methods: ['GET', 'POST']
   },
   path: '/game/socket.io'
-
 })
 
 const port = process.env.PORT || 5001
@@ -40,13 +40,30 @@ app.post('/authenticate', async (req, res) => {
 
 app.post('/game', (req, res) => {
   console.log('Received request to create game')
-  const userId = req.headers['authorization']
-  const response = gameRoom.create(userId);
+  const userId = removeBearer(req.headers['authorization']);
+  const userName = getUsername(userId);
+  const response = games.create(userName);
   res.status(200).send(response); // todo : actually call from frontend
 })
 
 io.on('connection', socket => {
-  console.log('connected af')
+  console.log('connected')
+
+  const gameId = socket.request._query['gameId']
+  const userId = socket.request._query['idToken']
+  const userName = getUsername(userId);
+  console.log('a', gameId, userId)
+  const game =  games.getById(gameId);
+  console.log(game)
+  if (!game.containsPlayer(userName)) {
+    game.addPlayer(userId);
+  }
+
+  console.log(game.color(userName));
+
+  socket.emit('clientColor', game.color(userName));
+
+ 
   socket.on('disconnect', () => {
     console.log('disconnected')
   })
@@ -56,7 +73,13 @@ server.listen(port, () => {
   console.log(`started server listening on port ${port}`)
 })
 
+const removeBearer = tokenWithBearer => {
+  return tokenWithBearer.split(' ')[1];
+}
 
+const getUsername = idToken => {
+  return jwtDecode(idToken)['cognito:username']
+}
 function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);

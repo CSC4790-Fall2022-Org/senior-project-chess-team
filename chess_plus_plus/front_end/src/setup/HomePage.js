@@ -16,7 +16,9 @@ function HomePage({setIsLoggedIn}) {
         if (response.ok) {
             const json = await response.json();
             const game_id = json.game_id;
-            navigate(`/game/${game_id}`);
+
+
+            navigate(`/game?id=${game_id}`);
         }
     }
 

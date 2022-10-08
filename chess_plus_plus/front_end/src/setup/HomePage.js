@@ -40,7 +40,6 @@ function HomePage({setIsLoggedIn}) {
             <textarea />
             <button>Join game</button>
         </form>
-        <Game isWhite={false}></Game>
         </>
     )
 }

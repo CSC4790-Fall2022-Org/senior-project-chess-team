@@ -3,6 +3,7 @@ import serverURL from "../config/serverConfig";
 import Base64Url from "crypto-js/enc-base64url";
 import CryptoJS from "crypto-js";
 import { useSearchParams } from "react-router-dom";
+import { verifyCognitoCredentials } from '../api/authentication.js'
 
 function SignInPage({ setIsLoggedIn }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -12,9 +13,6 @@ function SignInPage({ setIsLoggedIn }) {
 
     const SHA256 = require("crypto-js/sha256");
     const clientId = "39i33g2381dako8dicf0nd5hdl";
-    const USER_POOL_ID = "us-east-1_AAixkhVH9";
-
-    
 
     const cognitoDomainName = "https://chessplusplus.auth.us-east-1.amazoncognito.com";
     useEffect(() => {
@@ -23,7 +21,10 @@ function SignInPage({ setIsLoggedIn }) {
             searchParams.get("code") !== null &&
             searchParams.get("state") !== null
         ) {
-            
+            setTimeout(() => {
+                setVerifyIsLoading(false);
+                // Add in an alert or something that we timed out
+            }, 15000); 
             const verifyUserDetails = async () => {
                 console.log("Checking if user has returned from Cognito");
                 window.history.replaceState({}, document.title, window.location.href);
@@ -33,22 +34,12 @@ function SignInPage({ setIsLoggedIn }) {
                 if (codeVerifier == null) {
                     console.log('null code verifier')
                     setVerifyIsLoading(false)
-                    // return () => {
-                    //     ignore = true;
-                    // }
                 }
                 console.log("Requesting tokens from cognito");
 
-                const response = await fetch(serverURL("/authenticate"), {
-                    method: "POST",
-                    headers: new Headers({
-                        "content-type": "application/json",
-                    }),
-                    body: JSON.stringify({
-                        code: searchParams.get("code"),
-                        verifier: codeVerifier,
-                    }),
-                });
+                let code = searchParams.get('code')
+                const response = await verifyCognitoCredentials(code, codeVerifier);
+
                 console.log("Received response from cognito");
                 if (response.ok) {
                     console.log("ok");
@@ -71,6 +62,7 @@ function SignInPage({ setIsLoggedIn }) {
 
     useEffect(() => {
         if (idToken !== null && typeof idToken !== "undefined") {
+            localStorage.setItem('id_token', idToken);
             setIsLoggedIn(true);
             window.location.replace("/");
         } else {

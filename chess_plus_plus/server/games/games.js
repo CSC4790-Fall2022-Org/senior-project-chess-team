@@ -9,8 +9,10 @@ function Game(gameId, whiteUserId, blackUserId) {
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
-        this.whiteUserId = this.whiteUserId || id;
-        this.blackUserId = this.blackUserId || id;
+        console.log(this.whiteUserId ?? id)
+        console.log(this.blackUserId ?? id)
+        this.whiteUserId = this.whiteUserId ?? id;
+        this.blackUserId = this.blackUserId ?? id;
     }
     this.color = id => {
         return id === this.whiteUserId ? 'white' : 'black';

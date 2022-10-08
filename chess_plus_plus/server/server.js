@@ -52,11 +52,16 @@ io.on('connection', socket => {
   const gameId = socket.request._query['gameId']
   const userId = socket.request._query['idToken']
   const userName = getUsername(userId);
-  console.log('a', gameId, userId)
+  console.log('a', gameId, userName)
   const game =  games.getById(gameId);
+  if (game === null) {
+    socket.disconnect(true);
+    return;
+  }
   console.log(game)
   if (!game.containsPlayer(userName)) {
-    game.addPlayer(userId);
+    console.log(`${userName} is not a player in game with id ${game.gameId}`);
+    game.addPlayer(userName);
   }
 
   console.log(game.color(userName));

@@ -1,9 +1,11 @@
-import {Navigate, useNavigate} from "react-router-dom";
+import {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
 import {Game} from '../chess/ui/game.js'
 
 function HomePage({setIsLoggedIn}) {
 
+    const [text, setText] = useState('');
     const navigate = useNavigate();
     const pseudoLogout = () => {
         setIsLoggedIn(false);
@@ -23,14 +25,25 @@ function HomePage({setIsLoggedIn}) {
     }
 
     const joinGame = () => {
+        console.log("first")
+        console.log(text)
+        navigate(`/game?id=${text}`);
+    }
 
+    const handleTextAreaChange = t => {
+        setText(t.target.value);
     }
     return (
         <>
         <h1>home </h1>
         <button onClick={pseudoLogout}> logout </button>
+        <br />
         <button onClick={createGame}>Create game</button>
-        <button onClick={joinGame}>Join game</button>
+        <br />
+        <form onSubmit={joinGame} onChange={handleTextAreaChange}>
+            <textarea />
+            <button>Join game</button>
+        </form>
         <Game isWhite={false}></Game>
         </>
     )

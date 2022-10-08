@@ -14,19 +14,15 @@ function HomePage({setIsLoggedIn}) {
 
     const createGame = async () => {
         const response = await createGameRoom();
-        console.log('response ', response.ok)
         if (response.ok) {
             const json = await response.json();
             const game_id = json.game_id;
-
 
             navigate(`/game?id=${game_id}`);
         }
     }
 
     const joinGame = () => {
-        console.log("first")
-        console.log(text)
         navigate(`/game?id=${text}`);
     }
 

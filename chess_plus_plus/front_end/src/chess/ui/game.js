@@ -24,7 +24,9 @@ export class Game extends React.Component {
                 boardSquares.push(<Square piece={this.state.boardState.board[i][j]} 
                     pos={String(i) + ',' + String(j)} 
                     state={this.state}
-                    updateGame={this.update}></Square>);
+                    updateGame={this.update}
+                    socket={this.props.ws}></Square>
+                    );
             }
         }
         return (

@@ -4,7 +4,7 @@ import {useDrop} from 'react-dnd'
 //import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
 
-export default function Square({piece, pos, state, updateGame}) {
+export default function Square({piece, pos, state, updateGame, socket}) {
 
   // When piece is dropped, check if it can be moved there, then move it
   // and send to backend
@@ -16,9 +16,15 @@ export default function Square({piece, pos, state, updateGame}) {
       console.log(src_pos + " to " + dest_pos);
       const validMove = state.boardState.canMovePiece(src_pos, dest_pos);
       if (validMove) {
+        socket.emit("playerMove", "worlc!");
+        // IDEA: Instead of moving/updating, let's send to the backend first.
+        // Then, we will wait for the backend to emit the move to both players
+        // That will call the updateGame function (or perhaps, simply sends a board to be rendered)
         state.boardState.movePiece(src_pos, dest_pos);
         updateGame(state.boardState);
       }
+
+
       // SEND THE UPDATE TO THE BACKEND HERE
     },
     canDrop: (item) => {

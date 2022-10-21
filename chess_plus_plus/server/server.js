@@ -69,7 +69,8 @@ io.on('connection', socket => {
 
   socket.emit('clientColor', game.color(userName));
 
-  socket.on('playerMove', () => {
+  socket.on('playerMove', (arg) => {
+    console.log(arg);
     if (!isValidMove(null)) {
       // handle
     }

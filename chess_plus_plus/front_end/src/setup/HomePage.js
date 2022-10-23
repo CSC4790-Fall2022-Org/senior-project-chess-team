@@ -1,14 +1,17 @@
 import { useSearchParams } from "react-router-dom";
-import {useState} from 'react';
 import {Game} from '../chess/ui/game.js'
 import Banner from '../chess/ui/banner.js'
 
 function HomePage({setIsLoggedIn}) {
 
+    const pseudoLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem('oauth');
+    }
     return (
         <>
-        <Banner setIsLoggedIn={setIsLoggedIn}></Banner>
-        <button class="startButton">Start Game</button>
+        <h1>home </h1>
+        <button onClick={pseudoLogout}> logout </button>
         <Game isWhite={false}></Game>
         </>
     )

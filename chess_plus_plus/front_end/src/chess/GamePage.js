@@ -35,14 +35,19 @@ export default function GamePage() {
 
         return () => {
             newSocket.close();
+            console.log('why are we here?')
+
         }
         }, [socket, searchParams])
 
+    useEffect(() => {
+        console.log("game page rerendered")
+    }, [])
 
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current}/> : <p>Waiting for response...</p> }
+            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
         </>
     )
 }

@@ -5,7 +5,7 @@ const jwtDecode = require('jwt-decode')
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
-const { isValidMove } = require('./games/movement.js')
+const { handleMove } = require('./games/handleMove.js')
 
 
 const app = express()
@@ -64,18 +64,15 @@ io.on('connection', socket => {
     game.addPlayer(userName);
   }
 
-  console.log(game)
-
-
   socket.emit('clientColor', game.color(userName));
 
   socket.on('playerMove', (arg) => {
-    console.log(arg);
-    if (!isValidMove(null)) {
-      // handle
-    }
-    socket.emit('updateAfterMove', arg)
-    // emit to both players
+    updated_board = handleMove(arg)
+    
+    // ONLY EMIT TO PLAYERS IN THE ROOM. 
+    socket.broadcast.emit('updateAfterMove', updated_board)
+    socket.emit('updateAfterMove', updated_board)
+
   })
   socket.on('disconnect', () => {
     console.log('disconnected')

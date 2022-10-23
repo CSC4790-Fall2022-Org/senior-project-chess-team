@@ -11,12 +11,14 @@ export default function Square({piece, pos, state, updateGame, sendMove}) {
   const [{isOver, canDrop}, drop] = useDrop({
     accept: 'Piece',
     drop: (item) => {
+      console.log("dropping")
       const src_pos = item.id.split("_")[0];
       const dest_pos= pos;
       console.log(src_pos + " to " + dest_pos);
       const validMove = state.boardState.canMovePiece(src_pos, dest_pos);
       if (validMove) {
         sendMove(src_pos, dest_pos)
+        console.log("considered valid move")
         // IDEA: Instead of moving/updating, let's send to the backend first.
         // Then, we will wait for the backend to emit the move to both players
         // That will call the updateGame function (or perhaps, simply sends a board to be rendered)

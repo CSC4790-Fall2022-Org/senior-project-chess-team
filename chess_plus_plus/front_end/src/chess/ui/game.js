@@ -6,6 +6,7 @@ import '../ui/game.css'
 export class Game extends React.Component {
 
     constructor(props) {
+        console.log("constructor for game")
         super();
         
         this.state = {
@@ -13,6 +14,8 @@ export class Game extends React.Component {
         }
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
+        this.makeMove = this.makeMove.bind(this);
+        this.receievedMove = this.receievedMove.bind(this);
     }
 
     update(board) {
@@ -20,12 +23,49 @@ export class Game extends React.Component {
     }
 
     sendMove(src_pos, dest_pos) {
-        console.log('supposed to send move', this.props.ws)
-        this.props.ws.emit("playerMove", {
-            src: src_pos,
-            dest: dest_pos,
-          });
+        // this.props.ws.emit("playerMove", {
+        //     src: src_pos,
+        //     dest: dest_pos,
+        //   });
+        this.props.ws.emit('playerMove', JSON.stringify({
+            game_id: this.props.id, 
+            move: {
+                    src: src_pos,
+                    dest: dest_pos,
+                  },
+            board: this.state.boardState
+        }))
     }
+
+    makeMove(move) {
+        console.log("moveing")
+        console.log(this.state.boardState)
+        this.state.boardState.movePiece(move.src, move.dest);
+        console.log("move?")
+
+        console.log('supposed to send move', this.props.ws)
+            console.log(this.state.boardState.board)
+            this.update(this.state.boardState);
+    }
+
+    receievedMove(board) {
+        this.update(board);
+    }
+    componentDidMount() {
+        console.log('game mount')
+        this.props.ws.on('updateAfterMove', this.receievedMove)
+    }
+
+    componentDidUpdate() {
+        console.log('game updated')
+    }
+    componentWillUnmount() {
+        console.log('game will unmount')
+        this.props.ws.removeListener("updateAfterMove")
+    }
+
+
+    
 
     
     render() {

@@ -74,6 +74,7 @@ io.on('connection', socket => {
     if (!isValidMove(null)) {
       // handle
     }
+    socket.emit('updateAfterMove', arg)
     // emit to both players
   })
   socket.on('disconnect', () => {

@@ -7,16 +7,27 @@ export class Game extends React.Component {
 
     constructor(props) {
         super();
+        
         this.state = {
             boardState: new BoardState(props.isWhite)
         }
         this.update = this.update.bind(this);
+        this.sendMove = this.sendMove.bind(this);
     }
 
     update(board) {
         this.setState({boardState: board});
     }
 
+    sendMove(src_pos, dest_pos) {
+        console.log('supposed to send move', this.props.ws)
+        this.props.ws.emit("playerMove", {
+            src: src_pos,
+            dest: dest_pos,
+          });
+    }
+
+    
     render() {
         let boardSquares = [];
         for (let i = 0; i < 8; i++) {
@@ -25,7 +36,7 @@ export class Game extends React.Component {
                     pos={String(i) + ',' + String(j)} 
                     state={this.state}
                     updateGame={this.update}
-                    socket={this.props.ws}></Square>
+                    sendMove={this.sendMove}></Square>
                     );
             }
         }

@@ -30,7 +30,7 @@ export default function GamePage() {
         })
 
         newSocket.on('disconnect', () => {
-            console.log('we disconnected for free');
+            console.log('we disconnected');
         });
 
         return () => {
@@ -42,7 +42,7 @@ export default function GamePage() {
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket}/> : <p>Waiting for response...</p> }
+            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current}/> : <p>Waiting for response...</p> }
         </>
     )
 }

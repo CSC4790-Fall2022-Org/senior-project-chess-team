@@ -1,23 +1,18 @@
-const {Piece} = require('../piece.js')
+const {Piece} = require('./piece.js');
 
 // Moves will be represented as a string tuple containing row,col
 
-export function pairToMoveStr(x, y) {
+ function pairToMoveStr(x, y) {
     let move_str = String(x) + ',' + String(y);
     return move_str;
 }
 
-export class Pawn extends Piece {
+ class Pawn extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'Pawn';
-        if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png';
-        }
+
     }
 
     // Call this function after a piece is moved
@@ -83,18 +78,13 @@ export class Pawn extends Piece {
     }
 }
 
-export class Rook extends Piece {
+ class Rook extends Piece {
     
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'Rook';
-        if (this.isWhite) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png'
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png';
-        }
+
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
         // up
@@ -158,17 +148,12 @@ export class Rook extends Piece {
     }
 }
 
-export class Knight extends Piece {
+ class Knight extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'Knight';
-        if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png';
-        }
+
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -195,17 +180,12 @@ export class Knight extends Piece {
     
 }
 
-export class Bishop extends Piece {
+ class Bishop extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'Bishop';
-        if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png';
-        }
+
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -269,18 +249,12 @@ export class Bishop extends Piece {
         this.possibleMoves = moves;
     }
 }
-
-export class Queen extends Piece {
+ class Queen extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'Queen';
-        if (this.isWhite) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png'
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png';
-        }
+
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
         // up
@@ -396,17 +370,11 @@ export class Queen extends Piece {
     }
 }
 
-export class King extends Piece {
+class King extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
         this.type = 'King';
-        if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png';
-        }
     }
     
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -429,3 +397,11 @@ export class King extends Piece {
     }
 
 }
+
+exports.pairToMoveStr = pairToMoveStr;
+exports.Pawn = Pawn;
+exports.Rook = Rook;
+exports.Bishop = Bishop;
+exports.Knight = Knight;
+exports.Queen = Queen;
+exports.King = King;

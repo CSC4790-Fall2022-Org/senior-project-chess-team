@@ -1,8 +1,7 @@
-export class Piece {
+ class Piece {
     constructor(isWhite) {
         this.possibleMoves = new Set()
         this.isWhite = isWhite
-        this.imageUrl = null
         this.type = 'none'
     }
 
@@ -18,3 +17,5 @@ export class Piece {
     }
 
 }
+
+exports.Piece = Piece;

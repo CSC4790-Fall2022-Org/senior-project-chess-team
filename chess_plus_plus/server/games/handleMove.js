@@ -7,7 +7,7 @@ function handleMove(arg) {
     board = arg.board
     game_id = arg.game_id
     console.log(move)
-    console.log(board)
+    console.log(board.board[0][0])
 
     if (!board.playerIsWhite) {
         console.log(move)
@@ -15,10 +15,10 @@ function handleMove(arg) {
         console.log(move)
     }
     let playerGame = game.getById(game_id)
-    console.log(game)
-    if (!isValidMove(null)) {
-      return null
-    }
+    console.log(playerGame)
+    // if (!isValidMove(null)) {
+    //   return null
+    // }
 
 
 }

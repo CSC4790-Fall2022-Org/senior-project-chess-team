@@ -1,3 +1,4 @@
+const boardState = require('./boardState.js')
 var activeGames = {}
 
 function Game(gameId, whiteUserId, blackUserId) {
@@ -5,7 +6,9 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
     this.isWhiteTurn = true;
-    this.board = GameBoard();
+    this.whiteBoard = boardState.makeInitialBoard();
+    this.blackBoard = boardState.makeInitialBoard();
+
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
@@ -15,14 +18,19 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.color = id => {
         return id === this.whiteUserId ? 'white' : 'black';
     }
-}
 
-function GameBoard() {
-    this.state = [[0]] // 2d array representing board;
-    this.whiteKingInCheck = false;
-    this.blackKingInCheck = false;
-}
+    function makeMove(isWhite, move) {
+        let board;
+        if (isWhite) {
+            board = this.whiteBoard;
+        }
+        else {
+            board = this.blackBoard;
+        }
 
+        // do the move
+    }
+}
 
 
 const getRandomColor = () => {

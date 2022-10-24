@@ -1,7 +1,10 @@
 import {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
-import {Game} from '../chess/ui/game.js'
+import logo from '../chess/files/Logo.png';
+import scroll from '../chess/files/scroll.png';
+import buttons from '../chess/files/buttons.jpg';
+import './HomePage.css';
 
 function HomePage({setIsLoggedIn}) {
 
@@ -31,14 +34,16 @@ function HomePage({setIsLoggedIn}) {
     }
     return (
         <>
-        <h1>home </h1>
+        <body class ="background"></body>
+        <img src={logo} class="Logo" />
+        <img src={scroll} class="Scroll" />
         <button onClick={pseudoLogout}> logout </button>
         <br />
-        <button onClick={createGame}>Create game</button>
+        <button onClick={createGame} class = "createGame">Create game</button>
         <br />
         <form onSubmit={joinGame} onChange={handleTextAreaChange}>
-            <textarea />
-            <button>Join game</button>
+            <textarea class = "input" />
+            <button class = "joinGame">Join game</button>
         </form>
         </>
     )

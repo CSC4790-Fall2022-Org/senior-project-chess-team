@@ -6,8 +6,8 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
     this.isWhiteTurn = true;
-    this.whiteBoard = boardState.makeInitialBoard();
-    this.blackBoard = boardState.makeInitialBoard();
+    this.whiteBoard = new boardState.BoardState(true);
+    this.blackBoard = new boardState.BoardState(false);
 
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
@@ -19,20 +19,34 @@ function Game(gameId, whiteUserId, blackUserId) {
         return id === this.whiteUserId ? 'white' : 'black';
     }
 
-    function makeMove(isWhite, move) {
+    this.makeMove = (isWhite, move) => {
+        console.log(move)
         let board;
         if (isWhite) {
-            board = this.whiteBoard;
+            this.whiteBoard.movePiece(move.src, move.dest)
+            this.blackBoard.board = rotated(this.whiteBoard.board)
+
+            // make move on white board normally
+            // set black board to be inverted version
         }
         else {
-            board = this.blackBoard;
+            this.blackBoard.movePiece(move.src, move.dest)
+            this.whiteBoard.board = rotated(this.blackBoard.board)
         }
-
         // do the move
     }
 }
 
+const rotated = board => {
+    new_board = []
+    for (let i = 0; i < board.length; i++) {
+        new_board[i] = board[i].slice();
+    }
 
+    new_board.reverse().forEach(function(arr) { arr.reverse })
+    return new_board
+
+}
 const getRandomColor = () => {
     return Math.floor(Math.random() * 2);
 }
@@ -56,3 +70,4 @@ const getById = id => {
 }
 exports.create = createGameRoom;
 exports.getById = getById;
+exports.Game = Game

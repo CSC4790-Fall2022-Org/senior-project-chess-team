@@ -67,11 +67,18 @@ io.on('connection', socket => {
   socket.emit('clientColor', game.color(userName));
 
   socket.on('playerMove', (arg) => {
-    updated_board = handleMove(arg)
-    
+    updated_game = handleMove(arg)
+
+
+    if (JSON.parse(arg).board.playerIsWhite) {
+      socket.emit('updateAfterMove', {'board': updated_game.whiteBoard})
+      socket.broadcast.emit('updateAfterMove', {'board': updated_game.blackBoard})
+    }
+    else {
+      socket.broadcast.emit('updateAfterMove', {'board': updated_game.whiteBoard})
+      socket.emit('updateAfterMove', {'board': updated_game.blackBoard})
+    }
     // ONLY EMIT TO PLAYERS IN THE ROOM. 
-    socket.broadcast.emit('updateAfterMove', updated_board)
-    socket.emit('updateAfterMove', updated_board)
 
   })
   socket.on('disconnect', () => {

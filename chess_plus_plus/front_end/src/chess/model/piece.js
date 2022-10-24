@@ -10,11 +10,5 @@ export class Piece {
         // Template for subclass
     }
 
-    toJSON() {
-        return {
-            isWhite: this.isWhite,
-            type: this.type
-        }
-    }
 
 }

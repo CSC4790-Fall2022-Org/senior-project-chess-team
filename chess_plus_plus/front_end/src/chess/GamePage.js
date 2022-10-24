@@ -29,20 +29,20 @@ export default function GamePage() {
             setColor(color);
         })
 
-        newSocket.on('disconnect', () => {
+        newSocket.on('disconnect', (reason) => {
+            console.log('disconnect because: ',reason)
             console.log('we disconnected');
         });
 
         return () => {
             newSocket.close();
             console.log('why are we here?')
-
         }
         }, [socket, searchParams])
 
     useEffect(() => {
         console.log("game page rerendered")
-    }, [])
+    })
 
     return (
         <>

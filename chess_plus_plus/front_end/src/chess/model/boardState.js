@@ -201,6 +201,12 @@ export class BoardState {
         return false;
     }
 
+
+    updateAllMoves() {
+        console.log("updating all moves on board")
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
+    }
+    
     movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);

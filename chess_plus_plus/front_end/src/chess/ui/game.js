@@ -48,11 +48,14 @@ export class Game extends React.Component {
     }
 
     receievedMove(board) {
-        console.log(board.board.board)
+        console.log(board.board)
         let newBoard = new BoardState(this.props.isWhite)
-        newBoard.blackKingInCheck = board.blackKingInCheck
-        newBoard.whiteKingInCheck = board.whiteKingInCheck
+        newBoard.blackKingInCheck = board.board.blackKingInCheck
+        newBoard.whiteKingInCheck = board.board.whiteKingInCheck
         newBoard.board = this.convertToPieces(board.board.board)
+        console.log('before', newBoard)
+        newBoard.updateAllMoves();
+        console.log('after')
         this.update(newBoard);
     }
     componentDidMount() {
@@ -107,7 +110,6 @@ export class Game extends React.Component {
         let boardSquares = [];
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
-                console.log(this.state.boardState)
                 boardSquares.push(<Square piece={this.state.boardState.board[i][j]} 
                     pos={String(i) + ',' + String(j)} 
                     state={this.state}

@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  frontend:
+    container_name: frontend
+    build: front_end/ # path to frontend Dockerfile
+    ports:
+      - "3000:3000"
+  server:
+    container_name: server
+    build: server/
+    ports:
+      - "5001:5001"

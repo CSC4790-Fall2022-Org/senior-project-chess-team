@@ -5,7 +5,7 @@ const jwtDecode = require('jwt-decode')
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
-const { isValidMove } = require('./games/movement.js')
+const { handleMove } = require('./games/handleMove.js')
 
 
 const app = express()
@@ -64,16 +64,20 @@ io.on('connection', socket => {
     game.addPlayer(userName);
   }
 
-  console.log(game)
-
+  if (!game.addSocketId(userName, socket.id)) {
+    // player connected is not a part of the game. Spectating (currently) not supported, but we don't need to disconnect them.
+  }
 
   socket.emit('clientColor', game.color(userName));
 
-  socket.on('playerMove', () => {
-    if (!isValidMove(null)) {
-      // handle
-    }
-    // emit to both players
+
+  socket.on('playerMove', (arg) => {
+    updated_game = handleMove(arg)
+    console.log(updated_game.whiteUserSocketId)
+    console.log(updated_game.blackUserSocketId)
+
+    io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
+    io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})
   })
   socket.on('disconnect', () => {
     console.log('disconnected')

@@ -1,13 +1,13 @@
-const {Piece} = require('../piece.js')
+const {Piece} = require('./piece.js');
 
 // Moves will be represented as a string tuple containing row,col
 
-export function pairToMoveStr(x, y) {
+function pairToMoveStr(x, y) {
     let move_str = String(x) + ',' + String(y);
     return move_str;
 }
 
-export class Pawn extends Piece {
+class Pawn extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -83,7 +83,7 @@ export class Pawn extends Piece {
     }
 }
 
-export class Rook extends Piece {
+class Rook extends Piece {
     
     constructor(isWhite) {
         super();
@@ -158,7 +158,7 @@ export class Rook extends Piece {
     }
 }
 
-export class Knight extends Piece {
+class Knight extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -195,7 +195,7 @@ export class Knight extends Piece {
     
 }
 
-export class Bishop extends Piece {
+class Bishop extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -270,7 +270,7 @@ export class Bishop extends Piece {
     }
 }
 
-export class Queen extends Piece {
+class Queen extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -396,7 +396,7 @@ export class Queen extends Piece {
     }
 }
 
-export class King extends Piece {
+class King extends Piece {
     constructor(isWhite) {
         super();
         this.isWhite = isWhite;
@@ -429,3 +429,12 @@ export class King extends Piece {
     }
 
 }
+
+
+exports.pairToMoveStr = pairToMoveStr;
+exports.Pawn = Pawn;
+exports.Rook = Rook;
+exports.Bishop = Bishop;
+exports.Knight = Knight;
+exports.Queen = Queen;
+exports.King = King;

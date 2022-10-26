@@ -1,10 +1,10 @@
-import {Pawn} from './pieces/subpieces.js'
-import {Rook} from './pieces/subpieces.js'
-import {Bishop} from './pieces/subpieces.js'
-import {Queen} from './pieces/subpieces.js'
-import {King} from './pieces/subpieces.js'
-import {Knight} from './pieces/subpieces.js'
-import {pairToMoveStr} from './pieces/subpieces.js'
+const {Pawn} = require('./pieces/subpieces.js')
+const {Rook} = require('./pieces/subpieces.js')
+const {Bishop} = require('./pieces/subpieces.js')
+const {Queen} = require('./pieces/subpieces.js')
+const {King} = require('./pieces/subpieces.js')
+const {Knight} = require('./pieces/subpieces.js')
+const {pairToMoveStr} = require('./pieces/subpieces.js')
 
 function makeInitialBoard(playerIsWhite) {
     var initBoard = [];
@@ -179,7 +179,7 @@ function moveSafeFromCheck(board, src, dest, playerIsWhite) {
     return ret
 }
 
-export class BoardState {
+class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
         this.whiteKingInCheck = false;
@@ -201,12 +201,6 @@ export class BoardState {
         return false;
     }
 
-
-    updateAllMoves() {
-        console.log("updating all moves on board")
-        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
-    }
-    
     movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
@@ -288,3 +282,6 @@ export class BoardState {
     }
 
 }
+
+exports.BoardState = BoardState
+exports.makeInitialBoard = makeInitialBoard;

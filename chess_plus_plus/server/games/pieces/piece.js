@@ -1,4 +1,4 @@
-export class Piece {
+class Piece {
     constructor(isWhite) {
         this.possibleMoves = new Set()
         this.isWhite = isWhite
@@ -12,3 +12,5 @@ export class Piece {
 
 
 }
+
+exports.Piece = Piece;

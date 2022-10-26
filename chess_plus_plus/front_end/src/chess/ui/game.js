@@ -15,7 +15,6 @@ export class Game extends React.Component {
         }
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
-        this.makeMove = this.makeMove.bind(this);
         this.receievedMove = this.receievedMove.bind(this);
     }
 
@@ -36,16 +35,6 @@ export class Game extends React.Component {
         }))
     }
 
-    makeMove(move) {
-        console.log("moveing")
-        console.log(this.state.boardState)
-        this.state.boardState.movePiece(move.src, move.dest);
-        console.log("move?")
-
-        console.log('supposed to send move', this.props.ws)
-            console.log(this.state.boardState.board)
-            this.update(this.state.boardState);
-    }
 
     receievedMove(board) {
         console.log(board.board)

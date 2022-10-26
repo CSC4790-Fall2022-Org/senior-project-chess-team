@@ -73,8 +73,8 @@ io.on('connection', socket => {
 
   socket.on('playerMove', (arg) => {
     updated_game = handleMove(arg)
-    console.log(updated_game.whiteUserSocketId)
-    console.log(updated_game.blackUserSocketId)
+    console.log(updated_game.whiteBoard)
+    console.log(updated_game.blackBoard)
 
     io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
     io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})

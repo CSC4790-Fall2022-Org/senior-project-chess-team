@@ -5,7 +5,8 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.gameId = gameId;
     this.whiteUserId = whiteUserId;
     this.blackUserId = blackUserId;
-    this.isWhiteTurn = true;
+    this.whiteUserSocketId = null;
+    this.blackuserSocketId = null;
     this.whiteBoard = new boardState.BoardState(true);
     this.blackBoard = new boardState.BoardState(false);
 
@@ -16,7 +17,13 @@ function Game(gameId, whiteUserId, blackUserId) {
         this.blackUserId = this.blackUserId ?? id;
     }
     this.color = id => {
-        return id === this.whiteUserId ? 'white' : 'black';
+        if (id === this.whiteUserId) {
+            return 'white'
+        }
+        if (id === this.blackUserId) {
+            return 'black';
+        }
+        return 'spectator'
     }
 
     this.makeMove = (isWhite, move) => {
@@ -34,6 +41,18 @@ function Game(gameId, whiteUserId, blackUserId) {
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
         // do the move
+    }
+
+    this.addSocketId = (userName, socketId) => {
+        if (userName === this.whiteUserId) {
+            this.whiteUserSocketId = socketId;
+            return true;
+        }
+        else {
+            this.blackUserSocketId = socketId;    
+            return true;
+        }
+        return false;
     }
 }
 
@@ -54,7 +73,6 @@ const createGameRoom = userId => {
     const gameId = generateGameId();
     const playerIsWhite = getRandomColor();
     let newGame = new Game(gameId, (playerIsWhite) ? userId : null,  (!playerIsWhite) ? userId : null)
-
      // otherId will come when user joins game w/ game id
     activeGames[gameId] = newGame;
     return {'game_id': gameId};

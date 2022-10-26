@@ -64,22 +64,20 @@ io.on('connection', socket => {
     game.addPlayer(userName);
   }
 
+  if (!game.addSocketId(userName, socket.id)) {
+    // player connected is not a part of the game. Spectating (currently) not supported, but we don't need to disconnect them.
+  }
+
   socket.emit('clientColor', game.color(userName));
+
 
   socket.on('playerMove', (arg) => {
     updated_game = handleMove(arg)
+    console.log(updated_game.whiteUserSocketId)
+    console.log(updated_game.blackUserSocketId)
 
-
-    if (JSON.parse(arg).board.playerIsWhite) {
-      socket.emit('updateAfterMove', {'board': updated_game.whiteBoard})
-      socket.broadcast.emit('updateAfterMove', {'board': updated_game.blackBoard})
-    }
-    else {
-      socket.broadcast.emit('updateAfterMove', {'board': updated_game.whiteBoard})
-      socket.emit('updateAfterMove', {'board': updated_game.blackBoard})
-    }
-    // ONLY EMIT TO PLAYERS IN THE ROOM. 
-
+    io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
+    io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})
   })
   socket.on('disconnect', () => {
     console.log('disconnected')

@@ -1,5 +1,4 @@
 const game = require('../games/games')
-const { isValidMove } = require('./movement.js')
 function handleMove(arg) {
     // TODO: add check for player color and if their turn
     arg = JSON.parse(arg)

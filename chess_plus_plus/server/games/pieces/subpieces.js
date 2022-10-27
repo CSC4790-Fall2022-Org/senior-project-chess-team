@@ -8,9 +8,8 @@ function pairToMoveStr(x, y) {
 }
 
 class Pawn extends Piece {
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'Pawn';
         if (this.isWhite === true) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png';
@@ -85,9 +84,8 @@ class Pawn extends Piece {
 
 class Rook extends Piece {
     
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'Rook';
         if (this.isWhite) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png'
@@ -159,9 +157,8 @@ class Rook extends Piece {
 }
 
 class Knight extends Piece {
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'Knight';
         if (this.isWhite === true) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png';
@@ -196,9 +193,8 @@ class Knight extends Piece {
 }
 
 class Bishop extends Piece {
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png';
@@ -271,9 +267,8 @@ class Bishop extends Piece {
 }
 
 class Queen extends Piece {
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'Queen';
         if (this.isWhite) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png'
@@ -397,9 +392,8 @@ class Queen extends Piece {
 }
 
 class King extends Piece {
-    constructor(isWhite) {
-        super();
-        this.isWhite = isWhite;
+    constructor(isWhite, hasMoved) {
+        super(isWhite, hasMoved);
         this.type = 'King';
         if (this.isWhite === true) {
             this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png';
@@ -424,12 +418,48 @@ class King extends Piece {
                 }
             }    
         }
+
+        // Check for the castling
+        if (!this.hasMoved) {
+            // Check for right side castling
+            if (board[7][7] !== null) {
+                if (board[7][7].type === 'Rook') {
+                    if (!board[7][7].hasMoved) {
+                        let canCastle = true;
+                        for (let j = 5; j < 7; j++) {
+                            if (board[7][j] !== null) {
+                                canCastle = false;
+                            }
+                        }
+                        if (canCastle) {
+                            moves.add(pairToMoveStr(7, 6))
+                        }
+                    }
+                }
+            }
+            // Check for left side castling
+            if (board[7][0] !== null) {
+                if (board[7][0].type === 'Rook') {
+                    if (!board[7][0].hasMoved) {
+                        let canCastle = true;
+                        for (let j = 1; j < 4; j++) {
+                            if (board[7][j] !== null) {
+                                canCastle = false;
+                            }
+                        }
+                        if (canCastle) {
+                            moves.add(pairToMoveStr(7, 2))
+                        }
+                    }
+                }
+            }
+        }
+
         this.possibleMoves = moves;
 
     }
 
 }
-
 
 exports.pairToMoveStr = pairToMoveStr;
 exports.Pawn = Pawn;

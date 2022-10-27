@@ -17,6 +17,8 @@ export class Game extends React.Component {
         this.sendMove = this.sendMove.bind(this);
         this.makeMove = this.makeMove.bind(this);
         this.receievedMove = this.receievedMove.bind(this);
+        this.youWin = this.youWin.bind(this);
+        this.youLose = this.youLose.bind(this);
     }
 
     update(board) {
@@ -47,6 +49,18 @@ export class Game extends React.Component {
             this.update(this.state.boardState);
     }
 
+    // TODO: put UI for win and handling win stuff here
+    youWin(board) {
+        this.receievedMove(board)
+        console.log("you win")
+    }
+
+    // TODO: put UI for loss and handling loss stuff here
+    youLose(board) {
+        this.receievedMove(board)
+        console.log("you lose")
+    }
+
     receievedMove(board) {
         console.log(board.board)
         let newBoard = new BoardState(this.props.isWhite)
@@ -62,7 +76,8 @@ export class Game extends React.Component {
         console.log('game mount')
         this.props.ws.on('updateAfterMove', this.receievedMove)
         this.props.ws.on('bob', console.log('bob rec'))
-
+        this.props.ws.on('win', this.youWin)
+        this.props.ws.on('loss', this.youLose)
     }
 
     componentDidUpdate() {
@@ -80,22 +95,22 @@ export class Game extends React.Component {
             for (let j = 0; j < 8; j++) {
                 switch(board[i][j]?.type) {
                     case 'Pawn':
-                        board[i][j] = new Pawn(board[i][j].isWhite)
+                        board[i][j] = new Pawn(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break;
                     case 'Rook':
-                        board[i][j] = new Rook(board[i][j].isWhite)
+                        board[i][j] = new Rook(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'Knight':
-                        board[i][j] = new Knight(board[i][j].isWhite)
+                        board[i][j] = new Knight(board[i][j].isWhite, board[i][j]?.hasMovedd)
                         break
                     case 'Bishop':
-                        board[i][j] = new Bishop(board[i][j].isWhite)
+                        board[i][j] = new Bishop(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'Queen':
-                        board[i][j] = new Queen(board[i][j].isWhite)
+                        board[i][j] = new Queen(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'King':
-                        board[i][j] = new King(board[i][j].isWhite)
+                        board[i][j] = new King(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     default:
                         break

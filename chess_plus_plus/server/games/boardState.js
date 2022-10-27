@@ -95,6 +95,29 @@ function updatePossibleMovesAllPieces(board, playerIsWhite) {
 }
 
 function movePieceHelper(board, src, dest) {
+    // Check for a castling move first
+    // Right Castle
+    if (parseInt(dest[0]) === 7 && parseInt(dest[2]) === 6) {
+        if (parseInt(src[0]) === 7 && parseInt(src[2]) === 4) {
+            if (board[parseInt(src[0])][parseInt(src[2])].type === 'King') {
+                // move rook too
+                let src_piece = board[7][7];
+                board[7][7] = null;
+                board[7][5] = src_piece;
+            }
+        }
+    }
+    // Left Castle
+    if (parseInt(dest[0]) === 7 && parseInt(dest[2]) === 2) {
+        if (parseInt(src[0]) === 7 && parseInt(src[2]) === 4) {
+            if (board[parseInt(src[0])][parseInt(src[2])].type === 'King') {
+                // move rook too
+                let src_piece = board[7][0];
+                board[7][0] = null;
+                board[7][3] = src_piece;
+            }
+        }
+    }
     let src_piece = board[parseInt(src[0])][parseInt(src[2])];
     board[parseInt(src[0])][parseInt(src[2])] = null;
     board[parseInt(dest[0])][parseInt(dest[2])] = src_piece;
@@ -102,6 +125,29 @@ function movePieceHelper(board, src, dest) {
 }
 
 function undoMoveHelper(board, src, dest, dest_piece) {
+    // Check for a castling move first
+    // Right Castle
+    if (parseInt(dest[0]) === 7 && parseInt(dest[2]) === 6) {
+        if (parseInt(src[0]) === 7 && parseInt(src[2]) === 4) {
+            if (board[parseInt(dest[0])][parseInt(dest[2])].type !== null && board[parseInt(dest[0])][parseInt(dest[2])].type === 'King') {
+                // move rook back
+                let rook = board[7][5]
+                board[7][7] = rook;
+                board[7][5] = null
+            }
+        }
+    }
+    // Left Castle
+    if (parseInt(dest[0]) === 7 && parseInt(dest[2]) === 2) {
+        if (parseInt(src[0]) === 7 && parseInt(src[2]) === 4) {
+            if (board[parseInt(dest[0])][parseInt(dest[2])].type !== null && board[parseInt(dest[0])][parseInt(dest[2])].type === 'King') {
+                // move rook back
+                let rook = board[7][3]
+                board[7][0] = rook;
+                board[7][3] = null;
+            }
+        }
+    }
     board[parseInt(src[0])][parseInt(src[2])] = board[parseInt(dest[0])][parseInt(dest[2])];
     board[parseInt(dest[0])][parseInt(dest[2])] = dest_piece;
     return board;
@@ -203,10 +249,10 @@ class BoardState {
 
     movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
+        this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         this.postMoveCheckUpdate();
-        console.log(this.whiteKingInCheck + " " + this.blackKingInCheck);
         return true;
     }
 

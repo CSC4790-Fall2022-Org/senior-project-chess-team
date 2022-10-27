@@ -250,7 +250,6 @@ class BoardState {
     movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
         this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
-        console.log("piece moved update hasmoved:")
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         this.postMoveCheckUpdate();

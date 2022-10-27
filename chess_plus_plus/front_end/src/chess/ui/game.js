@@ -80,7 +80,6 @@ export class Game extends React.Component {
             for (let j = 0; j < 8; j++) {
                 switch(board[i][j]?.type) {
                     case 'Pawn':
-                        console.log("has moved", board[i][j]?.hasMoved);
                         board[i][j] = new Pawn(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break;
                     case 'Rook':

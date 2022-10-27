@@ -2,12 +2,12 @@ const {Piece} = require('./piece.js');
 
 // Moves will be represented as a string tuple containing row,col
 
- function pairToMoveStr(x, y) {
+function pairToMoveStr(x, y) {
     let move_str = String(x) + ',' + String(y);
     return move_str;
 }
 
- class Pawn extends Piece {
+class Pawn extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
         this.type = 'Pawn';
@@ -82,7 +82,7 @@ const {Piece} = require('./piece.js');
     }
 }
 
- class Rook extends Piece {
+class Rook extends Piece {
     
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
@@ -156,7 +156,7 @@ const {Piece} = require('./piece.js');
     }
 }
 
- class Knight extends Piece {
+class Knight extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
         this.type = 'Knight';
@@ -192,7 +192,7 @@ const {Piece} = require('./piece.js');
     
 }
 
- class Bishop extends Piece {
+class Bishop extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
         this.type = 'Bishop';
@@ -266,7 +266,7 @@ const {Piece} = require('./piece.js');
     }
 }
 
- class Queen extends Piece {
+class Queen extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
         this.type = 'Queen';
@@ -391,7 +391,7 @@ const {Piece} = require('./piece.js');
     }
 }
 
- class King extends Piece {
+class King extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
         this.type = 'King';

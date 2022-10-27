@@ -72,9 +72,24 @@ io.on('connection', socket => {
 
 
   socket.on('playerMove', (arg) => {
-    updated_game = handleMove(arg)
+    updated_game_info = handleMove(arg)
+    updated_game = updated_game_info[0]
+    check_mate_status = updated_game_info[1]
     console.log(updated_game.whiteUserSocketId)
     console.log(updated_game.blackUserSocketId)
+    console.log("Checkmate status:", check_mate_status)
+
+    // If Check-Mate, handle this
+    if (check_mate_status !== 'X') {
+      if (check_mate_status === 'W') {
+        io.to(updated_game.whiteUserSocketId).emit('win', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('loss', {'board': updated_game.blackBoard})
+      }
+      else {
+        io.to(updated_game.whiteUserSocketId).emit('loss', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('win', {'board': updated_game.blackBoard})
+      }
+    }
 
     io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
     io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})

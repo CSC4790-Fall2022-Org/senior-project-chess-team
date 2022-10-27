@@ -1,4 +1,5 @@
 const game = require('../games/games')
+// Return a tuple with second element indicating check-mate status
 function handleMove(arg) {
     // TODO: add check for player color and if their turn
     arg = JSON.parse(arg)
@@ -13,7 +14,12 @@ function handleMove(arg) {
 
     playerGame.makeMove(board.playerIsWhite, move)
 
-    return playerGame
+    // Check for Checkmate
+    if (playerGame.opponentInCheckMate(board.playerIsWhite)) {
+        return board.playerIsWhite ? [playerGame, 'W'] : [playerGame, 'B']
+    }
+
+    return [playerGame, 'X']
 }
 
 

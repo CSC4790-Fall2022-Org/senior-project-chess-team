@@ -32,6 +32,8 @@ function Game(gameId, whiteUserId, blackUserId) {
         if (isWhite) {
             this.whiteBoard.movePiece(move.src, move.dest)
             console.log("Bruh")
+            this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
+            this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
             this.blackBoard.board = rotated(this.whiteBoard.board)
 
             // make move on white board normally
@@ -40,9 +42,25 @@ function Game(gameId, whiteUserId, blackUserId) {
         else {
             this.blackBoard.movePiece(move.src, move.dest)
             console.log("Bruh")
+            this.whiteBoard.blackKingInCheck = this.blackBoard.blackKingInCheck
+            this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
         // do the move
+    }
+
+    this.opponentInCheckMate = (isWhite) => {
+        let board = isWhite ? this.blackBoard : this.whiteBoard;
+        // First check for check to save time
+        console.log("white check status:", board.whiteKingInCheck)
+        console.log("black check status:", board.blackKingInCheck)
+        if (isWhite ? board.blackKingInCheck : board.whiteKingInCheck) {
+            // Then check for subset of check (checkmate) when they cant move
+            if (!board.playerCanMove()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     this.addSocketId = (userName, socketId) => {

@@ -30,18 +30,26 @@ function Game(gameId, whiteUserId, blackUserId) {
         console.log(move)
         let board;
         if (isWhite) {
-            this.whiteBoard.movePiece(move.src, move.dest)
-            console.log("Bruh")
+            if (!this.whiteBoard.canMovePiece(move.src, move.dest)) {
+                console.log("can move on frontend but not server... huh")
+            }
+            else {
+                this.whiteBoard.movePiece(move.src, move.dest)
+            }
+
             this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
             this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
             this.blackBoard.board = rotated(this.whiteBoard.board)
-
             // make move on white board normally
             // set black board to be inverted version
         }
         else {
-            this.blackBoard.movePiece(move.src, move.dest)
-            console.log("Bruh")
+            if (!this.blackBoard.canMovePiece(move.src, move.dest)) {
+                console.log("can move on frontend but not server... huh")
+            }
+            else {
+                this.blackBoard.movePiece(move.src, move.dest)
+            }
             this.whiteBoard.blackKingInCheck = this.blackBoard.blackKingInCheck
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)

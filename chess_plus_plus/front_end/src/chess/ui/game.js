@@ -80,22 +80,23 @@ export class Game extends React.Component {
             for (let j = 0; j < 8; j++) {
                 switch(board[i][j]?.type) {
                     case 'Pawn':
-                        board[i][j] = new Pawn(board[i][j].isWhite)
+                        console.log("has moved", board[i][j]?.hasMoved);
+                        board[i][j] = new Pawn(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break;
                     case 'Rook':
-                        board[i][j] = new Rook(board[i][j].isWhite)
+                        board[i][j] = new Rook(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'Knight':
-                        board[i][j] = new Knight(board[i][j].isWhite)
+                        board[i][j] = new Knight(board[i][j].isWhite, board[i][j]?.hasMovedd)
                         break
                     case 'Bishop':
-                        board[i][j] = new Bishop(board[i][j].isWhite)
+                        board[i][j] = new Bishop(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'Queen':
-                        board[i][j] = new Queen(board[i][j].isWhite)
+                        board[i][j] = new Queen(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     case 'King':
-                        board[i][j] = new King(board[i][j].isWhite)
+                        board[i][j] = new King(board[i][j].isWhite, board[i][j]?.hasMoved)
                         break
                     default:
                         break

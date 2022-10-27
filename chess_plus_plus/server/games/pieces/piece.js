@@ -4,6 +4,7 @@ class Piece {
         this.isWhite = isWhite
         this.imageUrl = null
         this.type = 'none'
+        this.hasMoved = false;
     }
 
     updatePossibleMoves() {

@@ -31,6 +31,7 @@ function Game(gameId, whiteUserId, blackUserId) {
         let board;
         if (isWhite) {
             this.whiteBoard.movePiece(move.src, move.dest)
+            console.log("Bruh")
             this.blackBoard.board = rotated(this.whiteBoard.board)
 
             // make move on white board normally
@@ -38,6 +39,7 @@ function Game(gameId, whiteUserId, blackUserId) {
         }
         else {
             this.blackBoard.movePiece(move.src, move.dest)
+            console.log("Bruh")
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
         // do the move

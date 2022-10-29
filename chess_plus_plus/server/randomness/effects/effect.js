@@ -1,0 +1,3 @@
+/*
+This file provides the general class for an effect to be iherited from.
+*/

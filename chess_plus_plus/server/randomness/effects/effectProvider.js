@@ -1,0 +1,3 @@
+/*
+This file randomly selects an effect from its collection of effects.
+*/

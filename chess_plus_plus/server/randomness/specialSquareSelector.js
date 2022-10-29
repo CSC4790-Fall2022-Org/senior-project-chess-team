@@ -1,0 +1,3 @@
+/*
+This file selects a square on board to designate as special.
+*/

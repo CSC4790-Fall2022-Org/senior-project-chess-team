@@ -72,6 +72,7 @@ io.on('connection', socket => {
 
 
   socket.on('playerMove', (arg) => {
+    console.log(arg)
     updated_game = handleMove(arg)
     console.log(updated_game.whiteBoard)
     console.log(updated_game.blackBoard)

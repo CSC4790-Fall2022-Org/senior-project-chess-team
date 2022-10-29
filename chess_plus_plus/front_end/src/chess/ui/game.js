@@ -65,21 +65,21 @@ export class Game extends React.Component {
 
     sendPromotionMove(pieceType) {
         console.log(pieceType);
-
+        const move = this.state.promotionMove;
         this.setState({promotionMove: null})
         console.log(this.state)
-        // this.props.ws.emit(
-        //     "promotion",
-        //     JSON.stringify({
-        //         game_id: this.props.id,
-        //         move: {
-        //             src: move.src_pos,
-        //             dest: move.dest_pos,
-        //         },
-        //         board: this.state.boardState,
-        //         promotionPiece: pieceType
-        //     })
-        // );
+        this.props.ws.emit(
+            "promotion",
+            JSON.stringify({
+                game_id: this.props.id,
+                move: {
+                    src: move.src_pos,
+                    dest: move.dest_pos,
+                },
+                board: this.state.boardState,
+                promotionPiece: pieceType
+            })
+        );
     }
 
     componentDidMount() {

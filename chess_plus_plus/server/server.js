@@ -72,13 +72,14 @@ io.on('connection', socket => {
 
 
   socket.on('playerMove', (arg) => {
-    console.log(arg)
     updated_game = handleMove(arg)
-    console.log(updated_game.whiteBoard)
-    console.log(updated_game.blackBoard)
 
     io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
     io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})
+  })
+
+  socket.on('promotion', arg => {
+    console.log(arg)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')

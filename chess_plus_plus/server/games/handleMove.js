@@ -7,7 +7,6 @@ function handleMove(arg) {
     board = arg.board
     game_id = arg.game_id
     // console.log(move)
-    console.log(board.board[0][0])
 
     let playerGame = game.getById(game_id)
 

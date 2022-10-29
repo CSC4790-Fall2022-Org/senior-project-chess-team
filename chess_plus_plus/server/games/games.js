@@ -27,7 +27,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.makeMove = (isWhite, move) => {
-        console.log(move)
         let board;
         if (isWhite) {
             this.whiteBoard.movePiece(move.src, move.dest)
@@ -37,12 +36,23 @@ function Game(gameId, whiteUserId, blackUserId) {
             // set black board to be inverted version
         }
         else {
+
             this.blackBoard.movePiece(move.src, move.dest)
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
         // do the move
     }
 
+    this.promotePawn = (isWhite, pieceType, squareCoords) => {
+        if (isWhite) {
+            this.whiteBoard.promotePawn(pieceType, squareCoords)
+            this.blackBoard.board = rotated(this.whiteBoard.board)
+        }
+        else {
+            this.blackBoard.promotePawn(pieceType, squareCoords)
+            this.whiteBoard.board = rotated(this.blackBoard.board)
+        }
+    }
     this.addSocketId = (userName, socketId) => {
         if (userName === this.whiteUserId) {
             this.whiteUserSocketId = socketId;

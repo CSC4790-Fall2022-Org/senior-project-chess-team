@@ -6,6 +6,7 @@ const jwtDecode = require('jwt-decode')
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
+const { handlePromotionMove } = require('./games/handlePromotionMove.js')
 
 
 const app = express()
@@ -72,14 +73,14 @@ io.on('connection', socket => {
 
 
   socket.on('playerMove', (arg) => {
+    console.log('someone moved')
     updated_game = handleMove(arg)
-
-    io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
-    io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})
+    updatePlayers(updated_game)
   })
 
   socket.on('promotion', arg => {
-    console.log(arg)
+    updated_game = handlePromotionMove(arg)
+    updatePlayers(updated_game)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')
@@ -101,4 +102,10 @@ function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+const updatePlayers = game => {
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard})
+  
 }

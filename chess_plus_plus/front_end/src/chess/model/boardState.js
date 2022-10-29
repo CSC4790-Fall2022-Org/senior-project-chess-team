@@ -334,4 +334,11 @@ export class BoardState {
         return false;
     }
 
+    isPawnPromotion(src, dest) {
+        console.log('CHecking if pawn promotion')
+        console.log(this.board[parseInt(src[0])][parseInt(src[2])])
+        return this.board[parseInt(src[0])][parseInt(src[2])].type === 'Pawn'
+        && parseInt(dest[0]) === 0
+    }
+
 }

@@ -225,6 +225,19 @@ function moveSafeFromCheck(board, src, dest, playerIsWhite) {
     return ret
 }
 
+const getPieceOfType = (type, isWhite) => {
+    switch (type) {
+        case 'Knight':
+            return new Knight(isWhite)
+        case 'Rook':
+            return new Rook(isWhite)
+        case 'Bishop':
+            return new Bishop(isWhite)
+        case 'Queen':
+            return new Queen(isWhite)
+    }
+}
+
 class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
@@ -233,6 +246,9 @@ class BoardState {
         this.board = makeInitialBoard(playerIsWhite);
     }
 
+    updateAllMoves() {
+        updatePossibleMovesAllPieces(this.board, this.playerIsWhite)
+    }
     // src and dest are strings
     canMovePiece(src, dest) {
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
@@ -251,9 +267,16 @@ class BoardState {
         this.board = movePieceHelper(this.board, src, dest);
         this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
-        console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         this.postMoveCheckUpdate();
         return true;
+    }
+
+    promotePawn(pieceType, dest) {
+        let destRow = parseInt(dest[0])
+        let destCol = parseInt(dest[2])
+        let newPiece = getPieceOfType(pieceType, this.playerIsWhite)
+
+        this.board[destRow][destCol] = newPiece;
     }
 
     postMoveCheckUpdate() {

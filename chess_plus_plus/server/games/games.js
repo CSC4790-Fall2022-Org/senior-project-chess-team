@@ -27,15 +27,15 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.makeMove = (isWhite, move) => {
-        console.log(move)
         let board;
         if (isWhite) {
-            if (!this.whiteBoard.canMovePiece(move.src, move.dest)) {
-                console.log("can move on frontend but not server... huh")
-            }
-            else {
-                this.whiteBoard.movePiece(move.src, move.dest)
-            }
+            // if (!this.whiteBoard.canMovePiece(move.src, move.dest)) {
+            //     console.log("can move on frontend but not server... huh")
+            // }
+            // else {
+            //     this.whiteBoard.movePiece(move.src, move.dest)
+            // }
+            this.whiteBoard.movePiece(move.src, move.dest)
 
             this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
             this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
@@ -44,19 +44,34 @@ function Game(gameId, whiteUserId, blackUserId) {
             // set black board to be inverted version
         }
         else {
-            if (!this.blackBoard.canMovePiece(move.src, move.dest)) {
-                console.log("can move on frontend but not server... huh")
-            }
-            else {
-                this.blackBoard.movePiece(move.src, move.dest)
-            }
+            // if (!this.blackBoard.canMovePiece(move.src, move.dest)) {
+            //     console.log("can move on frontend but not server... huh")
+            // }
+            // else {
+            //     this.blackBoard.movePiece(move.src, move.dest)
+            // }
+            this.blackBoard.movePiece(move.src, move.dest)
+
             this.whiteBoard.blackKingInCheck = this.blackBoard.blackKingInCheck
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
+        this.updateMovesOnBoards()
         // do the move
     }
 
+    this.promotePawn = (isWhite, pieceType, squareCoords) => {
+        if (isWhite) {
+            this.whiteBoard.promotePawn(pieceType, squareCoords)
+            this.blackBoard.board = rotated(this.whiteBoard.board)
+        }
+        else {
+            this.blackBoard.promotePawn(pieceType, squareCoords)
+            this.whiteBoard.board = rotated(this.blackBoard.board)
+        }
+
+        this.updateMovesOnBoards()
+    }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
         // First check for check to save time
@@ -81,6 +96,11 @@ function Game(gameId, whiteUserId, blackUserId) {
             return true;
         }
         return false;
+    }
+
+    this.updateMovesOnBoards = () => {
+        this.whiteBoard.updateAllMoves()
+        this.blackBoard.updateAllMoves()
     }
 }
 

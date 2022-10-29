@@ -23,60 +23,37 @@ class Pawn extends Piece {
     updatePossibleMoves(i, j, board, playerIsWhite) {
         // up
         var moves = new Set();
-        if (playerIsWhite === this.isWhite) {
-            if (i > 0) {
-                if (board[i - 1][j] === null) {
-                    moves.add(pairToMoveStr(i - 1, j));
-                }
+        if (i > 0) {
+            if (board[i - 1][j] === null) {
+                moves.add(pairToMoveStr(i - 1, j));
             }
-            // check for starting pawn
-            if (i === 6) {
-                if (board[i - 2][j] === null) {
-                    moves.add(pairToMoveStr(i - 2, j));
-                }
-            }
-            // INCLUDE EN PASSANT LATER? how tf we do that
-    
-            // check for capture
-                // top left
-                if (i > 0 && j > 0) {
-                    if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
-                        moves.add(pairToMoveStr(i - 1, j - 1));
-                    }
-                }
-                // top right
-                if (i > 0 && j < board[0].length - 1) {
-                    if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
-                        moves.add(pairToMoveStr(i - 1, j + 1));
-                    }
-                }
         }
-        else {
-            if (i < board.length) {
-                if (board[i + 1][j] === null) {
-                    moves.add(pairToMoveStr(i + 1, j));
-                }
+        // check for starting pawn
+        if (i === 6) {
+            if (board[i - 2][j] === null) {
+                moves.add(pairToMoveStr(i - 2, j));
             }
-            // check for starting pawn
-            if (i === 1) {
-                if (board[i + 2][j] === null) {
-                    moves.add(pairToMoveStr(i + 2, j));
-                }
+        }
+        // INCLUDE EN PASSANT LATER? how tf we do that
+
+        // check for capture
+        // top left
+        if (i > 0 && j > 0) {
+            if (
+                board[i - 1][j - 1] !== null &&
+                this.isWhite !== board[i - 1][j - 1].isWhite
+            ) {
+                moves.add(pairToMoveStr(i - 1, j - 1));
             }
-    
-            // check for capture
-                // top left
-                if (i < board.length - 1 && j > 0) {
-                    if (board[i + 1][j - 1] !== null && (this.isWhite !== board[i + 1][j - 1].isWhite)) {
-                        moves.add(pairToMoveStr(i + 1, j - 1));
-                    }
-                }
-                // top right
-                if (i < board.length - 1 && j < board[0].length - 1) {
-                    if (board[i + 1][j + 1] !== null && (this.isWhite !== board[i + 1][j + 1].isWhite)) {
-                        moves.add(pairToMoveStr(i + 1, j + 1));
-                    }
-                }
+        }
+        // top right
+        if (i > 0 && j < board[0].length - 1) {
+            if (
+                board[i - 1][j + 1] !== null &&
+                this.isWhite !== board[i - 1][j + 1].isWhite
+            ) {
+                moves.add(pairToMoveStr(i - 1, j + 1));
+            }
         }
         this.possibleMoves = moves;
     }

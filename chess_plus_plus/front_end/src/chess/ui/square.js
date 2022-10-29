@@ -15,13 +15,13 @@ export default function Square({piece, pos, state, updateGame, sendMove}) {
       const src_pos = item.id.split("_")[0];
       const dest_pos= pos;
       console.log(src_pos + " to " + dest_pos);
-      const validMove = state.boardState.canMovePiece(src_pos, dest_pos);
+      const validMove = state.boardState.canMovePiece(src_pos, dest_pos)
       if (validMove) {
         sendMove(src_pos, dest_pos)
         console.log("considered valid move")
         // IDEA: Instead of moving/updating, let's send to the backend first.
         // Then, we will wait for the backend to emit the move to both players
-        // That will call the updateGame function (or perhaps, simply sends a board to be rendered)
+        // That sends the boards to be rendered by each player
       }
 
 
@@ -48,30 +48,21 @@ export default function Square({piece, pos, state, updateGame, sendMove}) {
         color = 'rgba(255, 255, 0, .6)';
     }
 
-  if (piece !== null) {
-      return (
-        <div class='square' style={{
-          height: '80px',
-          width: '80px',
-          zIndex: 1,
-          backgroundColor: `${canDrop || isOver ? color : ""}`
-        }}
-         ref={drop}>
-          <Piece piece={piece} pos = {pos} state= {state}></Piece>
-        </div>
-      )
-  }
-  else {
-    return (
-      <div class='square' 
-        style={{
-          height: '80px',
-          width: '80px',
-          zIndex: 1,
-          backgroundColor: `${canDrop || isOver ? color : ""}`
-        }}
+    const pieceWrapperStyle = {
+      height: '80px',
+      width: '80px',
+      zIndex: 1,
+      backgroundColor: `${canDrop || isOver ? color : ""}`
+    }
+
+  return (
+    <div class='square' 
+        style={pieceWrapperStyle}
         ref={drop}>
-      </div>
-    )
-  }
+          {piece !== null && <Piece piece={piece} pos = {pos} state= {state}></Piece>}
+    </div>
+  )
+
 }
+
+

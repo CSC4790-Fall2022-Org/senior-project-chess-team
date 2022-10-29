@@ -1,21 +1,22 @@
-const {Piece} = require('../piece.js')
+const { Piece } = require("../piece.js");
 
 // Moves will be represented as a string tuple containing row,col
 
 export function pairToMoveStr(x, y) {
-    let move_str = String(x) + ',' + String(y);
+    let move_str = String(x) + "," + String(y);
     return move_str;
 }
 
 export class Pawn extends Piece {
     constructor(isWhite, hasMoved) {
         super(isWhite, hasMoved);
-        this.type = 'Pawn';
+        this.type = "Pawn";
         if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png";
         }
     }
 
@@ -23,60 +24,37 @@ export class Pawn extends Piece {
     updatePossibleMoves(i, j, board, playerIsWhite) {
         // up
         var moves = new Set();
-        if (playerIsWhite === this.isWhite) {
-            if (i > 0) {
-                if (board[i - 1][j] === null) {
-                    moves.add(pairToMoveStr(i - 1, j));
-                }
+        if (i > 0) {
+            if (board[i - 1][j] === null) {
+                moves.add(pairToMoveStr(i - 1, j));
             }
-            // check for starting pawn
-            if (i === 6) {
-                if (board[i - 2][j] === null) {
-                    moves.add(pairToMoveStr(i - 2, j));
-                }
-            }
-            // INCLUDE EN PASSANT LATER? how tf we do that
-    
-            // check for capture
-                // top left
-                if (i > 0 && j > 0) {
-                    if (board[i - 1][j - 1] !== null && (this.isWhite !== board[i - 1][j - 1].isWhite)) {
-                        moves.add(pairToMoveStr(i - 1, j - 1));
-                    }
-                }
-                // top right
-                if (i > 0 && j < board[0].length - 1) {
-                    if (board[i - 1][j + 1] !== null && (this.isWhite !== board[i - 1][j + 1].isWhite)) {
-                        moves.add(pairToMoveStr(i - 1, j + 1));
-                    }
-                }
         }
-        else {
-            if (i < board.length) {
-                if (board[i + 1][j] === null) {
-                    moves.add(pairToMoveStr(i + 1, j));
-                }
+        // check for starting pawn
+        if (i === 6) {
+            if (board[i - 2][j] === null) {
+                moves.add(pairToMoveStr(i - 2, j));
             }
-            // check for starting pawn
-            if (i === 1) {
-                if (board[i + 2][j] === null) {
-                    moves.add(pairToMoveStr(i + 2, j));
-                }
+        }
+        // INCLUDE EN PASSANT LATER? how tf we do that
+
+        // check for capture
+        // top left
+        if (i > 0 && j > 0) {
+            if (
+                board[i - 1][j - 1] !== null &&
+                this.isWhite !== board[i - 1][j - 1].isWhite
+            ) {
+                moves.add(pairToMoveStr(i - 1, j - 1));
             }
-    
-            // check for capture
-                // top left
-                if (i < board.length - 1 && j > 0) {
-                    if (board[i + 1][j - 1] !== null && (this.isWhite !== board[i + 1][j - 1].isWhite)) {
-                        moves.add(pairToMoveStr(i + 1, j - 1));
-                    }
-                }
-                // top right
-                if (i < board.length - 1 && j < board[0].length - 1) {
-                    if (board[i + 1][j + 1] !== null && (this.isWhite !== board[i + 1][j + 1].isWhite)) {
-                        moves.add(pairToMoveStr(i + 1, j + 1));
-                    }
-                }
+        }
+        // top right
+        if (i > 0 && j < board[0].length - 1) {
+            if (
+                board[i - 1][j + 1] !== null &&
+                this.isWhite !== board[i - 1][j + 1].isWhite
+            ) {
+                moves.add(pairToMoveStr(i - 1, j + 1));
+            }
         }
         this.possibleMoves = moves;
     }
@@ -88,10 +66,11 @@ export class Rook extends Piece {
         super(isWhite, hasMoved);
         this.type = 'Rook';
         if (this.isWhite) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png'
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -105,53 +84,49 @@ export class Rook extends Piece {
         // }
 
         // up
-        for(let k = i-1; k >= 0; k--){
-            if (board[k][j] === null){
-                moves.add(pairToMoveStr(k,j));
-            }
-            else if(board[k][j].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(k,j));
+        for (let k = i - 1; k >= 0; k--) {
+            if (board[k][j] === null) {
+                moves.add(pairToMoveStr(k, j));
+            } else if (board[k][j].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(k, j));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // down
-        for(let k = i+1; k <= 7; k++){
-            if (board[k][j] === null){
-                moves.add(pairToMoveStr(k,j));
-            }
-            else if(board[k][j].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(k,j));
+        for (let k = i + 1; k <= 7; k++) {
+            if (board[k][j] === null) {
+                moves.add(pairToMoveStr(k, j));
+            } else if (board[k][j].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(k, j));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // left
-        for(let k = j-1; k >= 0; k--){
-            if (board[i][k] === null){
-                moves.add(pairToMoveStr(i,k));
-            }
-            else if(board[i][k].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(i,k));
+        for (let k = j - 1; k >= 0; k--) {
+            if (board[i][k] === null) {
+                moves.add(pairToMoveStr(i, k));
+            } else if (board[i][k].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(i, k));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // right
-        for(let k = j+1; k <= 7; k++){
-            if (board[i][k] === null){
-                moves.add(pairToMoveStr(i,k));
-            }
-            else if(board[i][k].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(i,k));
+        for (let k = j + 1; k <= 7; k++) {
+            if (board[i][k] === null) {
+                moves.add(pairToMoveStr(i, k));
+            } else if (board[i][k].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(i, k));
                 break;
-            }else{
+            } else {
                 break;
             }
-        }   
+        }
         this.possibleMoves = moves;
     }
 }
@@ -161,35 +136,35 @@ export class Knight extends Piece {
         super(isWhite, hasMoved);
         this.type = 'Knight';
         if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png";
         }
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
         var moves = new Set();
 
-        let X = [ 2, 1, -1, -2, -2, -1, 1, 2 ];
-        let Y = [ 1, 2, 2, 1, -1, -2, -2, -1 ];
+        let X = [2, 1, -1, -2, -2, -1, 1, 2];
+        let Y = [1, 2, 2, 1, -1, -2, -2, -1];
 
         for (let k = 0; k < 8; k++) {
             let x = i + X[k];
             let y = j + Y[k];
 
             if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
-                if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
-                    moves.add(pairToMoveStr(x, y));   
+                if (
+                    board[x][y] === null ||
+                    this.isWhite !== board[x][y].isWhite
+                ) {
+                    moves.add(pairToMoveStr(x, y));
                 }
-            }    
+            }
         }
         this.possibleMoves = moves;
-
     }
-    
-
-    
 }
 
 export class Bishop extends Piece {
@@ -197,10 +172,11 @@ export class Bishop extends Piece {
         super(isWhite, hasMoved);
         this.type = 'Bishop';
         if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png";
         }
     }
 
@@ -208,15 +184,17 @@ export class Bishop extends Piece {
         let moves = new Set();
 
         // top right
-        for (let r = i - 1, c = j + 1; r >= 0 && c < board[0].length; r--, c++) {
+        for (
+            let r = i - 1, c = j + 1;
+            r >= 0 && c < board[0].length;
+            r--, c++
+        ) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -225,12 +203,10 @@ export class Bishop extends Piece {
         for (let r = i - 1, c = j - 1; r >= 0 && c >= 0; r--, c--) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -239,26 +215,26 @@ export class Bishop extends Piece {
         for (let r = i + 1, c = j - 1; r < board.length && c >= 0; r++, c--) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
 
         // btm right TODO
-        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
+        for (
+            let r = i + 1, c = j + 1;
+            r < board.length && c < board[0].length;
+            r++, c++
+        ) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -271,10 +247,11 @@ export class Queen extends Piece {
         super(isWhite, hasMoved);
         this.type = 'Queen';
         if (this.isWhite) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png'
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -283,15 +260,17 @@ export class Queen extends Piece {
 
         // BISHOP CODE
         // top right
-        for (let r = i - 1, c = j + 1; r >= 0 && c < board[0].length; r--, c++) {
+        for (
+            let r = i - 1, c = j + 1;
+            r >= 0 && c < board[0].length;
+            r--, c++
+        ) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -300,12 +279,10 @@ export class Queen extends Piece {
         for (let r = i - 1, c = j - 1; r >= 0 && c >= 0; r--, c--) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
@@ -314,79 +291,75 @@ export class Queen extends Piece {
         for (let r = i + 1, c = j - 1; r < board.length && c >= 0; r++, c--) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
 
         // btm right TODO
-        for (let r = i + 1, c = j + 1; r < board.length && c < board[0].length; r++, c++) {
+        for (
+            let r = i + 1, c = j + 1;
+            r < board.length && c < board[0].length;
+            r++, c++
+        ) {
             if (board[r][c] === null) {
                 moves.add(pairToMoveStr(r, c));
-            }
-            else if (board[r][c].isWhite !== this.isWhite) {
+            } else if (board[r][c].isWhite !== this.isWhite) {
                 moves.add(pairToMoveStr(r, c));
                 break;
-            }
-            else {
+            } else {
                 break;
             }
         }
-        
+
         // ROOK CODE
         // up
-        for(let k = i-1; k >= 0; k--){
-            if (board[k][j] === null){
-                moves.add(pairToMoveStr(k,j));
-            }
-            else if(board[k][j].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(k,j));
+        for (let k = i - 1; k >= 0; k--) {
+            if (board[k][j] === null) {
+                moves.add(pairToMoveStr(k, j));
+            } else if (board[k][j].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(k, j));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // down
-        for(let k = i+1; k <= 7; k++){
-            if (board[k][j] === null){
-                moves.add(pairToMoveStr(k,j));
-            }
-            else if(board[k][j].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(k,j));
+        for (let k = i + 1; k <= 7; k++) {
+            if (board[k][j] === null) {
+                moves.add(pairToMoveStr(k, j));
+            } else if (board[k][j].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(k, j));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // left
-        for(let k = j-1; k >= 0; k--){
-            if (board[i][k] === null){
-                moves.add(pairToMoveStr(i,k));
-            }
-            else if(board[i][k].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(i,k));
+        for (let k = j - 1; k >= 0; k--) {
+            if (board[i][k] === null) {
+                moves.add(pairToMoveStr(i, k));
+            } else if (board[i][k].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(i, k));
                 break;
-            }else{
+            } else {
                 break;
             }
         }
         // right
-        for(let k = j+1; k <= 7; k++){
-            if (board[i][k] === null){
-                moves.add(pairToMoveStr(i,k));
-            }
-            else if(board[i][k].isWhite !== this.isWhite){
-                moves.add(pairToMoveStr(i,k));
+        for (let k = j + 1; k <= 7; k++) {
+            if (board[i][k] === null) {
+                moves.add(pairToMoveStr(i, k));
+            } else if (board[i][k].isWhite !== this.isWhite) {
+                moves.add(pairToMoveStr(i, k));
                 break;
-            }else{
+            } else {
                 break;
             }
-        }   
+        }
         this.possibleMoves = moves;
     }
 }
@@ -396,27 +369,31 @@ export class King extends Piece {
         super(isWhite, hasMoved);
         this.type = 'King';
         if (this.isWhite === true) {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png';
-        }
-        else {
-            this.imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png';
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png";
+        } else {
+            this.imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png";
         }
     }
-    
+
     updatePossibleMoves(i, j, board, playerIsWhite) {
         var moves = new Set();
 
-        let X = [ 1, 1, 1, 0, 0, -1, -1, -1 ];
-        let Y = [ -1, 0, 1, -1, 1, -1, 0, 1 ];
+        let X = [1, 1, 1, 0, 0, -1, -1, -1];
+        let Y = [-1, 0, 1, -1, 1, -1, 0, 1];
         for (let k = 0; k < 8; k++) {
             let x = i + X[k];
             let y = j + Y[k];
 
             if (x >= 0 && x < board.length && y >= 0 && y < board.length) {
-                if (board[x][y] === null || (this.isWhite !== board[x][y].isWhite)) {
+                if (
+                    board[x][y] === null ||
+                    this.isWhite !== board[x][y].isWhite
+                ) {
                     moves.add(pairToMoveStr(x, y));
                 }
-            }    
+            }
         }
 
         // Check for the castling
@@ -456,7 +433,5 @@ export class King extends Piece {
         }
 
         this.possibleMoves = moves;
-
     }
-
 }

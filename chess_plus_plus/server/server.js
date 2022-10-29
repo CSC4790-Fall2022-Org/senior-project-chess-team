@@ -6,6 +6,7 @@ const jwtDecode = require('jwt-decode')
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
+const { handlePromotionMove } = require('./games/handlePromotionMove.js')
 
 
 const app = express()
@@ -75,8 +76,8 @@ io.on('connection', socket => {
     updated_game_info = handleMove(arg)
     updated_game = updated_game_info[0]
     check_mate_status = updated_game_info[1]
-    console.log(updated_game.whiteUserSocketId)
-    console.log(updated_game.blackUserSocketId)
+    updatePlayers(updated_game)
+    
     console.log("Checkmate status:", check_mate_status)
 
     // If Check-Mate, handle this
@@ -91,8 +92,12 @@ io.on('connection', socket => {
       }
     }
 
-    io.to(updated_game.whiteUserSocketId).emit('updateAfterMove', {'board': updated_game.whiteBoard})
-    io.to(updated_game.blackUserSocketId).emit('updateAfterMove', {'board': updated_game.blackBoard})
+    updatePlayers(updated_game)
+  })
+
+  socket.on('promotion', arg => {
+    updated_game = handlePromotionMove(arg)
+    updatePlayers(updated_game)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')
@@ -114,4 +119,9 @@ function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+const updatePlayers = game => {
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard})
 }

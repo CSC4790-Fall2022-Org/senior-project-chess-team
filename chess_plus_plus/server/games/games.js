@@ -10,7 +10,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.whiteBoard = new boardState.BoardState(true);
     this.blackBoard = new boardState.BoardState(false);
 
-
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
         this.whiteUserId = this.whiteUserId ?? id;
@@ -27,7 +26,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.makeMove = (isWhite, move) => {
-        console.log(move)
+        // console.log(move)
         let board;
         if (isWhite) {
             this.whiteBoard.movePiece(move.src, move.dest)

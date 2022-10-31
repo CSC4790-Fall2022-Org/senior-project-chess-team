@@ -7,7 +7,7 @@ import { Bishop, Knight, Pawn, Rook, Queen, King } from '../model/pieces/subpiec
 export class Game extends React.Component {
 
     constructor(props) {
-        console.log("constructor for game")
+        // console.log("constructor for game")
         super();
         
         this.state = {
@@ -15,17 +15,16 @@ export class Game extends React.Component {
         }
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
-        this.makeMove = this.makeMove.bind(this);
         this.receievedMove = this.receievedMove.bind(this);
     }
 
     update(board) {
-        console.log('update', board)
+        // console.log('update', board)
         this.setState({boardState: board, });
     }
-
+    // *****
     sendMove(src_pos, dest_pos) {
-        console.log('made move')
+        // console.log('made move')
         this.props.ws.emit('playerMove', JSON.stringify({
             game_id: this.props.id, 
             move: {
@@ -36,40 +35,29 @@ export class Game extends React.Component {
         }))
     }
 
-    makeMove(move) {
-        console.log("moveing")
-        console.log(this.state.boardState)
-        this.state.boardState.movePiece(move.src, move.dest);
-        console.log("move?")
-
-        console.log('supposed to send move', this.props.ws)
-            console.log(this.state.boardState.board)
-            this.update(this.state.boardState);
-    }
-
     receievedMove(board) {
-        console.log(board.board)
+        // console.log(board.board)
         let newBoard = new BoardState(this.props.isWhite)
         newBoard.blackKingInCheck = board.board.blackKingInCheck
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck
         newBoard.board = this.convertToPieces(board.board.board)
-        console.log('before', newBoard)
+        // console.log('before', newBoard)
         newBoard.updateAllMoves();
-        console.log('after')
+        // console.log('after')
         this.update(newBoard);
     }
     componentDidMount() {
-        console.log('game mount')
+        // console.log('game mount')
         this.props.ws.on('updateAfterMove', this.receievedMove)
-        this.props.ws.on('bob', console.log('bob rec'))
+        // this.props.ws.on('bob', console.log('bob rec'))
 
     }
 
     componentDidUpdate() {
-        console.log('game updated')
+        // console.log('game updated')
     }
     componentWillUnmount() {
-        console.log('game will unmount')
+        // console.log('game will unmount')
         this.props.ws.removeListener("updateAfterMove")
         this.props.ws.removeListener('bob')
     }

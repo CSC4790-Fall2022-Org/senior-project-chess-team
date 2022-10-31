@@ -185,10 +185,16 @@ export class BoardState {
         this.whiteKingInCheck = false;
         this.blackKingInCheck = false;
         this.board = makeInitialBoard(playerIsWhite);
+        this.isWhiteTurn = true;
     }
 
     // src and dest are strings
     canMovePiece(src, dest) {
+        if(this.board[parseInt(src[0])][parseInt(src[2])].isWhite && this.board.playerIsWhite){
+            this.isWhiteTurn = true;
+        }else{
+            this.isWhiteTurn = false;
+        }
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
@@ -284,6 +290,7 @@ export class BoardState {
         }
         // Handle win here or where the function returns false to
         console.log("checkmate!!");
+        // alert("checkmate");
         return false;
     }
 

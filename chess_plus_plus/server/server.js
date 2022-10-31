@@ -92,7 +92,6 @@ io.on('connection', socket => {
       }
     }
 
-    updatePlayers(updated_game)
   })
 
   socket.on('promotion', arg => {
@@ -122,7 +121,9 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  const randomSquare = getRandomSquare();
+  let nextPlayerBoardState = game.whiteBoard;
+  const randomSquare = getRandomSquare(nextPlayerBoardState); // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
+  // TODO: Player who is the opposite turn needs to get it with the board "inverted"
   io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': randomSquare})
   io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': randomSquare})
 }

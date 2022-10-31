@@ -77,6 +77,8 @@ export class Game extends React.Component {
         this.update(newBoard);
     }
 
+    
+
     sendPromotionMove(pieceType) {
         console.log(pieceType);
         const move = this.state.promotionMove;

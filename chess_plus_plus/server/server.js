@@ -1,12 +1,12 @@
 const express = require('express')
 const http = require('http')
 const jwtDecode = require('jwt-decode')
-// const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 
 const app = express()
@@ -122,6 +122,7 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard})
+  const randomSquare = getRandomSquare();
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': randomSquare})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': randomSquare})
 }

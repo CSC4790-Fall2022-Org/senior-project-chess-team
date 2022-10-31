@@ -65,20 +65,8 @@ export class Game extends React.Component {
         console.log("you lose")
     }
 
-    // TODO: put UI for win and handling win stuff here
-    youWin(board) {
-        this.receievedMove(board)
-        console.log("you win")
-    }
-
-    // TODO: put UI for loss and handling loss stuff here
-    youLose(board) {
-        this.receievedMove(board)
-        console.log("you lose")
-    }
-
     receievedMove(board) {
-        console.log(board.board);
+        console.log(board);
         let newBoard = new BoardState(this.props.isWhite);
         newBoard.blackKingInCheck = board.board.blackKingInCheck;
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;
@@ -121,7 +109,6 @@ export class Game extends React.Component {
     componentWillUnmount() {
         console.log("game will unmount");
         this.props.ws.removeListener("updateAfterMove");
-        this.props.ws.removeListener("bob");
     }
 
     convertToPieces(board) {

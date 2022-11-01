@@ -204,17 +204,22 @@ class BoardState {
         If they are equal, don't return yet. Let the next if statement block run.
         */
         // remove the next 5 lines with new code
-        if(this.board[parseInt(src[0])][parseInt(src[2])].isWhite && this.isWhiteTurn){
-            this.isWhiteTurn = true;
+        /*
+        if(this.playerIsWhite === this.isWhiteTurn){
+            return true;
         }else{
-            this.isWhiteTurn = false;
-        }
+            return false;
+        }*/
 
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
                 if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
-                    return true;
+                    if(this.playerIsWhite === this.isWhiteTurn){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
                 return false;
             }

@@ -190,16 +190,15 @@ export class BoardState {
 
     // src and dest are strings
     canMovePiece(src, dest) {
-        if(this.board[parseInt(src[0])][parseInt(src[2])].isWhite && this.board.playerIsWhite){
-            this.isWhiteTurn = true;
-        }else{
-            this.isWhiteTurn = false;
-        }
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
                 if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
-                    return true;
+                    if(this.playerIsWhite === this.isWhiteTurn){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
                 return false;
             }

@@ -22,13 +22,21 @@ function handleMove(arg) {
     of these if statements to check if canMovePiece returns false.
     */
     if(arg.playerIsWhite){
-        playerGame.whiteBoard.canMovePiece(src, dest)
+        if(playerGame.whiteBoard.canMovePiece(src, dest)){
+            playerGame.makeMove(board.playerIsWhite, move)
+        }else{
+            return null;
+        }
     }else{
-        playerGame.blackBoard.canMovePiece(src, dest)
+        if(playerGame.blackBoard.canMovePiece(src, dest)){
+            playerGame.makeMove(board.playerIsWhite, move)
+        }else{
+            return null;
+        }
     }
     
 
-    playerGame.makeMove(board.playerIsWhite, move)
+    // playerGame.makeMove(board.playerIsWhite, move)
 
     // set the state if true -> false
     // set the state if false -> true ??

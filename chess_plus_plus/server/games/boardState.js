@@ -210,6 +210,7 @@ class BoardState {
         }else{
             return false;
         }*/
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
 
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {

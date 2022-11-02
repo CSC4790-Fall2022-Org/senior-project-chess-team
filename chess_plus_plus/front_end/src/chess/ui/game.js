@@ -40,6 +40,7 @@ export class Game extends React.Component {
         let newBoard = new BoardState(this.props.isWhite)
         newBoard.blackKingInCheck = board.board.blackKingInCheck
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck
+        newBoard.isWhiteTurn = board.board.isWhiteTurn;
         newBoard.board = this.convertToPieces(board.board.board)
         // console.log('before', newBoard)
         newBoard.updateAllMoves();

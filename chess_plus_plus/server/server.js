@@ -76,6 +76,10 @@ io.on('connection', socket => {
     updated_game_info = handleMove(arg)
     updated_game = updated_game_info[0]
     check_mate_status = updated_game_info[1]
+    if (updated_game === null) {
+      // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
+      return
+    }
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)

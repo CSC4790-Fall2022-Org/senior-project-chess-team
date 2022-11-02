@@ -73,6 +73,10 @@ io.on('connection', socket => {
 
   socket.on('playerMove', (arg) => {
     updated_game = handleMove(arg)
+    if (updated_game === null) {
+      // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
+      return
+    }
     console.log(updated_game.whiteUserSocketId)
     console.log(updated_game.blackUserSocketId)
 

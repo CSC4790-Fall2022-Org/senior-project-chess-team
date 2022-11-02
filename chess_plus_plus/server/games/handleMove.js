@@ -21,7 +21,7 @@ function handleMove(arg) {
     So, the if statement part is fine, but we are going to need another if statement inside 
     of these if statements to check if canMovePiece returns false.
     */
-    if(arg.playerIsWhite){
+    if(arg.board.playerIsWhite){
         if(playerGame.whiteBoard.canMovePiece(src, dest)){
             playerGame.makeMove(board.playerIsWhite, move)
         }else{

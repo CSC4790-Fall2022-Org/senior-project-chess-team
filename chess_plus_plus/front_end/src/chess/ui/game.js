@@ -54,28 +54,27 @@ export class Game extends React.Component {
         );
     }
 
-    // TODO: put UI for win and handling win stuff here
-    youWin(board) {
-        this.receievedMove(board)
-        console.log("you win")
-    }
-
     // TODO: put UI for loss and handling loss stuff here
     youLose(board) {
         this.receievedMove(board)
-        console.log("you lose")
+        window.alert("You lose");
+        // var ask = window.confirm("You lose, Ok to play again.");
+        // if (ask) {
+        //     window.alert("Come on, now");
+    
+        //     window.location.href = "http://localhost:3000/";
+        // }
     }
 
     // TODO: put UI for win and handling win stuff here
     youWin(board) {
         this.receievedMove(board)
-        console.log("you win")
-    }
-
-    // TODO: put UI for loss and handling loss stuff here
-    youLose(board) {
-        this.receievedMove(board)
-        console.log("you lose")
+        var ask = window.confirm("You win, Ok to play again.");
+        if (ask) {
+            window.alert("Beat him again.");
+    
+            window.location.href = "http://localhost:3000/";
+        }
     }
 
     receievedMove(board) {

@@ -8,9 +8,29 @@ import './HomePage.css';
 
 function HomePage({setIsLoggedIn}) {
 
+    const [text, setText] = useState('');
+    const navigate = useNavigate();
     const pseudoLogout = () => {
         setIsLoggedIn(false);
-        localStorage.removeItem('oauth');
+        localStorage.removeItem('id_token');
+    }
+
+    const createGame = async () => {
+        const response = await createGameRoom();
+        if (response.ok) {
+            const json = await response.json();
+            const game_id = json.game_id;
+
+            navigate(`/game?id=${game_id}`);
+        }
+    }
+
+    const joinGame = () => {
+        navigate(`/game?id=${text}`);
+    }
+
+    const handleTextAreaChange = t => {
+        setText(t.target.value);
     }
     return (
         <>

@@ -1,0 +1,22 @@
+.background{
+    opacity:0.8;
+    background-color:#ccc;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:1000;
+}
+.banner{
+    background-color: aquamarine;
+    top: 0px;
+    right: 0px;
+    left:0px;
+}
+.BannerLogo{
+    width: 20%;
+    height: 20%;
+    position: relative;
+    left: 80%;
+}

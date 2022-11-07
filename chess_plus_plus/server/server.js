@@ -1,11 +1,12 @@
 const express = require('express')
 const http = require('http')
 const jwtDecode = require('jwt-decode')
-// const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
-const { isValidMove } = require('./games/movement.js')
+const { handleMove } = require('./games/handleMove.js')
+const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 
 const app = express()
@@ -64,16 +65,42 @@ io.on('connection', socket => {
     game.addPlayer(userName);
   }
 
-  console.log(game)
-
+  if (!game.addSocketId(userName, socket.id)) {
+    // player connected is not a part of the game. Spectating (currently) not supported, but we don't need to disconnect them.
+  }
 
   socket.emit('clientColor', game.color(userName));
 
-  socket.on('playerMove', () => {
-    if (!isValidMove(null)) {
-      // handle
+
+  socket.on('playerMove', (arg) => {
+    updated_game_info = handleMove(arg)
+    updated_game = updated_game_info[0]
+    check_mate_status = updated_game_info[1]
+    if (updated_game === null) {
+      // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
+      return
     }
-    // emit to both players
+    updatePlayers(updated_game)
+    
+    console.log("Checkmate status:", check_mate_status)
+
+    // If Check-Mate, handle this
+    if (check_mate_status !== 'X') {
+      if (check_mate_status === 'W') {
+        io.to(updated_game.whiteUserSocketId).emit('win', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('loss', {'board': updated_game.blackBoard})
+      }
+      else {
+        io.to(updated_game.whiteUserSocketId).emit('loss', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('win', {'board': updated_game.blackBoard})
+      }
+    }
+
+  })
+
+  socket.on('promotion', arg => {
+    updated_game = handlePromotionMove(arg)
+    updatePlayers(updated_game)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')
@@ -95,4 +122,21 @@ function sleep(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+const updatePlayers = game => {
+  const nextTurn = game.whiteBoard.isWhiteTurn;
+  let nextPlayerBoardState = nextTurn ? game.whiteBoard : game.blackBoard
+  const randomSquare = getRandomSquare(nextPlayerBoardState);
+  const squareForOtherPlayer = invertPosition(randomSquare)
+ // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
+  // TODO: Player who is the opposite turn needs to get it with the board "inverted"
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': nextTurn ? randomSquare : squareForOtherPlayer})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': nextTurn ? squareForOtherPlayer : randomSquare})
+}
+
+const invertPosition = (position) => {
+  const row = parseInt(position[0])
+  const col = parseInt(position[2])
+  return `${7-row},${col}`
 }

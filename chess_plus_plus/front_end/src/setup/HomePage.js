@@ -1,6 +1,10 @@
-import { useSearchParams } from "react-router-dom";
-import {Game} from '../chess/ui/game.js'
-import Banner from '../chess/ui/banner.js'
+import {useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import { createGameRoom } from "../api/gameRoom.js";
+import logo from '../chess/files/Logo.png';
+import scroll from '../chess/files/scroll.png';
+import banner from '../chess/ui/banner.js';
+import './HomePage.css';
 
 function HomePage({setIsLoggedIn}) {
 
@@ -10,9 +14,19 @@ function HomePage({setIsLoggedIn}) {
     }
     return (
         <>
-        <h1>home </h1>
+        <div class = "overlay">
+        <body></body>
+        <img src={logo} class="Logo" />
+        <img src={scroll} class="Scroll" />
         <button onClick={pseudoLogout}> logout </button>
-        <Game isWhite={false}></Game>
+        <br />
+        <button onClick={createGame} class = "createGame">Create game</button>
+        <br />
+        <form onSubmit={joinGame} onChange={handleTextAreaChange}>
+            <textarea class = "input" />
+            <button class = "joinGame">Join game</button>
+        </form>
+        </div>
         </>
     )
 }

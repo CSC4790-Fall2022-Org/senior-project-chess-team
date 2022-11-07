@@ -1,12 +1,12 @@
 const express = require('express')
 const http = require('http')
 const jwtDecode = require('jwt-decode')
-// const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 
 const app = express()
@@ -96,7 +96,6 @@ io.on('connection', socket => {
       }
     }
 
-    updatePlayers(updated_game)
   })
 
   socket.on('promotion', arg => {
@@ -126,6 +125,18 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard})
+  const nextTurn = game.whiteBoard.isWhiteTurn;
+  let nextPlayerBoardState = nextTurn ? game.whiteBoard : game.blackBoard
+  const randomSquare = getRandomSquare(nextPlayerBoardState);
+  const squareForOtherPlayer = invertPosition(randomSquare)
+ // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
+  // TODO: Player who is the opposite turn needs to get it with the board "inverted"
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': nextTurn ? randomSquare : squareForOtherPlayer})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': nextTurn ? squareForOtherPlayer : randomSquare})
+}
+
+const invertPosition = (position) => {
+  const row = parseInt(position[0])
+  const col = parseInt(position[2])
+  return `${7-row},${col}`
 }

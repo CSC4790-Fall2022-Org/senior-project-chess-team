@@ -83,6 +83,8 @@ io.on('connection', socket => {
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)
+    
+    updatePlayers(updated_game)
 
     // If Check-Mate, handle this
     if (check_mate_status !== 'X') {

@@ -58,13 +58,25 @@ export class Game extends React.Component {
     // TODO: put UI for loss and handling loss stuff here
     youLose(board) {
         this.receievedMove(board)
-        window.alert("You lose");
-        // var ask = window.confirm("You lose, Ok to play again.");
-        // if (ask) {
-        //     window.alert("Come on, now");
+        // console.log("you lose")
+        // window.alert("You lose");
+        var ask = window.confirm("You lose, Ok to play again.");
+        if (ask) {
+            window.alert("Come on, now");
     
-        //     window.location.href = "http://localhost:3000/";
-        // }
+            window.location.href = "http://localhost:3000/";
+        }
+    }
+    youWin(board) {
+        this.receievedMove(board)
+        // console.log("you lose")
+        // window.alert("You lose");
+        var ask = window.confirm("You win, Ok to play again.");
+        if (ask) {
+            window.alert("bye");
+    
+            window.location.href = "http://localhost:3000/";
+        }
     }
 
     receievedMove(board) {
@@ -115,6 +127,9 @@ export class Game extends React.Component {
     componentWillUnmount() {
         //console.log("game will unmount");
         this.props.ws.removeListener("updateAfterMove");
+        this.props.ws.removeListener("bob");
+        this.props.ws.removeListener("win");
+        this.props.ws.removeListener("lose");
     }
 
     convertToPieces(board) {

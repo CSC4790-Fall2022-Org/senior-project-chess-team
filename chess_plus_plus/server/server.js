@@ -125,9 +125,18 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  let nextPlayerBoardState = game.whiteBoard;
-  const randomSquare = getRandomSquare(nextPlayerBoardState); // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
+  const nextTurn = game.whiteBoard.isWhiteTurn;
+  let nextPlayerBoardState = nextTurn ? game.whiteBoard : game.blackBoard
+  const randomSquare = getRandomSquare(nextPlayerBoardState);
+  const squareForOtherPlayer = invertPosition(randomSquare)
+ // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
   // TODO: Player who is the opposite turn needs to get it with the board "inverted"
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': randomSquare})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': randomSquare})
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': nextTurn ? randomSquare : squareForOtherPlayer})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': nextTurn ? squareForOtherPlayer : randomSquare})
+}
+
+const invertPosition = (position) => {
+  const row = parseInt(position[0])
+  const col = parseInt(position[2])
+  return `${7-row},${col}`
 }

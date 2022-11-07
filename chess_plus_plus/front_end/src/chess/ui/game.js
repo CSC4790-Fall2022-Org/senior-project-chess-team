@@ -11,6 +11,7 @@ import {
     King,
 } from "../model/pieces/subpieces.js";
 import Promotion from "./promotion.js";
+
 export class Game extends React.Component {
     constructor(props) {
         // console.log("constructor for game")

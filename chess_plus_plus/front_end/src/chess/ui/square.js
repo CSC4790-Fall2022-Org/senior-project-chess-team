@@ -49,7 +49,6 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
         color = 'rgba(255, 255, 0, .6)';
     }
 
-    console.log(pos, specialProperty)
 
     let backgroundUrl = getBackgroundUrlForProperty(specialProperty)
     const opacity = specialProperty === null ? 0 : 0.4
@@ -81,7 +80,6 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
 }
 
 const getBackgroundUrlForProperty = (property) => {
-  console.log(property, Effects.SPECIAL_SQUARE)
   switch (property) {
     case Effects.SPECIAL_SQUARE:
       return specialSquareBackground

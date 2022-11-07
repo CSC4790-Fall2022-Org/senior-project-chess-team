@@ -20,6 +20,7 @@ export class Game extends React.Component {
         this.state = {
             boardState: new BoardState(props.isWhite),
             promotionMove: null,
+            specialSquares: {}
         };
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
@@ -73,10 +74,11 @@ export class Game extends React.Component {
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;
         newBoard.isWhiteTurn = board.board.isWhiteTurn;
         newBoard.board = this.convertToPieces(board.board.board);
-        console.log("before", newBoard);
         newBoard.updateAllMoves();
-        console.log("after");
         this.update(newBoard);
+        let newSpecialSquares = {}
+        newSpecialSquares[board.specialSquare] = Effects.SPECIAL_SQUARE
+        this.setState({specialSquares: newSpecialSquares})
     }
 
     
@@ -149,13 +151,17 @@ export class Game extends React.Component {
         let boardSquares = [];
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
+                let squareProperty = null
+                if (`${i},${j}` in this.state.specialSquares) {
+                    squareProperty = this.state.specialSquares[`${i},${j}`]
+                }
                 boardSquares.push(
                     <Square
                         piece={this.state.boardState.board[i][j]}
                         pos={String(i) + "," + String(j)}
                         state={this.state}
                         sendMove={this.sendMove}
-                        specialProperty={Effects.SPECIAL_SQUARE}
+                        specialProperty={squareProperty}
                     ></Square>
                 );
             }

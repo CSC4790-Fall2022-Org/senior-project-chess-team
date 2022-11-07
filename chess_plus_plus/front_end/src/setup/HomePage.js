@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
 import logo from '../chess/files/Logo.png';
 import scroll from '../chess/files/scroll.png';
-import buttons from '../chess/files/buttons.jpg';
+import banner from '../chess/ui/banner.js';
 import './HomePage.css';
 
 function HomePage({setIsLoggedIn}) {
@@ -34,7 +34,8 @@ function HomePage({setIsLoggedIn}) {
     }
     return (
         <>
-        <body class ="background"></body>
+        <div class = "overlay">
+        <body></body>
         <img src={logo} class="Logo" />
         <img src={scroll} class="Scroll" />
         <button onClick={pseudoLogout}> logout </button>
@@ -45,6 +46,7 @@ function HomePage({setIsLoggedIn}) {
             <textarea class = "input" />
             <button class = "joinGame">Join game</button>
         </form>
+        </div>
         </>
     )
 }

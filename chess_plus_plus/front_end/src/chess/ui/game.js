@@ -11,6 +11,7 @@ import {
     King,
 } from "../model/pieces/subpieces.js";
 import Promotion from "./promotion.js";
+import Effects from "./effects.js";
 export class Game extends React.Component {
     constructor(props) {
         // console.log("constructor for game")
@@ -164,8 +165,8 @@ export class Game extends React.Component {
                         piece={this.state.boardState.board[i][j]}
                         pos={String(i) + "," + String(j)}
                         state={this.state}
-                        updateGame={this.update}
                         sendMove={this.sendMove}
+                        specialProperty={Effects.SPECIAL_SQUARE}
                     ></Square>
                 );
             }

@@ -10,7 +10,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.whiteBoard = new boardState.BoardState(true);
     this.blackBoard = new boardState.BoardState(false);
 
-
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
         this.whiteUserId = this.whiteUserId ?? id;

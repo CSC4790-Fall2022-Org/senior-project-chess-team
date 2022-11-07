@@ -244,18 +244,45 @@ class BoardState {
         this.whiteKingInCheck = false;
         this.blackKingInCheck = false;
         this.board = makeInitialBoard(playerIsWhite);
+        this.isWhiteTurn = true;
     }
 
     updateAllMoves() {
         updatePossibleMovesAllPieces(this.board, this.playerIsWhite)
     }
     // src and dest are strings
+    // ********* check color? 
     canMovePiece(src, dest) {
+        // if the piece is white and the board is white
+        // where do i declare the which color or turn of the player?
+
+        // was going to wrap this with other if statments 
+
+        /*
+        We actually do not need color as a parameter because the 'playerIsWhite'
+        takes care of that in this class.
+        So, we simply need to check to see if this.playerIsWhite === this.isWhiteTurn.
+        If they are not equal, return false.
+        If they are equal, don't return yet. Let the next if statement block run.
+        */
+        // remove the next 5 lines with new code
+        /*
+        if(this.playerIsWhite === this.isWhiteTurn){
+            return true;
+        }else{
+            return false;
+        }*/
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
+
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
                 if (moveSafeFromCheck(this.board, src, dest, this.playerIsWhite)) {
-                    return true;
+                    if(this.playerIsWhite === this.isWhiteTurn){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
                 return false;
             }

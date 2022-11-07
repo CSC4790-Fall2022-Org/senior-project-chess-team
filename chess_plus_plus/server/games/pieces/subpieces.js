@@ -36,23 +36,46 @@ class Pawn extends Piece {
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
 
-        // check for capture
-        // top left
-        if (i > 0 && j > 0) {
-            if (
-                board[i - 1][j - 1] !== null &&
-                this.isWhite !== board[i - 1][j - 1].isWhite
-            ) {
-                moves.add(pairToMoveStr(i - 1, j - 1));
+        // check for capture my piece
+        if (playerIsWhite === this.isWhite) {
+            // top left
+            if (i > 0 && j > 0) {
+                if (
+                    board[i - 1][j - 1] !== null &&
+                    this.isWhite !== board[i - 1][j - 1].isWhite
+                ) {
+                    moves.add(pairToMoveStr(i - 1, j - 1));
+                }
+            }
+            // top right
+            if (i > 0 && j < board[0].length - 1) {
+                if (
+                    board[i - 1][j + 1] !== null &&
+                    this.isWhite !== board[i - 1][j + 1].isWhite
+                ) {
+                    moves.add(pairToMoveStr(i - 1, j + 1));
+                }
             }
         }
-        // top right
-        if (i > 0 && j < board[0].length - 1) {
-            if (
-                board[i - 1][j + 1] !== null &&
-                this.isWhite !== board[i - 1][j + 1].isWhite
-            ) {
-                moves.add(pairToMoveStr(i - 1, j + 1));
+        // check for capture opponent piece
+        else {
+            // bottom left
+            if (i < board.length && j > 0) {
+                if (
+                    board[i + 1][j - 1] !== null &&
+                    this.isWhite !== board[i + 1][j - 1].isWhite
+                ) {
+                    moves.add(pairToMoveStr(i + 1, j - 1));
+                }
+            }
+            // bottom right
+            if (i < board.length && j < board[0].length - 1) {
+                if (
+                    board[i + 1][j + 1] !== null &&
+                    this.isWhite !== board[i + 1][j + 1].isWhite
+                ) {
+                    moves.add(pairToMoveStr(i + 1, j + 1));
+                }
             }
         }
         this.possibleMoves = moves;

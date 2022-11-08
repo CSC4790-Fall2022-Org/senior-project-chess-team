@@ -129,8 +129,16 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': game.whiteSpecialSquare})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': game.blackSpecialSquare})
+  // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
+  // although it appears this is already done
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
+   'specialSquare': game.whiteSpecialSquare,
+   'cards': game.whiteCards
+  })
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
+   'specialSquare': game.blackSpecialSquare,
+   'cards': game.blackCards
+  })
 }
 
 

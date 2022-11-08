@@ -84,7 +84,6 @@ io.on('connection', socket => {
     
     console.log("Checkmate status:", check_mate_status)
     
-    updatePlayers(updated_game)
 
     // If Check-Mate, handle this
     if (check_mate_status !== 'X') {
@@ -127,14 +126,10 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  const nextTurn = game.whiteBoard.isWhiteTurn;
-  let nextPlayerBoardState = nextTurn ? game.whiteBoard : game.blackBoard
-  const randomSquare = getRandomSquare(nextPlayerBoardState);
-  const squareForOtherPlayer = invertPosition(randomSquare)
- // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
-  // TODO: Player who is the opposite turn needs to get it with the board "inverted"
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': nextTurn ? randomSquare : squareForOtherPlayer})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': nextTurn ? squareForOtherPlayer : randomSquare})
+
+  console.log(game)
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': game.whiteSpecialSquare})
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': game.blackSpecialSquare})
 }
 
 const invertPosition = (position) => {
@@ -142,3 +137,4 @@ const invertPosition = (position) => {
   const col = parseInt(position[2])
   return `${7-row},${col}`
 }
+

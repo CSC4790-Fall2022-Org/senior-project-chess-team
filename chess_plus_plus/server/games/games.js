@@ -1,4 +1,6 @@
 const boardState = require('./boardState.js')
+const { getRandomSquare } = require('../randomness/squareSelector')
+
 var activeGames = {}
 
 function Game(gameId, whiteUserId, blackUserId) {
@@ -9,6 +11,8 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.blackuserSocketId = null;
     this.whiteBoard = new boardState.BoardState(true);
     this.blackBoard = new boardState.BoardState(false);
+    this.whiteSpecialSquare = null
+    this.blackSpecialSquare = null
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
@@ -55,7 +59,9 @@ function Game(gameId, whiteUserId, blackUserId) {
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
+        this.flipTurns()
         this.updateMovesOnBoards()
+        this.generateRandomSquare()
         // do the move
     }
 
@@ -70,6 +76,11 @@ function Game(gameId, whiteUserId, blackUserId) {
         }
 
         this.updateMovesOnBoards()
+    }
+
+    this.flipTurns = () => {
+        this.whiteBoard.isWhiteTurn = !this.whiteBoard.isWhiteTurn
+        this.blackBoard.isWhiteTurn = !this.blackBoard.isWhiteTurn
     }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
@@ -100,6 +111,17 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.updateMovesOnBoards = () => {
         this.whiteBoard.updateAllMoves()
         this.blackBoard.updateAllMoves()
+    }
+
+    this.generateRandomSquare = () => {
+        const nextTurn = this.whiteBoard.isWhiteTurn;
+        let nextPlayerBoardState = nextTurn ? this.whiteBoard : this.blackBoard
+        const randomSquare = getRandomSquare(nextPlayerBoardState);
+        const squareForOtherPlayer = invertPosition(randomSquare);
+
+        this.whiteSpecialSquare = nextTurn ? randomSquare : squareForOtherPlayer
+        this.blackSpecialSquare = nextTurn ? squareForOtherPlayer : randomSquare
+
     }
 }
 
@@ -133,6 +155,13 @@ const generateGameId = () => {
 const getById = id => {
     return activeGames[id] ?? null;
 }
+
+const invertPosition = (position) => {
+    const row = parseInt(position[0])
+    const col = parseInt(position[2])
+    return `${7-row},${col}`
+}
+
 exports.create = createGameRoom;
 exports.getById = getById;
 exports.Game = Game

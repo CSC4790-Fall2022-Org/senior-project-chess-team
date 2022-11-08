@@ -1,5 +1,6 @@
 const boardState = require('./boardState.js')
 const { getRandomSquare } = require('../randomness/squareSelector')
+const cardProvider = require('../randomness/cardProvider')
 
 var activeGames = {}
 
@@ -13,6 +14,9 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.blackBoard = new boardState.BoardState(false);
     this.whiteSpecialSquare = null
     this.blackSpecialSquare = null
+    this.whiteCards = []
+    this.blackCards = []
+    this.cardProvider = new CardProvider()
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
@@ -30,7 +34,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.makeMove = (isWhite, move) => {
-        let board;
         if (isWhite) {
             // if (!this.whiteBoard.canMovePiece(move.src, move.dest)) {
             //     console.log("can move on frontend but not server... huh")
@@ -39,10 +42,10 @@ function Game(gameId, whiteUserId, blackUserId) {
             //     this.whiteBoard.movePiece(move.src, move.dest)
             // }
             this.whiteBoard.movePiece(move.src, move.dest)
-
             this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
             this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
             this.blackBoard.board = rotated(this.whiteBoard.board)
+
             // make move on white board normally
             // set black board to be inverted version
         }
@@ -59,6 +62,7 @@ function Game(gameId, whiteUserId, blackUserId) {
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
+        this.handleMoveToSpecialSquare(isWhite, move.dest)
         this.flipTurns()
         this.updateMovesOnBoards()
         this.generateRandomSquare()
@@ -81,6 +85,24 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.flipTurns = () => {
         this.whiteBoard.isWhiteTurn = !this.whiteBoard.isWhiteTurn
         this.blackBoard.isWhiteTurn = !this.blackBoard.isWhiteTurn
+    }
+
+    this.checkIfMoveToSpecialSquare = (isWhite, square) => {
+        return square === (isWhite ? this.whiteSpecialSquare : this.blackSpecialSquare)
+    }
+
+    this.handleMoveToSpecialSquare = (isWhite, square) => {
+        if (!this.checkIfMoveToSpecialSquare(isWhite, square)) {
+            return 
+        }
+        const newCard = this.cardProvider.getCard();
+        console.log(newCard)
+        if (isWhite) {
+            this.whiteCards.push(newCard)
+        }
+        else {
+            this.blackCards.push(newCard)
+        }
     }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
@@ -148,6 +170,7 @@ const createGameRoom = userId => {
 }
 
 const { v4: uuidv4 } = require('uuid');
+const { CardProvider } = require('../randomness/cardProvider.js');
 const generateGameId = () => {
     return uuidv4(); // make this shorter
 }

@@ -80,6 +80,9 @@ io.on('connection', socket => {
       // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
       return
     }
+    console.log(updated_game.whiteCards)
+    console.log(updated_game.blackCards)
+
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)
@@ -126,15 +129,18 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-
-  console.log(game)
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': game.whiteSpecialSquare})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': game.blackSpecialSquare})
+  // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
+  // although it appears this is already done
+  // TODO: figure out how to tell player that opponent has cards.
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
+   'specialSquare': game.whiteSpecialSquare,
+   'cards': game.whiteCards
+  })
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
+   'specialSquare': game.blackSpecialSquare,
+   'cards': game.blackCards
+  })
 }
 
-const invertPosition = (position) => {
-  const row = parseInt(position[0])
-  const col = parseInt(position[2])
-  return `${7-row},${col}`
-}
+
 

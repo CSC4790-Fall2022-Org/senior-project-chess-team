@@ -80,6 +80,9 @@ io.on('connection', socket => {
       // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
       return
     }
+    console.log(updated_game.whiteCards)
+    console.log(updated_game.blackCards)
+
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)

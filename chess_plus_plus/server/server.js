@@ -131,6 +131,7 @@ function sleep(ms) {
 const updatePlayers = game => {
   // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
   // although it appears this is already done
+  // TODO: figure out how to tell player that opponent has cards.
   io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
    'specialSquare': game.whiteSpecialSquare,
    'cards': game.whiteCards

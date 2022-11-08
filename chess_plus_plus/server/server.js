@@ -126,15 +126,9 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-
-  console.log(game)
   io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': game.whiteSpecialSquare})
   io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': game.blackSpecialSquare})
 }
 
-const invertPosition = (position) => {
-  const row = parseInt(position[0])
-  const col = parseInt(position[2])
-  return `${7-row},${col}`
-}
+
 

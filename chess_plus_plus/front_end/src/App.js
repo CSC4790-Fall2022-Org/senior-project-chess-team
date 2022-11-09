@@ -3,7 +3,6 @@ import React, { useEffect, useState  } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
 import RealHomePage from './setup/RealHomePage';
-
 import { Route, Routes, Navigate } from 'react-router-dom';
 import GamePage from './chess/GamePage';
 

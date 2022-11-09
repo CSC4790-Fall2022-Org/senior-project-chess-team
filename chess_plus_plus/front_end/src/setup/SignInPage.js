@@ -95,9 +95,11 @@ function SignInPage({ setIsLoggedIn }) {
         <>
         <div class = "background">
         <div class = "banner">
-            <img src={logo} class="BannerLogo" />
+            <img src={logo} class="BannerLogoCorner" />
         </div>
-        <button onClick={sendUserToCognito}>login</button> {/*style this*/}
+        <div class = "moveButton">
+            <button class = "playNow" onClick={sendUserToCognito} role = "button">Play Now</button> {/*style this*/}
+        </div>        
         </div>
         </>
     );

@@ -1,22 +1,70 @@
 .background{
     opacity:0.8;
-    background-color:#ccc;
+    background: url('../chess/files/back.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
     position:fixed;
     width:100%;
-    height:100%;
+    height:120%;
     top:0px;
     left:0px;
     z-index:1000;
 }
 .banner{
-    background-color: aquamarine;
     top: 0px;
     right: 0px;
     left:0px;
 }
-.BannerLogo{
+.BannerLogoCorner{
     width: 20%;
     height: 20%;
     position: relative;
-    left: 80%;
+    top:10px;
+    right: 2%;
+}
+
+.moveButton{
+    width: 25%;
+    height: 25%;
+    position: relative;
+    top:40px;
+    left: 7%;
+}
+
+
+
+/* CSS */
+.playNow{
+    height: 200px;
+    width: 200px;
+  --b: 3px; 
+  --s: .9em; 
+  --color: #ee940e;  
+  padding: calc(.9em + var(--s)) calc(.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+    
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 30px;
+  border: 50px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.playNow:hover,
+.playNow:focus-visible{
+  --_p: 60px;
+  outline-color: var(--color);
+  outline-offset: .2em;
+}
+
+.playNow:active {
+  background: var(--color);
+  color: rgb(252, 246, 246);
 }

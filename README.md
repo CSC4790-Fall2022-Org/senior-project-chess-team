@@ -1,6 +1,6 @@
 # Required Software
 - Docker (with compose) <--- easiest way
-(if running without Docker)
+<br />(if running without Docker)
 - Node v. 16.17
 - npm (any version should be fine)
 

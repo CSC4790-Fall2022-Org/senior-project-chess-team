@@ -60,7 +60,7 @@ class Pawn extends Piece {
         // check for capture opponent piece
         else {
             // bottom left
-            if (i < board.length && j > 0) {
+            if (i < board.length - 1 && j > 0) {
                 if (
                     board[i + 1][j - 1] !== null &&
                     this.isWhite !== board[i + 1][j - 1].isWhite
@@ -69,7 +69,7 @@ class Pawn extends Piece {
                 }
             }
             // bottom right
-            if (i < board.length && j < board[0].length - 1) {
+            if (i < board.length - 1 && j < board[0].length - 1) {
                 if (
                     board[i + 1][j + 1] !== null &&
                     this.isWhite !== board[i + 1][j + 1].isWhite

@@ -1,11 +1,12 @@
 const express = require('express')
 const http = require('http')
 const jwtDecode = require('jwt-decode')
-// const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
-const { isValidMove } = require('./games/movement.js')
+const { handleMove } = require('./games/handleMove.js')
+const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 
 const app = express()
@@ -64,16 +65,46 @@ io.on('connection', socket => {
     game.addPlayer(userName);
   }
 
-  console.log(game)
-
+  if (!game.addSocketId(userName, socket.id)) {
+    // player connected is not a part of the game. Spectating (currently) not supported, but we don't need to disconnect them.
+  }
 
   socket.emit('clientColor', game.color(userName));
 
-  socket.on('playerMove', () => {
-    if (!isValidMove(null)) {
-      // handle
+
+  socket.on('playerMove', (arg) => {
+    updated_game_info = handleMove(arg)
+    updated_game = updated_game_info[0]
+    check_mate_status = updated_game_info[1]
+    if (updated_game === null) {
+      // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
+      return
     }
-    // emit to both players
+    console.log(updated_game.whiteCards)
+    console.log(updated_game.blackCards)
+
+    updatePlayers(updated_game)
+    
+    console.log("Checkmate status:", check_mate_status)
+    
+
+    // If Check-Mate, handle this
+    if (check_mate_status !== 'X') {
+      if (check_mate_status === 'W') {
+        io.to(updated_game.whiteUserSocketId).emit('win', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('loss', {'board': updated_game.blackBoard})
+      }
+      else {
+        io.to(updated_game.whiteUserSocketId).emit('loss', {'board': updated_game.whiteBoard})
+        io.to(updated_game.blackUserSocketId).emit('win', {'board': updated_game.blackBoard})
+      }
+    }
+
+  })
+
+  socket.on('promotion', arg => {
+    updated_game = handlePromotionMove(arg)
+    updatePlayers(updated_game)
   })
   socket.on('disconnect', () => {
     console.log('disconnected')
@@ -96,3 +127,20 @@ function sleep(ms) {
     setTimeout(resolve, ms);
   });
 }
+
+const updatePlayers = game => {
+  // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
+  // although it appears this is already done
+  // TODO: figure out how to tell player that opponent has cards.
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
+   'specialSquare': game.whiteSpecialSquare,
+   'cards': game.whiteCards
+  })
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
+   'specialSquare': game.blackSpecialSquare,
+   'cards': game.blackCards
+  })
+}
+
+
+

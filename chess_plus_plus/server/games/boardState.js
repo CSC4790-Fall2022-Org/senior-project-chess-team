@@ -1,10 +1,10 @@
-import {Pawn} from './pieces/subpieces.js'
-import {Rook} from './pieces/subpieces.js'
-import {Bishop} from './pieces/subpieces.js'
-import {Queen} from './pieces/subpieces.js'
-import {King} from './pieces/subpieces.js'
-import {Knight} from './pieces/subpieces.js'
-import {pairToMoveStr} from './pieces/subpieces.js'
+const {Pawn} = require('./pieces/subpieces.js')
+const {Rook} = require('./pieces/subpieces.js')
+const {Bishop} = require('./pieces/subpieces.js')
+const {Queen} = require('./pieces/subpieces.js')
+const {King} = require('./pieces/subpieces.js')
+const {Knight} = require('./pieces/subpieces.js')
+const {pairToMoveStr} = require('./pieces/subpieces.js')
 
 function makeInitialBoard(playerIsWhite) {
     var initBoard = [];
@@ -225,7 +225,20 @@ function moveSafeFromCheck(board, src, dest, playerIsWhite) {
     return ret
 }
 
-export class BoardState {
+const getPieceOfType = (type, isWhite) => {
+    switch (type) {
+        case 'Knight':
+            return new Knight(isWhite)
+        case 'Rook':
+            return new Rook(isWhite)
+        case 'Bishop':
+            return new Bishop(isWhite)
+        case 'Queen':
+            return new Queen(isWhite)
+    }
+}
+
+class BoardState {
     constructor(playerIsWhite) {
         this.playerIsWhite = playerIsWhite;
         this.whiteKingInCheck = false;
@@ -234,8 +247,33 @@ export class BoardState {
         this.isWhiteTurn = true;
     }
 
+    updateAllMoves() {
+        updatePossibleMovesAllPieces(this.board, this.playerIsWhite)
+    }
     // src and dest are strings
+    // ********* check color? 
     canMovePiece(src, dest) {
+        // if the piece is white and the board is white
+        // where do i declare the which color or turn of the player?
+
+        // was going to wrap this with other if statments 
+
+        /*
+        We actually do not need color as a parameter because the 'playerIsWhite'
+        takes care of that in this class.
+        So, we simply need to check to see if this.playerIsWhite === this.isWhiteTurn.
+        If they are not equal, return false.
+        If they are equal, don't return yet. Let the next if statement block run.
+        */
+        // remove the next 5 lines with new code
+        /*
+        if(this.playerIsWhite === this.isWhiteTurn){
+            return true;
+        }else{
+            return false;
+        }*/
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
+
         if (this.board[parseInt(dest[0])][parseInt(dest[2])] === null || 
             this.board[parseInt(dest[0])][parseInt(dest[2])].isWhite !== this.board.playerIsWhite) {
             if (this.board[parseInt(src[0])][parseInt(src[2])].possibleMoves.has(dest)) {
@@ -252,20 +290,20 @@ export class BoardState {
         return false;
     }
 
-
-    updateAllMoves() {
-        console.log("updating all moves on board")
-        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
-    }
-    
     movePiece(src, dest) {
         this.board = movePieceHelper(this.board, src, dest);
         this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
-        console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);
         this.postMoveCheckUpdate();
-        console.log(this.whiteKingInCheck + " " + this.blackKingInCheck);
         return true;
+    }
+
+    promotePawn(pieceType, dest) {
+        let destRow = parseInt(dest[0])
+        let destCol = parseInt(dest[2])
+        let newPiece = getPieceOfType(pieceType, this.playerIsWhite)
+
+        this.board[destRow][destCol] = newPiece;
     }
 
     postMoveCheckUpdate() {
@@ -336,15 +374,10 @@ export class BoardState {
         }
         // Handle win here or where the function returns false to
         console.log("checkmate!!");
-        // alert("checkmate");
         return false;
     }
 
-    isPawnPromotion(src, dest) {
-        console.log('CHecking if pawn promotion')
-        console.log(this.board[parseInt(src[0])][parseInt(src[2])])
-        return this.board[parseInt(src[0])][parseInt(src[2])].type === 'Pawn'
-        && parseInt(dest[0]) === 0
-    }
-
 }
+
+exports.BoardState = BoardState
+exports.makeInitialBoard = makeInitialBoard;

@@ -12,11 +12,11 @@ export class Pawn extends Piece {
         super(isWhite, hasMoved);
         this.type = "Pawn";
         if (this.isWhite === true) {
-            this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png";
+            this.imageUrl = 
+                "https://upload.wikimedia.org/wikipedia/commons/3/3c/Pawn_white.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pawn_black.png";
         }
     }
 
@@ -90,10 +90,10 @@ export class Rook extends Piece {
         this.type = 'Rook';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/7/7d/Commoner_Transparent.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/4/49/CommonerB_Transparent.svg";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -160,10 +160,10 @@ export class Knight extends Piece {
         this.type = 'Knight';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/0/09/Chess_Glt45.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/9/97/Chess_Gdt45.svg";
         }
     }
 
@@ -196,10 +196,10 @@ export class Bishop extends Piece {
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/8/8a/Chess_xlt26.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/8/8a/Chess_tile_xx.svg";
         }
     }
 
@@ -271,10 +271,10 @@ export class Queen extends Piece {
         this.type = 'Queen';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/2/20/Chess_Mlt45.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/f/fa/Chess_Mdt45.svg";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -393,10 +393,10 @@ export class King extends Piece {
         this.type = 'King';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/5/50/White_Elephant_Xogos_da_Meiga_chess_icons_family.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/0/0c/Black_Elephant_Xogos_da_Meiga_chess_icons_family.svg";
         }
     }
 

@@ -8,10 +8,13 @@
     margin-inline: auto;    
 }
 
+/* figure out what would be the best pixel size would be and draw the pieces to apply here */
+
 .chessboard {
     width: 640px;
     height: 640px;
-    background-image: url('../files/greenboard.png');
+    border: 3px solid #000;
+    background-image: url('../files/board.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -23,8 +26,8 @@
 
 .square {
     z-index: 0;
-    width: 80px;
-    height: 80px;
+    width: 12.5%;
+    height: 20px;
     justify-content: center;
     align-items: center;
 }
@@ -64,7 +67,7 @@
     margin-left: -100%;
     z-index: 3;
     opacity: 0.5;
-    background-color: 'green';
+    background-image: url('../files/circle.jpeg');
     grid-column: 1;
     grid-row: 1;
 }

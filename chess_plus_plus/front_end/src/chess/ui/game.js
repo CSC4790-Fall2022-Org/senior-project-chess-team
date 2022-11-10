@@ -180,6 +180,12 @@ export class Game extends React.Component {
                  && <Promotion selection={this.sendPromotionMove} boardState={this.state.boardState}/>}
                 <div class="chessboard">{boardSquares}</div>
             </div>
+            // ******* Make background component? *******
+            // <div class="background">
+            //     {
+
+            //     }
+            // </div>
         );
     }
 }

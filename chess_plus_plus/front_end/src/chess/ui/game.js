@@ -24,7 +24,7 @@ export class Game extends React.Component {
         };
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
-        this.receievedMove = this.receievedMove.bind(this);
+        this.receivedMove = this.receivedMove.bind(this);
         this.sendPromotionMove = this.sendPromotionMove.bind(this);
         this.youWin = this.youWin.bind(this);
         this.youLose = this.youLose.bind(this);
@@ -57,7 +57,7 @@ export class Game extends React.Component {
 
     // TODO: put UI for loss and handling loss stuff here
     youLose(board) {
-        this.receievedMove(board)
+        this.receivedMove(board)
         // console.log("you lose")
         // window.alert("You lose");
         var ask = window.confirm("You lose, Ok to play again.");
@@ -68,7 +68,7 @@ export class Game extends React.Component {
         }
     }
     youWin(board) {
-        this.receievedMove(board)
+        this.receivedMove(board)
         // console.log("you lose")
         // window.alert("You lose");
         var ask = window.confirm("You win, Ok to play again.");
@@ -79,8 +79,9 @@ export class Game extends React.Component {
         }
     }
 
-    receievedMove(board) {
+    receivedMove(board) {
         console.log(board);
+        this.props.setCards(board.cards)
         let newBoard = new BoardState(this.props.isWhite);
         newBoard.blackKingInCheck = board.board.blackKingInCheck;
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;
@@ -116,7 +117,7 @@ export class Game extends React.Component {
         
     componentDidMount() {
         console.log("game mount");
-        this.props.ws.on("updateAfterMove", this.receievedMove);
+        this.props.ws.on("updateAfterMove", this.receivedMove);
         this.props.ws.on('win', this.youWin)
         this.props.ws.on('loss', this.youLose)
     }

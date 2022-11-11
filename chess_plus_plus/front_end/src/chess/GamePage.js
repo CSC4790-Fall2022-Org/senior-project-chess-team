@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import serverURL from '../config/serverConfig';
 import {Game} from '../chess/ui/game.js'
+import Hand from '../cards/Hand';
 
 
 
@@ -12,6 +13,7 @@ export default function GamePage() {
     const socket = useRef(null)
     const [searchParams, setSearchParams] = useSearchParams();
     const [color, setColor] = useState('');
+    const [cards, setCards] = useState([])
     const [showOverlay, setShowOverlay] = useState(true);
 
 
@@ -47,7 +49,8 @@ export default function GamePage() {
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
+            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')} setCards={setCards}/> : <p>Waiting for response...</p> }
+            {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} />  }
         </>
     )
 }

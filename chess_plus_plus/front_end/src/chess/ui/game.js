@@ -12,6 +12,7 @@ import {
 } from "../model/pieces/subpieces.js";
 import Promotion from "./promotion.js";
 import Effects from "./effects.js";
+
 export class Game extends React.Component {
     constructor(props) {
         // console.log("constructor for game")
@@ -69,8 +70,6 @@ export class Game extends React.Component {
     }
     youWin(board) {
         this.receievedMove(board)
-        // console.log("you lose")
-        // window.alert("You lose");
         var ask = window.confirm("You win, Ok to play again.");
         if (ask) {
             window.alert("bye");
@@ -187,6 +186,12 @@ export class Game extends React.Component {
                  && <Promotion selection={this.sendPromotionMove} boardState={this.state.boardState}/>}
                 <div class="chessboard">{boardSquares}</div>
             </div>
+            // ******* Make background component? *******
+            // <div class="background">
+            //     {
+
+            //     }
+            // </div>
         );
     }
 }

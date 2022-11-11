@@ -1,10 +1,10 @@
-function Card({name, decsription}) {
+function Card({name, description, id, useCard}) {
     // determine image based on name
     return (
-        <>
-            <p>{name}</p>
-            <p>{decsription}</p>
-        </>
+        <div>
+            <p>{id} {name} {description}</p>
+            <p>{description}</p>
+        </div>
     )
 }
 export default Card

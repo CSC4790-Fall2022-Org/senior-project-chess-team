@@ -98,9 +98,14 @@ function Game(gameId, whiteUserId, blackUserId) {
         const newCard = this.cardProvider.getCard();
         console.log(newCard)
         if (isWhite) {
+            newCard.id = nextId(this.whiteCards)
+            console.log(newCard)
             this.whiteCards.push(newCard)
         }
         else {
+            newCard.id = nextId(this.blackCards)
+            console.log(newCard)
+
             this.blackCards.push(newCard)
         }
     }
@@ -183,6 +188,11 @@ const invertPosition = (position) => {
     const row = parseInt(position[0])
     const col = parseInt(position[2])
     return `${7-row},${col}`
+}
+
+const nextId = (cards) => {
+    console.log('finding next id in', cards)
+    return 1 + Math.max(...cards.map(i => i.id), 0)
 }
 
 exports.create = createGameRoom;

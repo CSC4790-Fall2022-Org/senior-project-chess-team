@@ -22,7 +22,7 @@ function CardProvider() {
             randomNum -= cards[i].frequency
             i += 1
         }
-        return cards[i-1]
+        return {...cards[i-1]}
     }
 
 }

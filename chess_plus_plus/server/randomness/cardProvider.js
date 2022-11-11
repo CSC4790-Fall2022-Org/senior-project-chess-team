@@ -22,6 +22,7 @@ function CardProvider() {
             randomNum -= cards[i].frequency
             i += 1
         }
+        // we need the ... operator so that we make a copy b/c each card instantiated once
         return {...cards[i-1]}
     }
 

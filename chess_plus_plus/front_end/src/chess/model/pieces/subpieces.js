@@ -13,10 +13,10 @@ export class Pawn extends Piece {
         this.type = "Pawn";
         if (this.isWhite === true) {
             this.imageUrl = 
-                "https://upload.wikimedia.org/wikipedia/commons/3/3c/Pawn_white.png";
+                "https://upload.wikimedia.org/wikipedia/commons/3/36/Real_White_Pawn.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/a/a4/Pawn_black.png";
+                "https://upload.wikimedia.org/wikipedia/commons/5/5f/Real_Black_Pawn.png";
         }
     }
 
@@ -90,10 +90,10 @@ export class Rook extends Piece {
         this.type = 'Rook';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/7/7d/Commoner_Transparent.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/d/de/Real_White_Rook.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/4/49/CommonerB_Transparent.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/2/22/Black_Rook.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -196,10 +196,10 @@ export class Bishop extends Piece {
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/8/8a/Chess_xlt26.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/5/5f/White_Bishop.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/8/8a/Chess_tile_xx.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/c/c1/Real_Black_Bishop.png";
         }
     }
 
@@ -271,10 +271,10 @@ export class Queen extends Piece {
         this.type = 'Queen';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/2/20/Chess_Mlt45.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/6/60/Real_real_White_Queen.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/f/fa/Chess_Mdt45.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/2/28/Real_real_real_Black_Queen.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -393,10 +393,10 @@ export class King extends Piece {
         this.type = 'King';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/5/50/White_Elephant_Xogos_da_Meiga_chess_icons_family.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/3/3c/White_King.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/0/0c/Black_Elephant_Xogos_da_Meiga_chess_icons_family.svg";
+                "https://upload.wikimedia.org/wikipedia/commons/9/95/Black_King.png";
         }
     }
 

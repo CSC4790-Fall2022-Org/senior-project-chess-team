@@ -1,4 +1,7 @@
 const boardState = require('./boardState.js')
+const { getRandomSquare } = require('../randomness/squareSelector')
+const cardProvider = require('../randomness/cardProvider')
+
 var activeGames = {}
 
 function Game(gameId, whiteUserId, blackUserId) {
@@ -9,6 +12,11 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.blackuserSocketId = null;
     this.whiteBoard = new boardState.BoardState(true);
     this.blackBoard = new boardState.BoardState(false);
+    this.whiteSpecialSquare = null
+    this.blackSpecialSquare = null
+    this.whiteCards = []
+    this.blackCards = []
+    this.cardProvider = new CardProvider()
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
     this.addPlayer = id => {
@@ -26,7 +34,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.makeMove = (isWhite, move) => {
-        let board;
         if (isWhite) {
             // if (!this.whiteBoard.canMovePiece(move.src, move.dest)) {
             //     console.log("can move on frontend but not server... huh")
@@ -35,10 +42,10 @@ function Game(gameId, whiteUserId, blackUserId) {
             //     this.whiteBoard.movePiece(move.src, move.dest)
             // }
             this.whiteBoard.movePiece(move.src, move.dest)
-
             this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
             this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
             this.blackBoard.board = rotated(this.whiteBoard.board)
+
             // make move on white board normally
             // set black board to be inverted version
         }
@@ -55,7 +62,10 @@ function Game(gameId, whiteUserId, blackUserId) {
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
         }
+        this.handleMoveToSpecialSquare(isWhite, move.dest)
+        this.flipTurns()
         this.updateMovesOnBoards()
+        this.generateRandomSquare()
         // do the move
     }
 
@@ -70,6 +80,29 @@ function Game(gameId, whiteUserId, blackUserId) {
         }
 
         this.updateMovesOnBoards()
+    }
+
+    this.flipTurns = () => {
+        this.whiteBoard.isWhiteTurn = !this.whiteBoard.isWhiteTurn
+        this.blackBoard.isWhiteTurn = !this.blackBoard.isWhiteTurn
+    }
+
+    this.checkIfMoveToSpecialSquare = (isWhite, square) => {
+        return square === (isWhite ? this.whiteSpecialSquare : this.blackSpecialSquare)
+    }
+
+    this.handleMoveToSpecialSquare = (isWhite, square) => {
+        if (!this.checkIfMoveToSpecialSquare(isWhite, square)) {
+            return 
+        }
+        const newCard = this.cardProvider.getCard();
+        console.log(newCard)
+        if (isWhite) {
+            this.whiteCards.push(newCard)
+        }
+        else {
+            this.blackCards.push(newCard)
+        }
     }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
@@ -101,6 +134,17 @@ function Game(gameId, whiteUserId, blackUserId) {
         this.whiteBoard.updateAllMoves()
         this.blackBoard.updateAllMoves()
     }
+
+    this.generateRandomSquare = () => {
+        const nextTurn = this.whiteBoard.isWhiteTurn;
+        let nextPlayerBoardState = nextTurn ? this.whiteBoard : this.blackBoard
+        const randomSquare = getRandomSquare(nextPlayerBoardState);
+        const squareForOtherPlayer = invertPosition(randomSquare);
+
+        this.whiteSpecialSquare = nextTurn ? randomSquare : squareForOtherPlayer
+        this.blackSpecialSquare = nextTurn ? squareForOtherPlayer : randomSquare
+
+    }
 }
 
 const rotated = board => {
@@ -126,6 +170,7 @@ const createGameRoom = userId => {
 }
 
 const { v4: uuidv4 } = require('uuid');
+const { CardProvider } = require('../randomness/cardProvider.js');
 const generateGameId = () => {
     return uuidv4(); // make this shorter
 }
@@ -133,6 +178,13 @@ const generateGameId = () => {
 const getById = id => {
     return activeGames[id] ?? null;
 }
+
+const invertPosition = (position) => {
+    const row = parseInt(position[0])
+    const col = parseInt(position[2])
+    return `${7-row},${col}`
+}
+
 exports.create = createGameRoom;
 exports.getById = getById;
 exports.Game = Game

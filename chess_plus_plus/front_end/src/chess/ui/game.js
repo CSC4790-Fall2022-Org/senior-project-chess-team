@@ -11,6 +11,7 @@ import {
     King,
 } from "../model/pieces/subpieces.js";
 import Promotion from "./promotion.js";
+import Effects from "./effects.js";
 
 export class Game extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ export class Game extends React.Component {
         this.state = {
             boardState: new BoardState(props.isWhite),
             promotionMove: null,
+            specialSquares: {}
         };
         this.update = this.update.bind(this);
         this.sendMove = this.sendMove.bind(this);
@@ -66,30 +68,31 @@ export class Game extends React.Component {
             window.location.href = "http://localhost:3000/";
         }
     }
-
-    // TODO: put UI for win and handling win stuff here
     youWin(board) {
         this.receievedMove(board)
         var ask = window.confirm("You win, Ok to play again.");
         if (ask) {
-            window.alert("Beat him again.");
+            window.alert("bye");
     
             window.location.href = "http://localhost:3000/";
         }
     }
 
     receievedMove(board) {
-        console.log(board.board);
+        console.log(board);
         let newBoard = new BoardState(this.props.isWhite);
         newBoard.blackKingInCheck = board.board.blackKingInCheck;
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;
         newBoard.isWhiteTurn = board.board.isWhiteTurn;
         newBoard.board = this.convertToPieces(board.board.board);
-        console.log("before", newBoard);
         newBoard.updateAllMoves();
-        console.log("after");
         this.update(newBoard);
+        let newSpecialSquares = {}
+        newSpecialSquares[board.specialSquare] = Effects.SPECIAL_SQUARE
+        this.setState({specialSquares: newSpecialSquares})
     }
+
+    
 
     sendPromotionMove(pieceType) {
         console.log(pieceType);
@@ -126,7 +129,6 @@ export class Game extends React.Component {
         this.props.ws.removeListener("bob");
         this.props.ws.removeListener("win");
         this.props.ws.removeListener("lose");
-
     }
 
     convertToPieces(board) {
@@ -163,13 +165,17 @@ export class Game extends React.Component {
         let boardSquares = [];
         for (let i = 0; i < 8; i++) {
             for (let j = 0; j < 8; j++) {
+                let squareProperty = null
+                if (`${i},${j}` in this.state.specialSquares) {
+                    squareProperty = this.state.specialSquares[`${i},${j}`]
+                }
                 boardSquares.push(
                     <Square
                         piece={this.state.boardState.board[i][j]}
                         pos={String(i) + "," + String(j)}
                         state={this.state}
-                        updateGame={this.update}
                         sendMove={this.sendMove}
+                        specialProperty={squareProperty}
                     ></Square>
                 );
             }

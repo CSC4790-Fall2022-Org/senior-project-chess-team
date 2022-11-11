@@ -1,12 +1,12 @@
 const express = require('express')
 const http = require('http')
 const jwtDecode = require('jwt-decode')
-// const io = require('socket.io')(http, { path: '/game/socket.io'})
 
 const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 let chats = {}
 
@@ -95,11 +95,12 @@ io.on('connection', socket => {
       // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
       return
     }
+    console.log(updated_game.whiteCards)
+    console.log(updated_game.blackCards)
+
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)
-    
-    updatePlayers(updated_game)
 
     // If Check-Mate, handle this
     if (check_mate_status !== 'X') {
@@ -142,6 +143,18 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard})
+  // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
+  // although it appears this is already done
+  // TODO: figure out how to tell player that opponent has cards.
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
+   'specialSquare': game.whiteSpecialSquare,
+   'cards': game.whiteCards
+  })
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
+   'specialSquare': game.blackSpecialSquare,
+   'cards': game.blackCards
+  })
 }
+
+
+

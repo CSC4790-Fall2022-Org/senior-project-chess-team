@@ -8,6 +8,7 @@ const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
 const { getRandomSquare } = require('./randomness/squareSelector.js')
 
+let chats = {}
 
 const app = express()
 const server = http.createServer(app);
@@ -45,6 +46,8 @@ app.post('/game', (req, res) => {
   const userId = removeBearer(req.headers['authorization']);
   const userName = getUsername(userId);
   const response = games.create(userName);
+  // Create new empty chat
+  chats[response.game_id] = []
   res.status(200).send(response); // todo : actually call from frontend
 })
 
@@ -71,6 +74,18 @@ io.on('connection', socket => {
 
   socket.emit('clientColor', game.color(userName));
 
+  socket.on('sendMessage', (arg) => {
+    arg = JSON.parse(arg);
+    messages = chats[arg.game_id];
+    messages.push({
+      message: arg.message,
+      isWhite : arg.isWhite,
+      username : arg.isWhite ? game.whiteUserId : game.blackUserId
+    })
+    console.log(messages);
+    io.to(game.whiteUserSocketId).emit('updateMessages', {'messages': messages})
+    io.to(game.blackUserSocketId).emit('updateMessages', {'messages': messages})
+  })
 
   socket.on('playerMove', (arg) => {
     updated_game_info = handleMove(arg)
@@ -86,7 +101,6 @@ io.on('connection', socket => {
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)
-    
 
     // If Check-Mate, handle this
     if (check_mate_status !== 'X') {

@@ -3,6 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import serverURL from '../config/serverConfig';
 import {Game} from '../chess/ui/game.js'
+import {ChatBox} from '../chess/ui/chatBox.js'
+import '../chess/ui/gamePage.css'
 import Hand from '../cards/Hand';
 
 
@@ -32,9 +34,11 @@ export default function GamePage() {
         })
 
         newSocket.on('disconnect', (reason) => {
-            console.log('disconnect because: ',reason)
+            console.log('disconnect because: ', reason)
             console.log('we disconnected');
         });
+
+        newSocket.on()
 
         return () => {
             newSocket.close();
@@ -49,8 +53,17 @@ export default function GamePage() {
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')} setCards={setCards}/> : <p>Waiting for response...</p> }
-            {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} />  }
+            <div class="gamePage">
+                <div class="child">
+                {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')} setCards={setCards}/> : <p>Waiting for response...</p> }
+                </div>
+                <div class="child">
+                {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
+                </div>
+                <div class='child'>
+                {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} />  }
+                </div>
+            </div>
         </>
     )
 }

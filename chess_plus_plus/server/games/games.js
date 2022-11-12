@@ -96,7 +96,6 @@ function Game(gameId, whiteUserId, blackUserId) {
             return 
         }
         const newCard = this.cardProvider.getCard();
-        newCard.action(null)
         console.log(newCard)
         if (isWhite) {
             newCard.id = nextId(this.whiteCards)

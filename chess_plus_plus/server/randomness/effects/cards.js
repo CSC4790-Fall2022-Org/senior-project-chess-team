@@ -1,3 +1,4 @@
+const { Rook, Pawn } = require('../../games/pieces/subpieces.js');
 const {Card} = require('./card.js')
 
 
@@ -10,6 +11,8 @@ class ExampleCard extends Card {
     action(boardState) {
         // manipulate the boardstate in some way. 
         console.log('Action was called')
+        boardState.board[4][4] = new Pawn(boardState.playerIsWhite, false)
+        console.log(boardState.board)
 
     }
 }
@@ -18,11 +21,14 @@ class ExampleCard extends Card {
 class ExampleCard2 extends Card {
     constructor() {
         super('Example Card2', 2);
-        this.description = 'This is simply an example of how to add another card'
+        this.description = 'Spawns a friendly rook in the middle of hte board'
     }
 
     action(boardState) {
         console.log('Action was called')
+        boardState.board[3][3] = new Rook(boardState.playerIsWhite, false)
+        console.log(boardState.board)
+
         // manipulate the boardstate in some way. 
     }
 }

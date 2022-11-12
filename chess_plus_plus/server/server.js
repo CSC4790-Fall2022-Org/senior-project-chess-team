@@ -121,6 +121,7 @@ io.on('connection', socket => {
     console.log('trying to use card')
     updated_game = handleUseCard(arg, userName)
     updateHands(updated_game)
+    updatePlayers(updated_game)
     // make a function to emit a new hand to a specific player. 
     // though, if we are keeping track of both players being able to know 
     // the number of cards, then all we need is the "updated game" to do this

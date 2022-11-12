@@ -124,7 +124,6 @@ io.on('connection', socket => {
       socket.emit('error', {text: updated_game})
       return
     }
-    updateHands(updated_game)
     updatePlayers(updated_game)
     // make a function to emit a new hand to a specific player. 
     // though, if we are keeping track of both players being able to know 
@@ -145,8 +144,8 @@ server.listen(port, () => {
 })
 
 const updateHands = game => {
-  io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards})
-  io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards})
+  io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
+  io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards, opponentCardCount: game.whiteCards.length})
 }
 const removeBearer = tokenWithBearer => {
   return tokenWithBearer.split(' ')[1];
@@ -165,13 +164,12 @@ const updatePlayers = game => {
   // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
   // although it appears this is already done
   // TODO: figure out how to tell player that opponent has cards.
+  updateHands(game)
   io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
    'specialSquare': game.whiteSpecialSquare,
-   'cards': game.whiteCards
   })
   io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
    'specialSquare': game.blackSpecialSquare,
-   'cards': game.blackCards
   })
 }
 

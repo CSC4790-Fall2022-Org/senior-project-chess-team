@@ -13,11 +13,11 @@ import Hand from '../cards/Hand';
 export default function GamePage() {
 
     const socket = useRef(null)
+    const numOpponentCards = useRef(0)
     const [searchParams, setSearchParams] = useSearchParams();
     const [color, setColor] = useState('');
     const [cards, setCards] = useState([])
     const [showOverlay, setShowOverlay] = useState(true);
-
 
     useEffect(() => {
 
@@ -40,7 +40,10 @@ export default function GamePage() {
 
         newSocket.on('error', text => alert(text.text))
 
-        newSocket.on('updateHand', cards => setCards(cards.cards))
+        newSocket.on('updateHand', cards => {
+            numOpponentCards.current = cards.opponentCardCount
+            setCards(cards.cards)
+        })
 
 
         return () => {
@@ -58,14 +61,13 @@ export default function GamePage() {
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
             <div class="gamePage">
                 <div class="child">
-                {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')} setCards={setCards}/> : <p>Waiting for response...</p> }
+                {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
                 </div>
                 <div class="child">
                 {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
                 </div>
-
                 {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
-
+                <p>Opponent has {numOpponentCards.current} cards</p>
             </div>
         </>
     )

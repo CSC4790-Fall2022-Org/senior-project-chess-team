@@ -82,7 +82,6 @@ export class Game extends React.Component {
 
     receivedMove(board) {
         console.log(board);
-        this.props.setCards(board.cards)
         let newBoard = new BoardState(this.props.isWhite);
         newBoard.blackKingInCheck = board.board.blackKingInCheck;
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;

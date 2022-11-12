@@ -96,6 +96,7 @@ function Game(gameId, whiteUserId, blackUserId) {
             return 
         }
         const newCard = this.cardProvider.getCard();
+        newCard.action(null)
         console.log(newCard)
         if (isWhite) {
             newCard.id = nextId(this.whiteCards)
@@ -150,6 +151,24 @@ function Game(gameId, whiteUserId, blackUserId) {
         this.blackSpecialSquare = nextTurn ? squareForOtherPlayer : randomSquare
 
     }
+
+    this.playCard = (color, cardId) => {
+        let idx;
+        if (color === 'white') {
+            idx = findCardWithId(this.whiteCards, cardId)
+            this.whiteCards[idx].action(this.whiteBoard)
+            this.whiteCards.splice(idx, 1)
+            this.blackBoard.board = rotated(this.whiteBoard.board)
+        }
+        else {
+            idx = findCardWithId(this.blackCards, cardId)
+            console.log(this.blackCards[idx])
+            this.blackCards[idx].action(this.blackBoard)
+            this.blackCards.splice(idx, 1)
+            this.whiteBoard.board = rotated(this.blackBoard.board)
+        }
+        
+    }
 }
 
 const rotated = board => {
@@ -195,6 +214,14 @@ const nextId = (cards) => {
     return 1 + Math.max(...cards.map(i => i.id), 0)
 }
 
+const findCardWithId = (arr, id) => {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === id) {
+            return i
+        }
+    }
+    return -1
+}
 exports.create = createGameRoom;
 exports.getById = getById;
 exports.Game = Game

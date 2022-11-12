@@ -6,6 +6,7 @@ const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { handleUseCard } = require('./games/handleUseCard.js')
 const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 let chats = {}
@@ -114,6 +115,14 @@ io.on('connection', socket => {
       }
     }
 
+  }) 
+
+  socket.on('useCard', arg => {
+    updated_game = handleUseCard(arg, userName)
+    updateHands(updated_game)
+    // make a function to emit a new hand to a specific player. 
+    // though, if we are keeping track of both players being able to know 
+    // the number of cards, then all we need is the "updated game" to do this
   })
 
   socket.on('promotion', arg => {
@@ -129,6 +138,10 @@ server.listen(port, () => {
   console.log(`started server listening on port ${port}`)
 })
 
+const updateHands = game => {
+  io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards})
+  io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards})
+}
 const removeBearer = tokenWithBearer => {
   return tokenWithBearer.split(' ')[1];
 }

@@ -16,14 +16,14 @@ function CardProvider() {
 
     this.selectRandomCard = () => {
         let randomNum = Math.floor(Math.random() * (this.frequencyCount) + 1)
-        console.log(randomNum, this.frequencyCount)
         let i = 0;
         while (randomNum > 0) {
             randomNum -= cards[i].frequency
             i += 1
         }
+        
         // we need the ... operator so that we make a copy b/c each card instantiated once
-        return {...cards[i-1]}
+        return Object.create(Object.getPrototypeOf(cards[i-1]), Object.getOwnPropertyDescriptors(cards[i-1]));
     }
 
 }

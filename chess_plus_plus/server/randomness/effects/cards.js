@@ -9,6 +9,8 @@ class ExampleCard extends Card {
 
     action(boardState) {
         // manipulate the boardstate in some way. 
+        console.log('Action was called')
+
     }
 }
 
@@ -20,10 +22,10 @@ class ExampleCard2 extends Card {
     }
 
     action(boardState) {
+        console.log('Action was called')
         // manipulate the boardstate in some way. 
     }
 }
-
 // instantiate one of each card in the array.
 let cards = [
     new ExampleCard(),

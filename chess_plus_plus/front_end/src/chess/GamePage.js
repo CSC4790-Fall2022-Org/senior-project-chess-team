@@ -38,6 +38,8 @@ export default function GamePage() {
             console.log('we disconnected');
         });
 
+        newSocket.on('error', text => alert(text.text))
+
         newSocket.on('updateHand', cards => setCards(cards.cards))
 
 

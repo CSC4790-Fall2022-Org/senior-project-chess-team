@@ -38,7 +38,8 @@ export default function GamePage() {
             console.log('we disconnected');
         });
 
-        newSocket.on()
+        newSocket.on('updateHand', cards => setCards(cards.cards))
+
 
         return () => {
             newSocket.close();

@@ -118,6 +118,7 @@ io.on('connection', socket => {
   }) 
 
   socket.on('useCard', arg => {
+    console.log('trying to use card')
     updated_game = handleUseCard(arg, userName)
     updateHands(updated_game)
     // make a function to emit a new hand to a specific player. 

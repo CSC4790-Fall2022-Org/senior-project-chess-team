@@ -13,7 +13,7 @@
 }
 
 .chatBox {
-    width: 400px;
+    min-width: 200px;
     height: 640px;
     overflow: scroll;
     word-wrap: break-word;

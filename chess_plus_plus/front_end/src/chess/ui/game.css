@@ -5,6 +5,7 @@
 
 .game {
     display: flex;
+    flex-basis: wrap;
     margin-inline: auto;    
 }
 

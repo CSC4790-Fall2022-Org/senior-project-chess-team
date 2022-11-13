@@ -66,8 +66,12 @@ export default function GamePage() {
                 <div class="child">
                 {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
                 </div>
+                <div style={{width: '100%'}}>
+
                 {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
                 <p>Opponent has {numOpponentCards.current} cards</p>
+                </div>
+
             </div>
         </>
     )

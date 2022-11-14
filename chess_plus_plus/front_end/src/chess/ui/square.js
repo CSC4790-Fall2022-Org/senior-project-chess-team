@@ -3,12 +3,8 @@ import Piece from '../ui/piece.js'
 import {useDrop} from 'react-dnd'
 //import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
-<<<<<<< HEAD
-import specialSquareBackground from '../files/getEffectSquare.jpeg' 
+import specialSquareBackground from '../files/SquareWhite.png' 
 import frozenSquareBackground from '../files/frozenSquare.jpg'
-=======
-import specialSquareBackground from '../files/SqaureWhite.png' 
->>>>>>> b16752649073d1616f4c1b69b0f144aa770461f0
 import Effects from './effects.js'
 export default function Square({piece, pos, state, specialProperty, sendMove}) {
 

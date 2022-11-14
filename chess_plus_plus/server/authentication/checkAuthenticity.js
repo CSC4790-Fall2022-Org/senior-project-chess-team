@@ -1,4 +1,5 @@
-// import {CognitoJwtVerifier} from "aws-jwt-verify";
+//import {CognitoJwtVerifier} from "aws-jwt-verify";
+//import {jwt_decode} from "jwt-decode";
 
 const axios = require('axios')
 
@@ -25,26 +26,52 @@ const validIdToken = async id_token => {
     // https://aws.amazon.com/premiumsupport/knowledge-center/decode-verify-cognito-json-token/
     // above may be useful
 
-    return true; // until below works
-    var jwt = require('jsonwebtoken');
-    var jwkToPem = require('jwk-to-pem');
-    var pem = jwkToPem(jwk);
-    jwt.verify(token, pem, { algorithms: ['RS256'] }, function(err, decodedToken) {});
+    //Verifier that expects valid access tokens
+    console.log(id_token);
+const jwtVerifier = require('aws-jwt-verify')
+    const verifier = jwtVerifier.CognitoJwtVerifier.create({
+    userPoolId: "us-east-1_AAixkhVH9",
+    tokenUse: "id",
+    clientId: "39i33g2381dako8dicf0nd5hdl",
+});
 
-    const verifier = CognitoJwtVerifier.create({
-        userPoolId: "<user_pool_id>",
-        tokenUse: "access",
-        clientId: "<client_id>",
-    });
-    try {
-        const payload = await verifier.verify(
-            id_token //JWT as string
-        );
-        console.log("Token Valid. Payload: ", payload);
-    } catch {
-        console.log("Invalid Token");
-    }
+try {
+    const payload = await verifier.verify(
+        id_token
+    );
+    console.log("Token is valid. Payload is ", payload);
+    return true;
+} catch (err) {
+    console.error(err);
+    console.log("Token not found");
+    return false;
 }
+}
+    //return true; // until below works
+//     var decodedToken = require('jwt-decode');
+//     var decoded = decodedToken(id_token);
+//     console.log(decoded);
+//     if (decoded.kid == userPoolId) {
+//         var jwt = require('jsonwebtoken');
+//         var jwkToPem = require('jwk-to-pem');
+//         var pem = jwkToPem(jwk);
+//         jwt.verify(id_token, pem, { algorithms: ['RS256'] }, function(err, decodedToken) {});
+
+//         const verifier = CognitoJwtVerifier.create({
+//             userPoolId: "<user_pool_id>",
+//             tokenUse: "access",
+//             clientId: "<client_id>",
+//         });
+//         try {
+//             const payload = await verifier.verify(
+//                 id_token //JWT as string
+//             );
+//             console.log("Token Valid. Payload: ", payload);
+//         } catch {
+//             console.log("Invalid Token");
+//         }
+//     }
+// }
 const clientId = '39i33g2381dako8dicf0nd5hdl';
 const cognitoDomainName = 'https://chessplusplus.auth.us-east-1.amazoncognito.com';
 

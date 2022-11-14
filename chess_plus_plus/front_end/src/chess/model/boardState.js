@@ -120,8 +120,9 @@ function movePieceHelper(board, src, dest) {
     }
     let src_piece = board[parseInt(src[0])][parseInt(src[2])];
     board[parseInt(src[0])][parseInt(src[2])] = null;
+    let dest_piece = board[parseInt(dest[0])][parseInt(dest[2])]
     board[parseInt(dest[0])][parseInt(dest[2])] = src_piece;
-    return board;
+    return [board, dest_piece];
 }
 
 function undoMoveHelper(board, src, dest, dest_piece) {
@@ -207,7 +208,7 @@ function blackKingInCheck(board) {
 
 function moveSafeFromCheck(board, src, dest, playerIsWhite) {
     let dest_piece = board[parseInt(dest[0])][parseInt(dest[2])];
-    board = movePieceHelper(board, src, dest);
+    board = movePieceHelper(board, src, dest)[0];
     board = updatePossibleMovesAllPieces(board, playerIsWhite);
     let ret = true;
     if (playerIsWhite) {
@@ -259,7 +260,16 @@ export class BoardState {
     }
     
     movePiece(src, dest) {
-        this.board = movePieceHelper(this.board, src, dest);
+        let moveRes = movePieceHelper(this.board, src, dest);
+        this.board = moveRes[0];
+        if (moveRes[1] !== null) {
+            if (this.playerIsWhite) {
+                this.blackDeadPieces.push(moveRes[1].type);
+            }
+            else {
+                this.whiteDeadPieces.push(moveRes[1].type);
+            }
+        }
         this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
         this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
         console.log(this.board[parseInt(dest[0])][parseInt(dest[2])].possibleMoves);

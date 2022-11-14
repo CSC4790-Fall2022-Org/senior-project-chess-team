@@ -205,10 +205,10 @@ export class Bishop extends Piece {
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/5/5f/White_Bishop.png";
+                "https://upload.wikimedia.org/wikipedia/commons/c/c4/White_Bishop_new.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/c/c1/Real_Black_Bishop.png";
+                "https://upload.wikimedia.org/wikipedia/commons/9/96/Black_Bishop_new.png";
         }
     }
 

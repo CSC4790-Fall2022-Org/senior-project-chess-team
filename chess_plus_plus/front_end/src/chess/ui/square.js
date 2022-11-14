@@ -3,7 +3,7 @@ import Piece from '../ui/piece.js'
 import {useDrop} from 'react-dnd'
 //import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
-import specialSquareBackground from '../files/getEffectSquare.jpeg' 
+import specialSquareBackground from '../files/SqaureWhite.png' 
 import Effects from './effects.js'
 export default function Square({piece, pos, state, specialProperty, sendMove}) {
 
@@ -51,7 +51,7 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
 
 
     let backgroundUrl = getBackgroundUrlForProperty(specialProperty)
-    const opacity = specialProperty === null ? 0 : 0.4
+    const opacity = specialProperty === null ? 0 : 0.9
     const pieceWrapperStyle = {
       display: 'grid',
       height: '80px',

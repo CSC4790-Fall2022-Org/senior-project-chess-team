@@ -6,6 +6,7 @@ const checkAuthenticity = require('./authentication/checkAuthenticity.js')
 const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
+const { handleUseCard } = require('./games/handleUseCard.js')
 const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 let chats = {}
@@ -95,6 +96,9 @@ io.on('connection', socket => {
       // TODO: tell frontend it was invalid and force refresh the page or something, idk yet
       return
     }
+    console.log(updated_game.whiteCards)
+    console.log(updated_game.blackCards)
+
     updatePlayers(updated_game)
     
     console.log("Checkmate status:", check_mate_status)
@@ -111,6 +115,19 @@ io.on('connection', socket => {
       }
     }
 
+  }) 
+
+  socket.on('useCard', arg => {
+    console.log('trying to use card')
+    updated_game = handleUseCard(arg, userName)
+    if (typeof updated_game === 'string') {
+      socket.emit('error', {text: updated_game})
+      return
+    }
+    updatePlayers(updated_game)
+    // make a function to emit a new hand to a specific player. 
+    // though, if we are keeping track of both players being able to know 
+    // the number of cards, then all we need is the "updated game" to do this
   })
 
   socket.on('promotion', arg => {
@@ -126,6 +143,10 @@ server.listen(port, () => {
   console.log(`started server listening on port ${port}`)
 })
 
+const updateHands = game => {
+  io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
+  io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards, opponentCardCount: game.whiteCards.length})
+}
 const removeBearer = tokenWithBearer => {
   return tokenWithBearer.split(' ')[1];
 }
@@ -140,18 +161,17 @@ function sleep(ms) {
 }
 
 const updatePlayers = game => {
-  const nextTurn = game.whiteBoard.isWhiteTurn;
-  let nextPlayerBoardState = nextTurn ? game.whiteBoard : game.blackBoard
-  const randomSquare = getRandomSquare(nextPlayerBoardState);
-  const squareForOtherPlayer = invertPosition(randomSquare)
- // TODO: ONCE TURNS ARE IMPLEMENTED, SELECT THE CORRECT BOARDSTATE USING THAT
-  // TODO: Player who is the opposite turn needs to get it with the board "inverted"
-  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard, 'specialSquare': nextTurn ? randomSquare : squareForOtherPlayer})
-  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard, 'specialSquare': nextTurn ? squareForOtherPlayer : randomSquare})
+  // may want to consider a way to not pass the card's effects to frontend (separate DTO and Model)
+  // although it appears this is already done
+  // TODO: figure out how to tell player that opponent has cards.
+  updateHands(game)
+  io.to(game.whiteUserSocketId).emit('updateAfterMove', {'board': game.whiteBoard,
+   'specialSquare': game.whiteSpecialSquare,
+  })
+  io.to(game.blackUserSocketId).emit('updateAfterMove', {'board': game.blackBoard,
+   'specialSquare': game.blackSpecialSquare,
+  })
 }
 
-const invertPosition = (position) => {
-  const row = parseInt(position[0])
-  const col = parseInt(position[2])
-  return `${7-row},${col}`
-}
+
+

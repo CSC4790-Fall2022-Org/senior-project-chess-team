@@ -4,6 +4,9 @@ import Message from '../ui/message.js'
 import '../ui/chat.css'
 
 
+function clearInput(){
+    document.getElementById("messageText").value = '';
+}
 
 export class ChatBox extends React.Component {
     constructor(props) {
@@ -20,6 +23,22 @@ export class ChatBox extends React.Component {
           message: event.target.value
         });
     }
+
+    
+    sendMessage() {
+        var message = this.state.message;
+        this.props.ws.emit('sendMessage',
+            JSON.stringify({
+                message: message,
+                isWhite: this.props.isWhite,
+                game_id : this.props.id
+            })
+        );
+        clearInput();
+        console.log('message sent on frontend')
+
+    }
+
 
     // getInitialMessages(initialMessages) {
     //     console.log("updating initial messages")
@@ -39,18 +58,10 @@ export class ChatBox extends React.Component {
     //     console.log(newMessages)
     //     return newMessages
     // }
+
     
-    sendMessage() {
-        var message = this.state.message;
-        this.props.ws.emit('sendMessage',
-            JSON.stringify({
-                message: message,
-                isWhite: this.props.isWhite,
-                game_id : this.props.id
-            })
-        );
-        console.log('message sent on frontend')
-    }
+ 
+
 
     updateMessages(updatedMessages) {
         console.log("updating messages")
@@ -94,7 +105,9 @@ export class ChatBox extends React.Component {
             )
         });
         return (
-            <div>
+
+            <div class= "temp">
+
                 <div class="chatBox">
                     {messageLines.map((message, index) => (
                         <span key={index}>
@@ -102,8 +115,10 @@ export class ChatBox extends React.Component {
                         </span>
                     ))}
                 </div>
-                <input type="text" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
-                <button onClick={this.sendMessage.bind(this)}>send</button>
+
+                <input type="text" id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
+                <button onClick={this.sendMessage.bind(this)} >send</button>
+
             </div>
         )
     }

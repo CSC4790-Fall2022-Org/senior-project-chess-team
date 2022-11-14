@@ -3,7 +3,8 @@ import Piece from '../ui/piece.js'
 import {useDrop} from 'react-dnd'
 //import {BoardState} from '../model/boardState.js'
 import '../ui/game.css'
-import specialSquareBackground from '../files/getEffectSquare.jpeg' 
+import specialSquareBackground from '../files/SquareWhite.png' 
+import frozenSquareBackground from '../files/frozenSquare.jpg'
 import Effects from './effects.js'
 export default function Square({piece, pos, state, specialProperty, sendMove}) {
 
@@ -51,7 +52,13 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
 
 
     let backgroundUrl = getBackgroundUrlForProperty(specialProperty)
-    const opacity = specialProperty === null ? 0 : 0.4
+    let opacity = 0;
+    if (specialProperty === Effects.SPECIAL_SQUARE) {
+      opacity = 0.9;
+    }
+    else if (specialProperty === Effects.FROZEN_SQUARE) {
+      opacity = 0.7;
+    }
     const pieceWrapperStyle = {
       display: 'grid',
       height: '80px',
@@ -60,7 +67,7 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
       backgroundColor: `${canDrop || isOver ? color : ""}`,
     }
 
-    const backgroundImageStyle = {
+    const specialBackgroundImageStyle = {
       backgroundImage: `url(${backgroundUrl})`,
       backgroundSize: 'cover',
       gridColumn: 1,
@@ -73,7 +80,7 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
     <div class='square' 
         style={pieceWrapperStyle}
         ref={drop}>
-          <div style={backgroundImageStyle} />
+          <div style={specialBackgroundImageStyle} />
           {piece !== null && <Piece piece={piece} pos = {pos} state= {state}></Piece>}
     </div>
   )
@@ -83,6 +90,8 @@ const getBackgroundUrlForProperty = (property) => {
   switch (property) {
     case Effects.SPECIAL_SQUARE:
       return specialSquareBackground
+    case Effects.FROZEN_SQUARE:
+      return frozenSquareBackground
     default: 
       return null
   }

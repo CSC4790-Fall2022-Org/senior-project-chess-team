@@ -37,28 +37,7 @@ function handleMove(arg) {
     }
     
 
-    // playerGame.makeMove(board.playerIsWhite, move)
 
-    // set the state if true -> false
-    // set the state if false -> true ??
-    /*
-    This statement is not really on the right track, check my solution below.
-    Its a lot easier to just write this part instead of explaining it so I'm sorry about that.
-    
-    if(arg.playerIsWhite){
-        playerGame = playerGame.BlackBoardState
-    }else{
-        playerGame = playerGame.WhiteBoardState
-    }
-
-    Basically, my solution looks at each board state and changes the value in
-    isWhiteTurn to the opposite value
-    True becomes !True, which is False.
-    False becomes !False, which is True.
-    */
-
-    playerGame.whiteBoard.isWhiteTurn = !playerGame.whiteBoard.isWhiteTurn
-    playerGame.blackBoard.isWhiteTurn = !playerGame.blackBoard.isWhiteTurn
 
     // Check for Checkmate
     if (playerGame.opponentInCheckMate(board.playerIsWhite)) {

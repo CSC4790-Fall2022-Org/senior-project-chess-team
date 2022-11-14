@@ -72,3 +72,16 @@
     grid-column: 1;
     grid-row: 1;
 }
+
+.startButton {
+    background-color: #008CBA;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 45%;
+    cursor: pointer;
+}

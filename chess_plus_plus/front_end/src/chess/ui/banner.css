@@ -1,0 +1,12 @@
+.banner{
+  top: 0px;
+  right: 0px;
+  left:0px;
+}
+.BannerLogo{
+  width: 25%;
+  height: 25%;
+  position: relative;
+  top:10px;
+  left: 75%;
+}

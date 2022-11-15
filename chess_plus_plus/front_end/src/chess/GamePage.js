@@ -1,9 +1,9 @@
-import React , { useState, useEffect, useRef }from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import serverURL from '../config/serverConfig';
-import {Game} from '../chess/ui/game.js'
-import {ChatBox} from '../chess/ui/chatBox.js'
+import { Game } from '../chess/ui/game.js'
+import { ChatBox } from '../chess/ui/chatBox.js'
 import '../chess/ui/gamePage.css'
 import logo from '../chess/files/Logo.png';
 import logout from '../chess/files/signOut.png';
@@ -54,7 +54,7 @@ export default function GamePage() {
             newSocket.close();
             console.log('why are we here?')
         }
-        }, [socket, searchParams])
+    }, [socket, searchParams])
 
     useEffect(() => {
         console.log("game page rerendered")
@@ -62,32 +62,36 @@ export default function GamePage() {
 
     return (
         <>
-            {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
+
             <div class="overlay">
-                 <body>
-                    <ul>
+                <body>
+                    {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay} />}
+                    <ul class="navbar">
                         <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
                         <li class="LogoutHomePageDiv"><a><img src={logout} class="LogoutHomePage"></img></a></li>
                     </ul>
-                        <div class="board">
-                        {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
-                        </div>
-                        <div class="play">
-                            {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
-                        </div>
 
-                        <div style={{width: '100%'}}>
+                    <div class="board">
+                        {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')} /> : <p>Waiting for response...</p>}
+                    </div>
 
-                        {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
-                        <p>Opponent has {numOpponentCards.current} cards</p>
+                    <div class="LargeContainer">
+                        {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
+                        <div class="PowerUps" style={{ width: '100%' }}>
+                            {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')} />}
                         </div>
+                        <div class="opponentCard">
+                            <p>Opponent has {numOpponentCards.current} cards</p>
+                        </div>
+                    </div>
+
                 </body>
             </div>
         </>
     )
 }
 
-const TransparentOverlay = ({id, setShowOverlay}) => {
+const TransparentOverlay = ({ id, setShowOverlay }) => {
     return (
         <div style={transparentStyle}>
             <button style={closeOverlayButton} onClick={() => setShowOverlay(false)}>
@@ -95,11 +99,11 @@ const TransparentOverlay = ({id, setShowOverlay}) => {
             </button>
             <div style={centerBox}>
                 <p style={text}>Send the below code to your friend to join the game</p>
-                <div style={{display: 'flex'}}>
+                <div style={{ display: 'flex' }}>
                     <p style={text}>{id}</p>
-                    <button style={copyButton} onClick={() => {navigator.clipboard.writeText(id)}}>
-                        Copy 
-                        </button>
+                    <button style={copyButton} onClick={() => { navigator.clipboard.writeText(id) }}>
+                        Copy
+                    </button>
                 </div>
             </div>
         </div>

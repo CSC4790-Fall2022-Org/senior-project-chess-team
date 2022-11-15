@@ -78,13 +78,27 @@ left: -15%;
   display: block;
   width: 35%;
 }
-ul {
+.navbar {
   height: 40px;
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #102321;
+  
+}
+
+.Rules{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+p {
+  color:#ffbd59;
 }
 
 li {

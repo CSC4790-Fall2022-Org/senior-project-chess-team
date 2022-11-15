@@ -1,8 +1,37 @@
 .myMessage {
     text-align: right;
     padding-right: 5%;
-    color: turquoise;
     padding-bottom: 4%;
+}
+.temp{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+    border-radius: 15px;
+}
+.sendButton{
+    position: relative;
+    left:93%;
+    margin-top: 1%;
+}
+.typeBox{
+    background-color: transparent;
+    margin-top: 1%;
+    border:none;
+    position:absolute;
+    bottom:.25;
+    left: 1.5%;
+    right: 0%;
+    outline-width: 0;
+    color:#b5d6cf;
+}
+
+input::placeholder {
+    opacity: .5;
+    color: #b5d6cf;
 }
 
 .oppMessage {
@@ -13,14 +42,12 @@
 }
 
 .chatBox {
-
-    min-width: 200px;
-
-    height: 640px;
-    overflow: scroll;
+    background-color: #396c63;
+    height: 150px;
+    overflow-x: auto;
     word-wrap: break-word;
-    background-color: white;
-    border: 1px solid #000;
-    display: inline-block;
-    vertical-align: top;
+    color: #b5b8d6;
+    border-radius: 2.5%;
+    
 }
+

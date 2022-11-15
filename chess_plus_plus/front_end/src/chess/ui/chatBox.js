@@ -108,16 +108,18 @@ export class ChatBox extends React.Component {
 
             <div class= "temp">
 
-                <div class="chatBox">
+                <div class="chatBox" >
                     {messageLines.map((message, index) => (
                         <span key={index}>
                             { message }
                         </span>
                     ))}
                 </div>
-
-                <input type="text" id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
-                <button onClick={this.sendMessage.bind(this)} >send</button>
+                <div>
+                    <input class ="typeBox" type="text" placeholder="Send a message..." id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
+                    <button class = "sendButton" onClick={this.sendMessage.bind(this)} >send</button>
+                </div>
+                    
 
             </div>
         )

@@ -3,6 +3,11 @@ import { useSearchParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import serverURL from '../config/serverConfig';
 import {Game} from '../chess/ui/game.js'
+import {ChatBox} from '../chess/ui/chatBox.js'
+import '../chess/ui/gamePage.css'
+
+import Hand from '../cards/Hand';
+
 
 
 
@@ -10,10 +15,11 @@ import {Game} from '../chess/ui/game.js'
 export default function GamePage() {
 
     const socket = useRef(null)
+    const numOpponentCards = useRef(0)
     const [searchParams, setSearchParams] = useSearchParams();
     const [color, setColor] = useState('');
+    const [cards, setCards] = useState([])
     const [showOverlay, setShowOverlay] = useState(true);
-
 
     useEffect(() => {
 
@@ -30,9 +36,18 @@ export default function GamePage() {
         })
 
         newSocket.on('disconnect', (reason) => {
-            console.log('disconnect because: ',reason)
+            console.log('disconnect because: ', reason)
             console.log('we disconnected');
         });
+
+
+        newSocket.on('error', text => alert(text.text))
+
+        newSocket.on('updateHand', cards => {
+            numOpponentCards.current = cards.opponentCardCount
+            setCards(cards.cards)
+        })
+
 
         return () => {
             newSocket.close();
@@ -47,7 +62,21 @@ export default function GamePage() {
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
+            <div class="gamePage">
+                <div class="child">
+                {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
+                </div>
+                <div class="child">
+                {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
+                </div>
+
+                <div style={{width: '100%'}}>
+
+                {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
+                <p>Opponent has {numOpponentCards.current} cards</p>
+                </div>
+
+            </div>
         </>
     )
 }

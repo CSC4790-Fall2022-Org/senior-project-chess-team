@@ -4,6 +4,17 @@ const cardProvider = require('../randomness/cardProvider')
 
 var activeGames = {}
 
+function resetFrozenPiecesForMovingPlayer(board, playerColor) {
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+            if (board[i][j] !== null && board[i][j].isWhite === playerColor) {
+                board[i][j].isFrozen = false;
+            }
+        }
+    }
+    return board;
+}
+
 function Game(gameId, whiteUserId, blackUserId) {
     this.gameId = gameId;
     this.whiteUserId = whiteUserId;
@@ -16,6 +27,8 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.blackSpecialSquare = null
     this.whiteCards = []
     this.blackCards = []
+    this.whiteUsedCardThisTurn = false
+    this.blackUsedCardThisTurn = false
     this.cardProvider = new CardProvider()
 
     this.containsPlayer = id => this.whiteUserId === id || this.blackUserId === id;
@@ -42,9 +55,12 @@ function Game(gameId, whiteUserId, blackUserId) {
             //     this.whiteBoard.movePiece(move.src, move.dest)
             // }
             this.whiteBoard.movePiece(move.src, move.dest)
+            this.whiteBoard.board = resetFrozenPiecesForMovingPlayer(this.whiteBoard.board, isWhite);
             this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
             this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
             this.blackBoard.board = rotated(this.whiteBoard.board)
+            this.blackBoard.board = resetFrozenPiecesForMovingPlayer(this.blackBoard.board, isWhite);
+            this.whiteUsedCardThisTurn = false
 
             // make move on white board normally
             // set black board to be inverted version
@@ -57,10 +73,13 @@ function Game(gameId, whiteUserId, blackUserId) {
             //     this.blackBoard.movePiece(move.src, move.dest)
             // }
             this.blackBoard.movePiece(move.src, move.dest)
-
+            this.blackBoard.board = resetFrozenPiecesForMovingPlayer(this.blackBoard.board, isWhite);
             this.whiteBoard.blackKingInCheck = this.blackBoard.blackKingInCheck
             this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
             this.whiteBoard.board = rotated(this.blackBoard.board)
+            this.whiteBoard.board = resetFrozenPiecesForMovingPlayer(this.whiteBoard.board, isWhite);
+            this.blackUsedCardThisTurn = false
+
         }
         this.handleMoveToSpecialSquare(isWhite, move.dest)
         this.flipTurns()
@@ -98,9 +117,14 @@ function Game(gameId, whiteUserId, blackUserId) {
         const newCard = this.cardProvider.getCard();
         console.log(newCard)
         if (isWhite) {
+            newCard.id = nextId(this.whiteCards)
+            console.log(newCard)
             this.whiteCards.push(newCard)
         }
         else {
+            newCard.id = nextId(this.blackCards)
+            console.log(newCard)
+
             this.blackCards.push(newCard)
         }
     }
@@ -145,6 +169,45 @@ function Game(gameId, whiteUserId, blackUserId) {
         this.blackSpecialSquare = nextTurn ? squareForOtherPlayer : randomSquare
 
     }
+
+    this.playCard = (color, cardId) => {
+        let idx;
+        if (color === 'white') {
+            idx = findCardWithId(this.whiteCards, cardId)
+            let ret = this.whiteCards[idx].action(this.whiteBoard)
+            this.whiteCards.splice(idx, 1)
+            if (ret === 'swap') {
+                let temp = this.whiteCards;
+                this.whiteCards = this.blackCards;
+                this.blackCards = temp;
+            }
+            this.blackBoard.blackDeadPieces = this.whiteBoard.blackDeadPieces;
+            this.blackBoard.whiteDeadPieces = this.whiteBoard.whiteDeadPieces;
+            this.blackBoard.board = rotated(this.whiteBoard.board)
+            this.whiteUsedCardThisTurn = true
+        }
+        else {
+            idx = findCardWithId(this.blackCards, cardId)
+            console.log(this.blackCards[idx])
+            let ret = this.blackCards[idx].action(this.blackBoard)
+            this.blackCards.splice(idx, 1)
+            if (ret === 'swap') {
+                let temp = this.whiteCards;
+                this.whiteCards = this.blackCards;
+                this.blackCards = temp;
+            }
+            this.whiteBoard.blackDeadPieces = this.blackBoard.blackDeadPieces;
+            this.whiteBoard.whiteDeadPieces = this.blackBoard.whiteDeadPieces;
+            this.whiteBoard.board = rotated(this.blackBoard.board)
+            this.blackUsedCardThisTurn = true
+
+        }
+        
+    }
+
+    this.hasUsedCard = name => {
+        return this.color(name) === 'white' ? this.whiteUsedCardThisTurn : this.blackUsedCardThisTurn
+    }
 }
 
 const rotated = board => {
@@ -185,6 +248,19 @@ const invertPosition = (position) => {
     return `${7-row},${col}`
 }
 
+const nextId = (cards) => {
+    console.log('finding next id in', cards)
+    return 1 + Math.max(...cards.map(i => i.id), 0)
+}
+
+const findCardWithId = (arr, id) => {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].id === id) {
+            return i
+        }
+    }
+    return -1
+}
 exports.create = createGameRoom;
 exports.getById = getById;
 exports.Game = Game

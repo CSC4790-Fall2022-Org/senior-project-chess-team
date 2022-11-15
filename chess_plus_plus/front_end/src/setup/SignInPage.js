@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import serverURL from "../config/serverConfig";
 import Base64Url from "crypto-js/enc-base64url";
 import CryptoJS from "crypto-js";
+import logo from '../chess/files/Logo.png';
 import { useSearchParams } from "react-router-dom";
 import { verifyCognitoCredentials } from '../api/authentication.js'
+import './SignInPage.css';
 
 function SignInPage({ setIsLoggedIn }) {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -91,8 +93,14 @@ function SignInPage({ setIsLoggedIn }) {
     }
     return (
         <>
-            <p>You need to be signed in to continue.</p>
-            <button onClick={sendUserToCognito}>login</button> {/*style this*/}
+        <div class = "background">
+        <div class = "banner">
+            <img src={logo} class="BannerLogoCorner" />
+        </div>
+        <div class = "moveButton">
+            <button class = "playNow" onClick={sendUserToCognito} role = "button">Play Now</button> {/*style this*/}
+        </div>        
+        </div>
         </>
     );
 }

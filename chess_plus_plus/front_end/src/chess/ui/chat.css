@@ -1,0 +1,26 @@
+.myMessage {
+    text-align: right;
+    padding-right: 5%;
+    color: turquoise;
+    padding-bottom: 4%;
+}
+
+.oppMessage {
+    text-align: left;
+    padding-left: 5%;
+    color: red;
+    padding-bottom: 4%;
+}
+
+.chatBox {
+
+    min-width: 200px;
+
+    height: 640px;
+    overflow: scroll;
+    word-wrap: break-word;
+    background-color: white;
+    border: 1px solid #000;
+    display: inline-block;
+    vertical-align: top;
+}

@@ -1,66 +1,159 @@
-.Logo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top:2%;
-
-}
-body {
-    background-image: url('../chess/files/field.png');
+.overlay{
+    opacity:1;
+    background-color:#b5d6cf;
     background-repeat: no-repeat;
-    background-size: 100% 175%;
+    background-size: 100% 100%;
+    position:fixed;
+    width:100%;
+    height:120%;
+    top:0px;
+    left:0px;
+    z-index:1000;
 }
+.brownboard{
+  position: absolute;
+  left: 18%;
+  margin-top: 5.5%;
+  width: 32%;
 
-.Scroll{
-    height: 400px;
-    width: 450px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
-
-.input{
+.LogoHomePage{
+width: 140%;
+position: relative;
+margin-left: auto;
+margin-right: auto;
+display: block;
+top:-5px;
+left: -15%;
+}
+.LogoutHomePage{
+  width: 100%;
   position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  top: -200px;
-  left: 4px;
-  border-radius: 25px;
-  background: rgb(104, 204, 241);
-  border: 2px solid rgb(207, 52, 14);
-  padding: 10px; 
-  width: 140px;
-  height: 15px;
-}
+  top:-5px;
+  }
+.LogoHomePageDiv{
+  width: 10%; 
+  border-bottom: #FFFFFF;
+  }
+  .LogoutHomePageDiv{
+    float: right;
+    width: 10%;
+  }
 
-.createGame{
-  position: relative;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  top: -270px;
-  width: 148px;
-  height: 50px;
-
-  color: transparent; 
-  background-color: transparent; 
-  border-color: transparent; 
-  cursor: default;
-}
 
 .joinGame{
   position: relative;
-  display: block;
   margin-left: auto;
   margin-right: auto;
-  top: -305px;
-  width: 148px;
-  height: 50px;
-  color: transparent; 
-  background-color: transparent; 
-  border-color: transparent; 
-  cursor: default;
 }
 
+.play{
+  background-color: #4d897f;
+  position: absolute;
+  width: 30%;
+  height: 70%;
+  margin-top: 2%;
+  margin-left: 60%;
+  box-shadow: 5px 5px 2px #396c63;
+  border-radius: 15px;
 
+}
+.HowToPlay{
+  background-color: #4d897f;
+  position: absolute;
+  width: 47%;
+  height: 70%;
+  margin-top: 2%;
+  margin-left: 10%;
+  box-shadow: 5px 5px 2px #396c63;
+  border-radius: 15px;
+
+}
+
+.PlayNowImage{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8%;
+  display: block;
+  width: 30%;
+}
+.HowToPlayImage{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  display: block;
+  width: 35%;
+}
+ul {
+  height: 40px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #102321;
+}
+
+li {
+  float:left;
+  
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #102321;
+}
+
+.active {
+  background-color: #396c63;
+}
+
+.HomePageButton {
+  appearance: none;
+  background-color: #102321;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 80%;
+  will-change: transform;
+  margin-left: 10%;
+  margin-top: 10%;
+}
+
+.HomePageButton:disabled {
+  pointer-events: none;
+}
+
+.HomePageButton:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.HomePageButton:active {
+  box-shadow: none;
+  transform: translateY(0);
+}

@@ -8,20 +8,23 @@ export function pairToMoveStr(x, y) {
 }
 
 export class Pawn extends Piece {
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = "Pawn";
         if (this.isWhite === true) {
-            this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png";
+            this.imageUrl = 
+                "https://upload.wikimedia.org/wikipedia/commons/3/36/Real_White_Pawn.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/5/5f/Real_Black_Pawn.png";
         }
     }
 
     // Call this function after a piece is moved
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         // up
         var moves = new Set();
         if (i > 0) {
@@ -85,18 +88,21 @@ export class Pawn extends Piece {
 
 export class Rook extends Piece {
     
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = 'Rook';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/5/5c/Chess_rlt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/d/de/Real_White_Rook.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/a/a0/Chess_rdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/2/22/Black_Rook.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         // up
         var moves = new Set();
         // moving logic?
@@ -155,19 +161,22 @@ export class Rook extends Piece {
 }
 
 export class Knight extends Piece {
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = 'Knight';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Chess_nlt45.svg/45px-Chess_nlt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/0/09/Chess_Glt45.svg";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Chess_ndt45.svg/45px-Chess_ndt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/9/97/Chess_Gdt45.svg";
         }
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         var moves = new Set();
 
         let X = [2, 1, -1, -2, -2, -1, 1, 2];
@@ -191,19 +200,22 @@ export class Knight extends Piece {
 }
 
 export class Bishop extends Piece {
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/9/9b/Chess_blt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/c/c4/White_Bishop_new.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/8/81/Chess_bdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/9/96/Black_Bishop_new.png";
         }
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         let moves = new Set();
 
         // top right
@@ -266,18 +278,21 @@ export class Bishop extends Piece {
 }
 
 export class Queen extends Piece {
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = 'Queen';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/4/49/Chess_qlt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/6/60/Real_real_White_Queen.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/a/af/Chess_qdt60.png";
+                "https://upload.wikimedia.org/wikipedia/commons/2/28/Real_real_real_Black_Queen.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         // up
         var moves = new Set();
 
@@ -388,19 +403,22 @@ export class Queen extends Piece {
 }
 
 export class King extends Piece {
-    constructor(isWhite, hasMoved) {
-        super(isWhite, hasMoved);
+    constructor(isWhite, hasMoved, isFrozen) {
+        super(isWhite, hasMoved, isFrozen);
         this.type = 'King';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Chess_klt45.svg/68px-Chess_klt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/3/3c/White_King.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chess_kdt45.svg/68px-Chess_kdt45.svg.png";
+                "https://upload.wikimedia.org/wikipedia/commons/9/95/Black_King.png";
         }
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        if (this.isFrozen) {
+            return new Set();
+        }
         var moves = new Set();
 
         let X = [1, 1, 1, 0, 0, -1, -1, -1];

@@ -1,9 +1,11 @@
+import { hasCustomState } from '@aws-amplify/auth/lib-esm/types/Auth.js';
 import {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
 import logo from '../chess/files/Logo.png';
-import scroll from '../chess/files/scroll.png';
-import buttons from '../chess/files/buttons.jpg';
+import logout from '../chess/files/signOut.png';
+import PlayNowImage from '../chess/files/PlayNowImage.png';
+import HowToPlayImage from '../chess/files/HowToPlayImage.png';
 import './HomePage.css';
 
 function HomePage({setIsLoggedIn}) {
@@ -14,6 +16,7 @@ function HomePage({setIsLoggedIn}) {
         setIsLoggedIn(false);
         localStorage.removeItem('id_token');
     }
+    //document.getElementById('textInput').className="show";
 
     const createGame = async () => {
         const response = await createGameRoom();
@@ -34,17 +37,28 @@ function HomePage({setIsLoggedIn}) {
     }
     return (
         <>
-        <body class ="background"></body>
-        <img src={logo} class="Logo" />
-        <img src={scroll} class="Scroll" />
-        <button onClick={pseudoLogout}> logout </button>
-        <br />
-        <button onClick={createGame} class = "createGame">Create game</button>
-        <br />
-        <form onSubmit={joinGame} onChange={handleTextAreaChange}>
-            <textarea class = "input" />
-            <button class = "joinGame">Join game</button>
-        </form>
+        <div class = "overlay">
+        <body>
+            <ul>
+            <li class = "LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class = "LogoHomePage"></img></a></li>
+            <li class="LogoutHomePageDiv"><a onClick={pseudoLogout}><img src={logout} class = "LogoutHomePage"></img></a></li>
+            </ul>  
+
+            <div class="HowToPlay">
+                <img class = "HowToPlayImage" src={HowToPlayImage}></img>
+            </div>
+
+        <div class="play">
+            <img class = "PlayNowImage" src={PlayNowImage}></img>
+            <button onClick={createGame} class = "HomePageButton">Create Game</button>
+            <form onSubmit = {joinGame} onChange={handleTextAreaChange}>
+                <button class = "HomePageButton " onClick={joinGame}>Join Game</button>
+                <textarea class = "input" />
+            </form>
+            <button class = "HomePageButton">Settings</button>
+        </div>
+        </body>
+        </div>
         </>
     )
 }

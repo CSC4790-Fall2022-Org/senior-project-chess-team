@@ -5,7 +5,8 @@ import serverURL from '../config/serverConfig';
 import {Game} from '../chess/ui/game.js'
 import {ChatBox} from '../chess/ui/chatBox.js'
 import '../chess/ui/gamePage.css'
-
+import logo from '../chess/files/Logo.png';
+import logout from '../chess/files/signOut.png';
 import Hand from '../cards/Hand';
 
 
@@ -62,20 +63,25 @@ export default function GamePage() {
     return (
         <>
             {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay}/>}
-            <div class="gamePage">
-                <div class="child">
-                {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
-                </div>
-                <div class="child">
-                {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
-                </div>
+            <div class="overlay">
+                 <body>
+                    <ul>
+                        <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
+                        <li class="LogoutHomePageDiv"><a><img src={logout} class="LogoutHomePage"></img></a></li>
+                    </ul>
+                        <div class="board">
+                        {color !== '' ? <Game isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}/> : <p>Waiting for response...</p> }
+                        </div>
+                        <div class="play">
+                            {color !== '' ? <ChatBox isWhite={(color === 'white')} ws={socket.current} id={searchParams.get('id')}></ChatBox> : <p></p>}
+                        </div>
 
-                <div style={{width: '100%'}}>
+                        <div style={{width: '100%'}}>
 
-                {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
-                <p>Opponent has {numOpponentCards.current} cards</p>
-                </div>
-
+                        {color !== '' && <Hand ws={socket.current} id={searchParams.get('id')} cards={cards} gameId={searchParams.get('id')}/>  }
+                        <p>Opponent has {numOpponentCards.current} cards</p>
+                        </div>
+                </body>
             </div>
         </>
     )

@@ -4,5 +4,11 @@
     display: grid;
     grid-template-columns: 640px 1fr;
     grid-template-rows: 640px 1fr;
-    justify-content: start;   
+    justify-content: start; 
+    background-color: #b5d6cf;  
+}
+.board{
+    position: absolute;
+    margin-top: 2%;
+    margin-left: 10%;
 }

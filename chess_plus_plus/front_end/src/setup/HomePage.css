@@ -99,6 +99,7 @@ left: -15%;
 
 p {
   color:#ffbd59;
+  font-size: 32px;
 }
 
 li {
@@ -164,4 +165,13 @@ li a:hover:not(.active) {
 .HomePageButton:active {
   box-shadow: none;
   transform: translateY(0);
+}
+.input{
+  position: absolute;
+  right: 20%;
+  margin-top: 1%;
+  margin-bottom:1%;
+  width: 300px;
+  height: 10px;
+  padding: 10px;
 }

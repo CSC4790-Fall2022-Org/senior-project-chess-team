@@ -47,9 +47,9 @@ function HomePage({ setIsLoggedIn }) {
                     <div class="HowToPlay">
                         <img class="HowToPlayImage" src={HowToPlayImage}></img>
                         <ul class = "Rules">
-                            <p>Move Piece</p>
-                            <p>Get Card</p>
-                            <p>Win</p>
+                            <p>-Move Piece</p>
+                            <p>-Get Card</p>
+                            <p>-Win</p>
                         </ul>
                     </div>
 

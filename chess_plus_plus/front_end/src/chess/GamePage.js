@@ -64,7 +64,7 @@ export default function GamePage() {
         <>
 
             <div class="overlay">
-                <body>
+
                     {showOverlay && <TransparentOverlay id={searchParams.get('id')} setShowOverlay={setShowOverlay} />}
                     <ul class="navbar">
                         <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
@@ -84,8 +84,6 @@ export default function GamePage() {
                             <p>Opponent has {numOpponentCards.current} cards</p>
                         </div>
                     </div>
-
-                </body>
             </div>
         </>
     )

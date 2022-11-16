@@ -2,8 +2,9 @@
 
 .gamePage {
     display: grid;
-    grid-template-columns: 640px 1fr;
-    grid-template-rows: 640px 1fr;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-column-gap: 5px;
     justify-content: start; 
     background-color: #b5d6cf;  
 }
@@ -11,10 +12,9 @@
   display: block;
   background-color: #4d897f;
   position: relative;
-  width: 50%;
-  min-width: none;
-  margin-right: auto;
-  margin-left: auto;
+  width: 90%;
+  min-width: 200px;
+  margin-right: 5%;
   height: 500px;
   border: 12px solid #4d897f;
   border-radius: 5px;

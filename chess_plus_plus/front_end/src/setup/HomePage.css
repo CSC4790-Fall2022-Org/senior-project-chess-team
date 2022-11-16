@@ -1,15 +1,4 @@
-.overlay{
-    opacity:1;
-    background-color:#b5d6cf;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width:100%;
-    height:120%;
-    top:0px;
-    left:0px;
-    z-index:1000;
-    display:block;
-}
+
 
 .LogoHomePage{
 width: 140%;

@@ -7,7 +7,6 @@ const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
 const { handleUseCard } = require('./games/handleUseCard.js')
-const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 let chats = {}
 
@@ -74,7 +73,14 @@ io.on('connection', socket => {
   }
 
   socket.emit('clientColor', game.color(userName));
-
+  socket.on('gameMounted', () => {
+    socket.emit('updateAfterMove', {'board': game.color(userName) === 'white' ? game.whiteBoard : game.blackBoard,
+    'specialSquare': game.color(userName) === 'white' ? game.whiteSpecialSquare : game.blackSpecialSquare,
+   })
+   updateHands(game)
+  })
+  
+  console.log('we emitted')
   socket.on('sendMessage', (arg) => {
     arg = JSON.parse(arg);
     messages = chats[arg.game_id];
@@ -90,9 +96,6 @@ io.on('connection', socket => {
 
   socket.on('playerMove', (arg) => {
     updated_game_info = handleMove(arg)
-    if (updated_game_info === null) {
-      return
-    }
     updated_game = updated_game_info[0]
     check_mate_status = updated_game_info[1]
     if (updated_game === null) {
@@ -147,8 +150,15 @@ server.listen(port, () => {
 })
 
 const updateHands = game => {
-  io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
+  // if (game.whiteUserSocketId !== null) {
+    io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
+
+  // }
+  // if (game.blackUserSocketId !== null)
+  // {
   io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards, opponentCardCount: game.whiteCards.length})
+
+  // }
 }
 const removeBearer = tokenWithBearer => {
   return tokenWithBearer.split(' ')[1];

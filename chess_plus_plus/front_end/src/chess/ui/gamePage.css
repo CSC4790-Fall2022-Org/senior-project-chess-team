@@ -2,7 +2,47 @@
 
 .gamePage {
     display: grid;
-    grid-template-columns: 640px 1fr;
-    grid-template-rows: 640px 1fr;
-    justify-content: start;   
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 2fr 1fr;
+    grid-column-gap: 5px;
+    justify-content: start; 
+    background-color: #b5d6cf;  
+}
+.LargeContainer{
+  display: block;
+  background-color: #4d897f;
+  position: relative;
+  width: 90%;
+  min-width: 200px;
+  margin-right: 5%;
+  height: 500px;
+  border: 12px solid #4d897f;
+  border-radius: 5px;
+  margin-top: 100px;
+  box-shadow: 5px 5px 2px #396c63;
+  border-radius: 15px;
+
+}
+
+
+.board{
+    position: relative;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.PowerUps{
+  margin-top: 20%;
+}
+
+.opponentCard{
+  width: 48%;
+  height: 150px;
+  position: absolute;
+  left: 52%;
+  top:20%;
+  display: flex;
+  flex-flow: wrap row;
+  background-color: #396c63;
+  border-radius: 2.5%;
 }

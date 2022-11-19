@@ -89,6 +89,9 @@ io.on('connection', socket => {
 
   socket.on('playerMove', (arg) => {
     updated_game_info = handleMove(arg)
+    if (updated_game_info === null) {
+      return
+    }
     updated_game = updated_game_info[0]
     check_mate_status = updated_game_info[1]
     if (updated_game === null) {

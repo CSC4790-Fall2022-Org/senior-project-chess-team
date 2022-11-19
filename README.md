@@ -1,3 +1,4 @@
+# Run this branch for release 3. Ignore release 3 tag.
 # Required Software
 - Docker (with compose) <--- easiest way
 <br />(below required if not running with docker)

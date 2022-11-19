@@ -7,7 +7,6 @@ const games = require('./games/games.js')
 const { handleMove } = require('./games/handleMove.js')
 const { handlePromotionMove } = require('./games/handlePromotionMove.js')
 const { handleUseCard } = require('./games/handleUseCard.js')
-const { getRandomSquare } = require('./randomness/squareSelector.js')
 
 let chats = {}
 

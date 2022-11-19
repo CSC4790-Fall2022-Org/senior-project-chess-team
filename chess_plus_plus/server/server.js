@@ -140,7 +140,6 @@ io.on('connection', socket => {
 
   socket.on('promotion', arg => {
     updated_game_info = handlePromotionMove(arg)
-    console.log(updated_game_info)
     if (updated_game_info === null) {
       return
     }

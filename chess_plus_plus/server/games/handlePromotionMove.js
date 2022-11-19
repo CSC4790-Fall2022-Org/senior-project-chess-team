@@ -11,7 +11,11 @@ function handlePromotionMove(arg) {
     playerGame.makeMove(arg.board.playerIsWhite, arg.move)
     playerGame.promotePawn(arg.board.playerIsWhite, arg.promotionPiece, arg.move.dest)
 
-    return playerGame
+    if (playerGame.opponentInCheckMate(arg.board.playerIsWhite)) {
+        return arg.board.playerIsWhite ? [playerGame, 'W'] : [playerGame, 'B']
+    }
+
+    return [playerGame, 'X']
 }
 
 exports.handlePromotionMove = handlePromotionMove

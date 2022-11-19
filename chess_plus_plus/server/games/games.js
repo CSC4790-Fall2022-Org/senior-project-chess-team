@@ -92,10 +92,14 @@ function Game(gameId, whiteUserId, blackUserId) {
         if (isWhite) {
             this.whiteBoard.promotePawn(pieceType, squareCoords)
             this.blackBoard.board = rotated(this.whiteBoard.board)
+            this.blackBoard.blackKingInCheck = this.whiteBoard.blackKingInCheck
+            this.blackBoard.whiteKingInCheck = this.whiteBoard.whiteKingInCheck
         }
         else {
             this.blackBoard.promotePawn(pieceType, squareCoords)
             this.whiteBoard.board = rotated(this.blackBoard.board)
+            this.whiteBoard.blackKingInCheck = this.blackBoard.blackKingInCheck
+            this.whiteBoard.whiteKingInCheck = this.blackBoard.whiteKingInCheck
         }
 
         this.updateMovesOnBoards()

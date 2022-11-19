@@ -39,6 +39,7 @@ test('Can detect if board in checkmate', () => {
     game.whiteBoard.board = getWhiteBoardOneMoveAwayFromCheckmate(playerIsWhite)
     game.makeMove(playerIsWhite, move)
     game.promotePawn(playerIsWhite, pieceType, move.dest)    
+    console.log(game.whiteBoard.board[0][6])
 
     expect(game.opponentInCheckMate(playerIsWhite)).toBeTruthy()
 })

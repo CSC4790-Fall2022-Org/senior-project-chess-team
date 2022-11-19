@@ -316,6 +316,11 @@ class BoardState {
         let newPiece = getPieceOfType(pieceType, this.playerIsWhite)
 
         this.board[destRow][destCol] = newPiece;
+        
+
+        this.board[parseInt(dest[0])][parseInt(dest[2])].hasMoved = true;
+        this.board = updatePossibleMovesAllPieces(this.board, this.playerIsWhite);
+        this.postMoveCheckUpdate();
     }
 
     postMoveCheckUpdate() {

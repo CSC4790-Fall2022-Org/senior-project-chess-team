@@ -2,13 +2,13 @@
     position: absolute;
     display: flex;
     flex-wrap: wrap;
-    background-color: aqua;
+    background-color: gray;
     left: 50%;
     width: 10%;
     height: 20%;
     top: 50%;
     align-self: center;
-    opacity: .3;
+    opacity: .8;
     align-self: flex-end;
     z-index: 5;
     width: 160px;

@@ -20,16 +20,18 @@ class FreezeCard extends Card {
 
     action(boardState, target) {
         // manipulate the boardstate in some way. 
-        console.log('Action was called')
+        console.log('Used freezecard')
         // For now pick a random target square
         target = getRandomEnemySquare(boardState);
+
+
+        console.log('target square', target)
         // if (boardState.playerIsWhite) {
         //     boardState.blackDeadPieces.push(boardState.board[target[0]][target[1]].type)
         // }
         // else {
         //     boardState.whiteDeadPieces.push(boardState.board[target[0]][target[1]].type)
         // }
-        console.log(boardState.whiteDeadPieces, boardState.blackDeadPieces)
         boardState.board[target[0]][target[1]].isFrozen = true;
 
 
@@ -44,7 +46,6 @@ class FrozenCrossCard extends Card {
 
     action(boardState, target) {
         // manipulate the boardstate in some way. 
-        console.log('Action was called')
         let row = getRandomNumber(0, 7)
         let col = getRandomNumber(0, 7)
         // if (boardState.playerIsWhite) {

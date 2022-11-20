@@ -119,15 +119,12 @@ function Game(gameId, whiteUserId, blackUserId) {
             return 
         }
         const newCard = this.cardProvider.getCard();
-        console.log(newCard)
         if (isWhite) {
             newCard.id = nextId(this.whiteCards)
-            console.log(newCard)
             this.whiteCards.push(newCard)
         }
         else {
             newCard.id = nextId(this.blackCards)
-            console.log(newCard)
 
             this.blackCards.push(newCard)
         }
@@ -135,8 +132,6 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
         // First check for check to save time
-        console.log("white check status:", board.whiteKingInCheck)
-        console.log("black check status:", board.blackKingInCheck)
         if (isWhite ? board.blackKingInCheck : board.whiteKingInCheck) {
             // Then check for subset of check (checkmate) when they cant move
             if (!board.playerCanMove()) {
@@ -175,6 +170,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.playCard = (color, cardId) => {
+        // console.log('entering play card', this.whiteBoard.board)
         let idx;
         if (color === 'white') {
             idx = findCardWithId(this.whiteCards, cardId)
@@ -187,7 +183,9 @@ function Game(gameId, whiteUserId, blackUserId) {
             }
             this.blackBoard.blackDeadPieces = this.whiteBoard.blackDeadPieces;
             this.blackBoard.whiteDeadPieces = this.whiteBoard.whiteDeadPieces;
+            // console.log('in playcard, white:', this.whiteBoard.board)
             this.blackBoard.board = rotated(this.whiteBoard.board)
+
             this.whiteUsedCardThisTurn = true
         }
         else {
@@ -212,6 +210,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.hasUsedCard = name => {
         return this.color(name) === 'white' ? this.whiteUsedCardThisTurn : this.blackUsedCardThisTurn
     }
+
 }
 
 const rotated = board => {
@@ -221,6 +220,7 @@ const rotated = board => {
     }
 
     new_board.reverse().forEach(function(arr) { arr.reverse })
+
     return new_board
 
 }

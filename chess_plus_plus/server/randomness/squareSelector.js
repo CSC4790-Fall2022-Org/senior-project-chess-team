@@ -6,11 +6,11 @@ function getRandomSquare(boardState) {
     return allPlayerMoves[randomNum]
 }
 
-function getRandomEnemySquare(boardState) {
+function getRandomEnemySquareNonKing(boardState) {
     let squares = []
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
-            if (boardState.board[i][j] !== null) {
+            if (boardState.board[i][j] !== null && boardState.board[i][j].type !== 'King') {
                 if (boardState.playerIsWhite !== boardState.board[i][j].isWhite) {
                     if (boardState.board[i][j].type !== 'King') {
                         squares.push([i, j]);
@@ -44,5 +44,5 @@ const getAllMoves = boardState => {
     return moves
 }
 exports.getRandomSquare = getRandomSquare;
-exports.getRandomEnemySquare = getRandomEnemySquare;
+exports.getRandomEnemySquareNonKing = getRandomEnemySquareNonKing;
 exports.getRandomNumber = getRandomNumber;

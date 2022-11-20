@@ -1,6 +1,6 @@
 const { Knight, Rook, Pawn, Bishop, Queen, King } = require('../../games/pieces/subpieces.js');
 const {Card} = require('./card.js')
-const { getRandomEnemySquare, getRandomNumber } = require('../squareSelector')
+const { getRandomEnemySquareNonKing, getRandomNumber } = require('../squareSelector')
 
 function getLowestAvailableSquare(boardState) {
     for (let i = 7; i >= 0; i--) {
@@ -22,7 +22,7 @@ class FreezeCard extends Card {
         // manipulate the boardstate in some way. 
         console.log('Action was called')
         // For now pick a random target square
-        target = getRandomEnemySquare(boardState);
+        target = getRandomEnemySquareNonKing(boardState);
         // if (boardState.playerIsWhite) {
         //     boardState.blackDeadPieces.push(boardState.board[target[0]][target[1]].type)
         // }
@@ -54,12 +54,12 @@ class FrozenCrossCard extends Card {
         //     boardState.whiteDeadPieces.push(boardState.board[target[0]][target[1]].type)
         // }
         for (let j = 0; j < 8; j++) {
-            if (boardState.board[row][j] !== null) {
+            if (boardState.board[row][j] !== null && boardState.board[row][j].type !== 'King') {
                 boardState.board[row][j].isFrozen = true;
             }
         }
         for (let i = 0; i < 8; i++) {
-            if (boardState.board[i][col] !== null) {
+            if (boardState.board[i][col] !== null && boardState.board[i][col].type !== 'King') {
                 boardState.board[i][col].isFrozen = true;
             }
         }

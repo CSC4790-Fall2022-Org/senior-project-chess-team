@@ -15,6 +15,7 @@ function handleUseCard(arg, userName) {
         return 'It must be your turn to use a card!'
     }
     playerGame.playCard(playerColor, arg.cardId)
+    playerGame.updateMovesOnBoards();
     return playerGame
 }
 

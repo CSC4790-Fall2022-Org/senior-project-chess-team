@@ -1,4 +1,3 @@
-import { hasCustomState } from '@aws-amplify/auth/lib-esm/types/Auth.js';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
@@ -7,10 +6,11 @@ import logout from '../chess/files/signOut.png';
 import PlayNowImage from '../chess/files/PlayNowImage.png';
 import HowToPlayImage from '../chess/files/HowToPlayImage.png';
 import './HomePage.css';
+import JoinGameInput from './JoinGameInput.js';
 
 function HomePage({ setIsLoggedIn }) {
-
-    const [text, setText] = useState('');
+    const [showJoinGameInput, setShowJoinGameInput] = useState(false);
+    
     const navigate = useNavigate();
     const pseudoLogout = () => {
         setIsLoggedIn(false);
@@ -28,13 +28,6 @@ function HomePage({ setIsLoggedIn }) {
         }
     }
 
-    const joinGame = () => {
-        navigate(`/game?id=${text}`);
-    }
-
-    const handleTextAreaChange = t => {
-        setText(t.target.value);
-    }
     return (
         <>
             <div class="overlay">
@@ -56,13 +49,10 @@ function HomePage({ setIsLoggedIn }) {
                     <div class="play">
                         <img class="PlayNowImage" src={PlayNowImage}></img>
                         <button onClick={createGame} class="HomePageButton">Create Game</button>
-                        <button class="HomePageButton" onClick={joinGame}>Join Game</button>
-                        <form onSubmit={joinGame} onChange={handleTextAreaChange}>
-                            <textarea class="input" />
-                        </form>
-                        <button class="HomePageButton">Settings</button>
+                        <button class="HomePageButton" onClick={() => setShowJoinGameInput(true)}>Join Game</button>
+                        {showJoinGameInput && <JoinGameInput closeInput={setShowJoinGameInput} />}
+                        <p>{showJoinGameInput}</p>
                     </div>
-                    
                 </body>
             </div>
             

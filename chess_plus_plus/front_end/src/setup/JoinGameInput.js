@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import './JoinGameInput.css';
 
 function JoinGameInput({closeInput}) {
     const navigate = useNavigate();
@@ -15,13 +16,14 @@ function JoinGameInput({closeInput}) {
     const [text, setText] = useState('');
 
     return (
-        <>
-        <form onSubmit={joinGame} onChange={handleTextAreaChange}> 
+        <div class='joinGameInput'>
+        <form onChange={handleTextAreaChange}> 
             <textarea class="input" />
-            <input type="submit" />
         </form>
-        <button onClick={() => closeInput(false)}>close me</button>
-        </>
+        <button onClick={joinGame}>join</button>
+        <button class='closeGameInput' onClick={() => closeInput(false)}>close me</button>
+        </div>
+        
     )
 }
 export default JoinGameInput;

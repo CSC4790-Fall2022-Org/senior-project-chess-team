@@ -187,5 +187,6 @@ const closeOverlayButton = {
     width: "50px",
     height: "50px",
     color: "white",
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    background: "transparent",
+    border: "none",
 };

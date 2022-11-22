@@ -17,11 +17,14 @@ function JoinGameInput({closeInput}) {
 
     return (
         <div class='joinGameInput'>
+        <p class='joinGameText'>Enter the game code below, then click join</p>
         <form onChange={handleTextAreaChange}> 
             <textarea class="input" />
         </form>
         <button onClick={joinGame}>join</button>
-        <button class='closeGameInput' onClick={() => closeInput(false)}>close me</button>
+        <button class='closeGameInput' onClick={() => closeInput(false) }>
+             <span>&times;</span>
+        </button>
         </div>
         
     )

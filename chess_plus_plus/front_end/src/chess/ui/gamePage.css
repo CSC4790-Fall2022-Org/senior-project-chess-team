@@ -10,7 +10,7 @@
 }
 .LargeContainer{
   display: block;
-  background-color: #4d897f;
+  background-color: rgb(77, 137, 127);
   position: relative;
   width: 90%;
   min-width: 200px;

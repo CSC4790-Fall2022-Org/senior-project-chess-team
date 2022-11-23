@@ -18,7 +18,9 @@ body {
 
 .game {
     aspect-ratio: 1 / 1;
-    width: 800px
+    flex-grow: 3;
+    max-width: 90vh;
+    min-width: 320px;
 }
 /* figure out what would be the best pixel size would be and draw the pieces to apply here */
 

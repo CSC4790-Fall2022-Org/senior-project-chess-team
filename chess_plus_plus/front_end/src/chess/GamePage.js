@@ -99,7 +99,7 @@ export default function GamePage({setIsLoggedIn}) {
                             />
                         )}
                     </div>
-                    <div class="opponentCard">
+                    <div class="opponentHand">
                         <p>Opponent has {numOpponentCards.current} cards</p>
                     </div>
                 </div>

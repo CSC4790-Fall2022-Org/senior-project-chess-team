@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
-import logo from '../chess/files/Logo.png';
-import logout from '../chess/files/signOut.png';
 import PlayNowImage from '../chess/files/PlayNowImage.png';
 import HowToPlayImage from '../chess/files/HowToPlayImage.png';
 import './HomePage.css';
 import JoinGameInput from './JoinGameInput.js';
+import Banner from '../chess/ui/banner.js';
 
 function HomePage({ setIsLoggedIn }) {
     const [showJoinGameInput, setShowJoinGameInput] = useState(false);
@@ -32,10 +31,7 @@ function HomePage({ setIsLoggedIn }) {
         <>
             <div class="overlay">
                 <body>
-                    <ul class ="navbar">
-                        <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
-                        <li class="LogoutHomePageDiv"><a onClick={pseudoLogout}><img src={logout} class="LogoutHomePage"></img></a></li>
-                    </ul>
+                <Banner setIsLoggedIn={setIsLoggedIn} />
 
                     <div class="HowToPlay">
                         <img class="HowToPlayImage" src={HowToPlayImage}></img>

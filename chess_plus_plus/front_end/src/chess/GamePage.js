@@ -8,8 +8,9 @@ import "../chess/ui/gamePage.css";
 import logo from "../chess/files/Logo.png";
 import logout from "../chess/files/signOut.png";
 import Hand from "../cards/Hand";
+import Banner from "./ui/banner";
 
-export default function GamePage() {
+export default function GamePage({setIsLoggedIn}) {
     const socket = useRef(null);
     const numOpponentCards = useRef(0);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -58,24 +59,15 @@ export default function GamePage() {
 
     return (
         <>
+        <Banner setIsLoggedIn={setIsLoggedIn} />
+
             {showOverlay && (
                 <TransparentOverlay
                     id={searchParams.get("id")}
                     setShowOverlay={setShowOverlay}
                 />
             )}
-            <ul class="navbar">
-                <li class="LogoHomePageDiv">
-                    <a class="active" href="#home">
-                        <img src={logo} class="LogoHomePage"></img>
-                    </a>
-                </li>
-                <li class="LogoutHomePageDiv">
-                    <a>
-                        <img src={logout} class="LogoutHomePage"></img>
-                    </a>
-                </li>
-            </ul>
+            
             <div class="gamePage">
                 <div class="board">
                     {color !== "" ? (

@@ -11,7 +11,7 @@ function Banner({setIsLoggedIn}) {
     return (
     <div class = "banner">
         <ul class ="navbar">
-            <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
+            <li class="LogoHomePageDiv"><a class="active" href="/"><img src={logo} class="LogoHomePage"></img></a></li>
             <li class="LogoutHomePageDiv"><a onClick={pseudoLogout}><img src={logout} class="LogoutHomePage"></img></a></li>
         </ul>
     </div>

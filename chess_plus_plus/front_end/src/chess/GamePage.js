@@ -69,7 +69,6 @@ export default function GamePage({setIsLoggedIn}) {
             )}
             
             <div class="gamePage">
-                <div class="board">
                     {color !== "" ? (
                         <Game
                             isWhite={color === "white"}
@@ -79,7 +78,6 @@ export default function GamePage({setIsLoggedIn}) {
                     ) : (
                         <p>Waiting for response...</p>
                     )}
-                </div>
 
                 <div class="LargeContainer">
                     {color !== "" ? (

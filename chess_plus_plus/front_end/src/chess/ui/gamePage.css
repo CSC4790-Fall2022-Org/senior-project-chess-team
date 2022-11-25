@@ -3,23 +3,24 @@
 .gamePage {
     display: flex;
     justify-content: flex-end; 
+    align-items: flex-start;
     background-color: #b5d6cf;  
     flex-wrap: wrap;
     margin: 1%;
+
 }
 .LargeContainer{
   display: flex;
   flex-direction: column;
   background-color: rgb(77, 137, 127);
   min-width: 200px;
-  max-width: 30vw;
   border: 12px solid #4d897f;
   box-shadow: 5px 5px 2px #396c63;
   border-radius: 15px;
   flex: 1 1 20vw;
-  margin: 1%;
+  margin-inline: 1%;
   align-items: stretch;
-
+  min-height: 450px;
 
 }
 

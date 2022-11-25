@@ -10,6 +10,7 @@
     row-gap: 1vh;
     column-gap: 1vh;
 }
+
 .LargeContainer{
   display: flex;
   flex-direction: column;
@@ -43,8 +44,10 @@
 .opponentHand{
   display: flex;
   flex-flow: wrap row;
+  align-items: center;
   background-color: #396c63;
   border-radius: 2.5%;
   width: 100%;
   flex: 1 0 0;
+  
 }

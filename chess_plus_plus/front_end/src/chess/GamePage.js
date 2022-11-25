@@ -57,6 +57,8 @@ export default function GamePage({setIsLoggedIn}) {
         console.log("game page rerendered");
     });
 
+    let opponentHand = [...Array(numOpponentCards.current)].map((e, i) => <div className="opponentCard" />)
+    console.log(numOpponentCards, opponentHand)
     return (
         <>
         <Banner setIsLoggedIn={setIsLoggedIn} />
@@ -100,7 +102,7 @@ export default function GamePage({setIsLoggedIn}) {
                         )}
                     </div>
                     <div class="opponentHand">
-                        <p>Opponent has {numOpponentCards.current} cards</p>
+                        {opponentHand}
                     </div>
                 </div>
             </div>

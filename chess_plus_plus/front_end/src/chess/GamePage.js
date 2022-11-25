@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import io from "socket.io-client";
 import serverURL from "../config/serverConfig";
 import { Game } from "../chess/ui/game.js";
@@ -10,7 +12,7 @@ import logout from "../chess/files/signOut.png";
 import Hand from "../cards/Hand";
 import Banner from "./ui/banner";
 
-export default function GamePage({setIsLoggedIn}) {
+export default function GamePage({ setIsLoggedIn }) {
     const socket = useRef(null);
     const numOpponentCards = useRef(0);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -38,9 +40,15 @@ export default function GamePage({setIsLoggedIn}) {
             console.log("we disconnected");
         });
 
-        
-
-        newSocket.on("error", (text) => alert(text.text));
+        newSocket.on("error", (text) => toast.error(text.text, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "colored",
+            }));
 
         newSocket.on("updateHand", (cards) => {
             numOpponentCards.current = cards.opponentCardCount;
@@ -57,11 +65,13 @@ export default function GamePage({setIsLoggedIn}) {
         console.log("game page rerendered");
     });
 
-    let opponentHand = [...Array(numOpponentCards.current)].map((e, i) => <div className="opponentCard" />)
-    console.log(numOpponentCards, opponentHand)
+    let opponentHand = [...Array(numOpponentCards.current)].map((e, i) => (
+        <div className="opponentCard" />
+    ));
+    console.log(numOpponentCards, opponentHand);
     return (
         <>
-        <Banner setIsLoggedIn={setIsLoggedIn} />
+            <Banner setIsLoggedIn={setIsLoggedIn} />
 
             {showOverlay && (
                 <TransparentOverlay
@@ -69,17 +79,17 @@ export default function GamePage({setIsLoggedIn}) {
                     setShowOverlay={setShowOverlay}
                 />
             )}
-            
+
             <div class="gamePage">
-                    {color !== "" ? (
-                        <Game
-                            isWhite={color === "white"}
-                            ws={socket.current}
-                            id={searchParams.get("id")}
-                        />
-                    ) : (
-                        <p>Waiting for response...</p>
-                    )}
+                {color !== "" ? (
+                    <Game
+                        isWhite={color === "white"}
+                        ws={socket.current}
+                        id={searchParams.get("id")}
+                    />
+                ) : (
+                    <p>Waiting for response...</p>
+                )}
 
                 <div class="LargeContainer">
                     {color !== "" ? (
@@ -101,10 +111,20 @@ export default function GamePage({setIsLoggedIn}) {
                             />
                         )}
                     </div>
-                    <div class="opponentHand">
-                        {opponentHand}
-                    </div>
+                    <div class="opponentHand">{opponentHand}</div>
                 </div>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={4000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
             </div>
         </>
     );
@@ -174,7 +194,7 @@ const copyButton = {
 
 const closeOverlayButton = {
     position: "absolute",
-    top: 0,
+    top: "5%",
     right: 0,
     width: "50px",
     height: "50px",

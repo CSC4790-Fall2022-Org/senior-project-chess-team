@@ -59,18 +59,11 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
     else if (specialProperty === Effects.FROZEN_SQUARE) {
       opacity = 0.7;
     }
-
-    const row = parseInt(pos[0])
-    const col = parseInt(pos[2])
     const pieceWrapperStyle = {
       display: 'grid',
+      height: '80px',
+      width: '80px',
       zIndex: 1,
-      gridRow: row+1,
-      gridColumn: col+1,
-      width: '100%',
-      height: '100%',
-      gridTemplateRows: '1fr',
-      gridTemplateColumns: '1fr',
       backgroundColor: `${canDrop || isOver ? color : ""}`,
     }
 
@@ -79,9 +72,9 @@ export default function Square({piece, pos, state, specialProperty, sendMove}) {
       backgroundSize: 'cover',
       gridColumn: 1,
       gridRow: 1,
-      width: '100%',
-      height: '100%',
-      opacity: opacity,
+      width: '80px',
+      height: '80px',
+      opacity: opacity
     }
   return (
     <div class='square' 

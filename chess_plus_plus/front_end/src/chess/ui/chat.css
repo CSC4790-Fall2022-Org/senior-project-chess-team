@@ -3,6 +3,10 @@
     padding-right: 5%;
     padding-bottom: 4%;
 }
+
+.inputArea {
+    height: 10%;
+}
 .temp{
     margin-left: auto;
     margin-right: auto;
@@ -10,10 +14,10 @@
     display: block;
     bottom:0;
     border-radius: 15px;
-    flex: 1 0 0;
+    flex: 2 0 0;
+    max-height: 50%;
 }
 .sendButton{
-    position: relative;
     left:93%;
     margin-top: 1%;
 }
@@ -21,7 +25,6 @@
     background-color: transparent;
     margin-top: 1%;
     border:none;
-    position:absolute;
     bottom:.25;
     left: 1.5%;
     right: 0%;
@@ -46,6 +49,7 @@ input::placeholder {
     overflow-x: auto;
     word-wrap: break-word;
     color: #b5b8d6;
+    height: 90%;
     border-radius: 2.5%;
     
 }

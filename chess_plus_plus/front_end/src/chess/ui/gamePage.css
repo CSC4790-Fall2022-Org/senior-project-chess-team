@@ -7,7 +7,8 @@
     background-color: #b5d6cf;  
     flex-wrap: wrap;
     margin: 1%;
-
+    row-gap: 1vh;
+    column-gap: 1vh;
 }
 .LargeContainer{
   display: flex;
@@ -17,11 +18,11 @@
   border: 12px solid #4d897f;
   box-shadow: 5px 5px 2px #396c63;
   border-radius: 15px;
-  flex: 1 1 20vw;
-  margin-inline: 1%;
+  flex: 1 1 0;
   align-items: stretch;
   min-height: 450px;
-
+  align-self: stretch;
+  gap: 10px;
 }
 
 
@@ -34,7 +35,9 @@
 .PowerUps{
   flex: 1 0 0;
   width: 100%;
-  background-color: aqua;
+  background-color: #396c63;
+  border-radius: 2.5%;
+
 }
 
 .opponentHand{

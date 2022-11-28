@@ -8,10 +8,6 @@ import '../chess/ui/gamePage.css'
 
 import Hand from '../cards/Hand';
 
-
-
-
-
 export default function GamePage() {
 
     const socket = useRef(null)

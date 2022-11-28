@@ -3,9 +3,8 @@ import { renderMatches } from 'react-router-dom';
 import Message from '../ui/message.js'
 import '../ui/chat.css'
 
-
 function clearInput(){
-    document.getElementById("messageText").value = '';
+    document.getElementById("messageText").reset();
 }
 
 export class ChatBox extends React.Component {
@@ -24,44 +23,20 @@ export class ChatBox extends React.Component {
         });
     }
 
-    
     sendMessage() {
         var message = this.state.message;
         this.props.ws.emit('sendMessage',
             JSON.stringify({
                 message: message,
                 isWhite: this.props.isWhite,
-                game_id : this.props.id
+                game_id : this.props.id,
+                date : new Date().toLocaleDateString
             })
         );
         clearInput();
         console.log('message sent on frontend')
 
     }
-
-
-    // getInitialMessages(initialMessages) {
-    //     console.log("updating initial messages")
-    //     let newMessages = []
-    //     if (initialMessages.length > 0) {
-    //         initialMessages.messages.forEach( (message) => {
-    //             console.log(message);
-    //             newMessages.push({
-    //                     isMyMessage : message.isWhite === this.props.isWhite,
-    //                     message : message.message,
-    //                     username : message.username
-    //                 }
-    //             )
-    //         }
-    //         )
-    //     }
-    //     console.log(newMessages)
-    //     return newMessages
-    // }
-
-    
- 
-
 
     updateMessages(updatedMessages) {
         console.log("updating messages")
@@ -71,7 +46,8 @@ export class ChatBox extends React.Component {
             newMessages.push({
                     isMyMessage : message.isWhite === this.props.isWhite,
                     message : message.message,
-                    username : message.username
+                    username : message.username,
+                    date : message.date
                 }
             )
         }
@@ -101,25 +77,44 @@ export class ChatBox extends React.Component {
                     isMyMessage={message.isMyMessage}
                     message={message.message}
                     username={message.username}
+                    date={message.date}
                 ></Message>
             )
         });
         return (
+            <section class="msger">
+                <header class="msger-header">
+                    <div class="msger-header-title">
+                        <i class="fas fa-comment-alt"></i> Chat
+                        <div class="msg-info-time">{Date().slice(16,21)}</div>
+                    </div>
+                </header>
 
-            <div class= "temp">
-
+                
+            <div class= "chat">
                 <div class="chatBox">
                     {messageLines.map((message, index) => (
                         <span key={index}>
                             { message }
                         </span>
                     ))}
+
+                    {/* <div class="msg-bubble">
+                        <div class="msg-info">
+                            <div class="msg-info-name">${name}</div>
+                            <div class="msg-info-time">${formatDate(new Date())}</div>
+                        </div>
+                    </div> */}
                 </div>
-
-                <input type="text" id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
-                <button onClick={this.sendMessage.bind(this)} >send</button>
-
             </div>
+                    
+                            
+                <input type="text" class="msger-input" id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
+                <button class="msgr-send-btn" onClick={this.sendMessage.bind(this)} >send</button>
+
+                
+            </section>
+
         )
     }
 }

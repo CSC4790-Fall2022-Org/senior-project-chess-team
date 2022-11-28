@@ -21,20 +21,31 @@ class Pawn extends Piece {
 
     // Call this function after a piece is moved
     updatePossibleMoves(i, j, board, playerIsWhite) {
-        if (this.isFrozen) {
-            return new Set();
-        }
+        
         // up
         var moves = new Set();
+        if (this.isFrozen) {
+            this.possibleMoves = moves;
+            return;
+        }
         if (i > 0) {
             if (board[i - 1][j] === null) {
                 moves.add(pairToMoveStr(i - 1, j));
             }
         }
         // check for starting pawn
-        if (i === 6) {
-            if (board[i - 2][j] === null) {
-                moves.add(pairToMoveStr(i - 2, j));
+        if (!this.hasMoved) {
+            // my pawn
+            if (this.isWhite === playerIsWhite) {
+                if (board[i - 1][j] === null && board[i - 2][j] === null) {
+                    moves.add(pairToMoveStr(i - 2, j));
+                }
+            }
+            // enemy pawn
+            else {
+                if (board[i + 1][j] === null && board[i + 2][j] === null) {
+                    moves.add(pairToMoveStr(i + 2, j));
+                }
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
@@ -98,11 +109,13 @@ class Rook extends Piece {
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
-        if (this.isFrozen) {
-            return new Set();
-        }
+        
         // up
         var moves = new Set();
+        if (this.isFrozen) {
+            this.possibleMoves = moves
+            return;
+        }
         // moving logic?
         // up
         // var flag = true;
@@ -175,10 +188,11 @@ class Knight extends Piece {
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
-        if (this.isFrozen) {
-            return new Set();
-        }
         var moves = new Set();
+        if (this.isFrozen) {
+            this.possibleMoves = moves;
+            return;
+        }
 
         let X = [ 2, 1, -1, -2, -2, -1, 1, 2 ];
         let Y = [ 1, 2, 2, 1, -1, -2, -2, -1 ];
@@ -214,10 +228,11 @@ class Bishop extends Piece {
     }
 
     updatePossibleMoves(i, j, board, playerIsWhite) {
+        var moves = new Set();
         if (this.isFrozen) {
-            return new Set();
+            this.possibleMoves = moves;
+            return;
         }
-        let moves = new Set();
 
         // top right
         for (let r = i - 1, c = j + 1; r >= 0 && c < board[0].length; r--, c++) {
@@ -290,11 +305,11 @@ class Queen extends Piece {
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
-        if (this.isFrozen) {
-            return new Set();
-        }
-        // up
         var moves = new Set();
+        if (this.isFrozen) {
+            this.possibleMoves = moves;
+            return;
+        }
 
         // BISHOP CODE
         // top right
@@ -419,10 +434,11 @@ class King extends Piece {
     }
     
     updatePossibleMoves(i, j, board, playerIsWhite) {
-        if (this.isFrozen) {
-            return new Set();
-        }
         var moves = new Set();
+        if (this.isFrozen) {
+            this.possibleMoves = moves;
+            return;
+        }
 
         let X = [ 1, 1, 1, 0, 0, -1, -1, -1 ];
         let Y = [ -1, 0, 1, -1, 1, -1, 0, 1 ];

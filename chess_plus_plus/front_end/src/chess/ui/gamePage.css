@@ -1,8 +1,53 @@
 
 
 .gamePage {
-    display: grid;
-    grid-template-columns: 640px 1fr;
-    grid-template-rows: 640px 1fr;
-    justify-content: start;   
+    display: flex;
+    justify-content: flex-end; 
+    align-items: flex-start;
+    background-color: #b5d6cf;  
+    flex-wrap: wrap;
+    margin: 1%;
+    row-gap: 1vh;
+    column-gap: 1vh;
+}
+
+.LargeContainer{
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(77, 137, 127);
+  min-width: 200px;
+  border: 12px solid #4d897f;
+  box-shadow: 5px 5px 2px #396c63;
+  border-radius: 15px;
+  flex: 1 1 0;
+  align-items: stretch;
+  min-height: 450px;
+  align-self: stretch;
+  gap: 10px;
+}
+
+
+.board{
+    position: relative;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.PowerUps{
+  flex: 1 0 0;
+  width: 100%;
+  background-color: #396c63;
+  border-radius: 2.5%;
+
+}
+
+.opponentHand{
+  display: flex;
+  flex-flow: wrap row;
+  align-items: center;
+  background-color: #396c63;
+  border-radius: 2.5%;
+  width: 100%;
+  flex: 1 0 0;
+  
 }

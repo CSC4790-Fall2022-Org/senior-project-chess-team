@@ -1,6 +1,6 @@
 # Required Software
 - Docker (with compose) <--- easiest way
-(if running without Docker)
+<br />(below required if not running with docker)
 - Node v. 16.17
 - npm (any version should be fine)
 
@@ -24,7 +24,7 @@ NOTE: This is a slightly older version than what was demod in class. That versio
 # Viewing application  
 Navigate to localhost:3000/ with your local browser.
 
-If you would like to play a game against yourself, you will need at least one incognito tab.
+If you would like to play a game against yourself, you will need one regular tab and one incognito tab.
 Simply sign into different accounts on the different tabs.
 We have provided two testing accounts for login purposes. <br />
 Username: defaultuser1

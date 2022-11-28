@@ -82,6 +82,7 @@ export class Game extends React.Component {
 
     receivedMove(board) {
         console.log(board);
+        console.log('received move')
         let newBoard = new BoardState(this.props.isWhite);
         newBoard.blackKingInCheck = board.board.blackKingInCheck;
         newBoard.whiteKingInCheck = board.board.whiteKingInCheck;
@@ -116,10 +117,10 @@ export class Game extends React.Component {
     }
         
     componentDidMount() {
-        console.log("game mount");
         this.props.ws.on("updateAfterMove", this.receivedMove);
         this.props.ws.on('win', this.youWin)
         this.props.ws.on('loss', this.youLose)
+        this.props.ws.emit('gameMounted', {})
     }
 
     componentDidUpdate() {
@@ -128,7 +129,6 @@ export class Game extends React.Component {
     componentWillUnmount() {
         //console.log("game will unmount");
         this.props.ws.removeListener("updateAfterMove");
-        this.props.ws.removeListener("bob");
         this.props.ws.removeListener("win");
         this.props.ws.removeListener("lose");
     }

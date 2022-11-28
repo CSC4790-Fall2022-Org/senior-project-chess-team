@@ -38,6 +38,38 @@
     padding-bottom: 4%;
 }
 
+.inputArea {
+    height: 10%;
+}
+.temp{
+    width: 100%;
+    display: block;
+    bottom:0;
+    border-radius: 15px;
+    flex: 2 0 0;
+    min-height: 50%;
+    max-height: 50%;
+}
+.sendButton{
+    left:93%;
+    margin-top: 1%;
+}
+.typeBox{
+    background-color: transparent;
+    margin-top: 1%;
+    border:none;
+    bottom:.25;
+    left: 1.5%;
+    right: 0%;
+    outline-width: 0;
+    color:#b5d6cf;
+}
+
+input::placeholder {
+    opacity: .5;
+    color: #b5d6cf;
+}
+
 .oppMessage {
     text-align: left;
     font-family: TF2 professor;

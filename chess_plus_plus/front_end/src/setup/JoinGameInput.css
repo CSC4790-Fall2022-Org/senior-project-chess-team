@@ -1,0 +1,28 @@
+.joinGameInput {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.closeGameInput {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;;
+    color: white;
+    background: transparent;
+    border: none
+}
+
+.joinGameText {
+    font-size: 20px;
+    
+}

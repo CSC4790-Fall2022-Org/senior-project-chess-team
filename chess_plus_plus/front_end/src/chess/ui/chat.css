@@ -89,7 +89,6 @@ input::placeholder {
 
 .chatBox {
     min-width: 200px;
-    height: 640px;
     overflow: scroll;
     word-wrap: break-word;
     border: 1px solid #000;

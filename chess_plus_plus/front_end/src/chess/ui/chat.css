@@ -11,6 +11,10 @@
 
 /* https://codepen.io/sajadhsm/pen/odaBdd */
 
+.msger {
+    flex: 2 0 0;
+    max-height: 50%;
+}
 .chat{
     /* Putting the chat right to the board? */
 }

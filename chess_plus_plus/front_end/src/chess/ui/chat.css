@@ -42,7 +42,8 @@
     border: 1px solid #000;
     background: rgb(236, 208, 208);
     color: rgb(21, 2, 2);
-    height: 15%;
+    height: 20%;
+    box-sizing: border-box;
   }
 
   .msg-info-time{
@@ -121,6 +122,7 @@ input::placeholder {
     color: #fff;
     font-weight: bold;
     cursor: pointer;
+    right: 0px;
     transition: background 0.23s;
 }
 

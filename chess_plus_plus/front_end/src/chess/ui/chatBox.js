@@ -4,7 +4,7 @@ import Message from '../ui/message.js'
 import '../ui/chat.css'
 
 function clearInput(){
-    document.getElementById("messageText").reset();
+    document.getElementById("messageText").value = '';
 }
 
 export class ChatBox extends React.Component {
@@ -85,36 +85,43 @@ export class ChatBox extends React.Component {
             <section class="msger">
                 <header class="msger-header">
                     <div class="msger-header-title">
-                        <i class="fas fa-comment-alt"></i> Chat
-                        <div class="msg-info-time">{Date().slice(16,21)}</div>
+                        Chat
+                        <div class="msg-info-time">{Date().slice(16, 21)}</div>
                     </div>
                 </header>
 
-                
-            <div class= "chat">
-                <div class="chatBox">
-                    {messageLines.map((message, index) => (
-                        <span key={index}>
-                            { message }
-                        </span>
-                    ))}
+                <div class="chat">
+                    <div class="chatBox">
+                        {messageLines.map((message, index) => (
+                            <span key={index}>{message}</span>
+                        ))}
 
-                    {/* <div class="msg-bubble">
+                        {/* <div class="msg-bubble">
                         <div class="msg-info">
                             <div class="msg-info-name">${name}</div>
                             <div class="msg-info-time">${formatDate(new Date())}</div>
                         </div>
                     </div> */}
+                    </div>
                 </div>
-            </div>
-                    
-                            
-                <input type="text" class="msger-input" id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
-                <button class="msgr-send-btn" onClick={this.sendMessage.bind(this)} >send</button>
+                <div class='inputArea'>
 
-                
+                <input
+                    type="text"
+                    class="msger-input"
+                    id="messageText"
+                    value={this.state.message}
+                    onChange={this.messageChanged.bind(this)}
+                ></input>
+                <button
+                    class="msgr-send-btn"
+                    onClick={this.sendMessage.bind(this)}
+                >
+                    send
+                </button>
+                </div>
+
             </section>
-
-        )
+        );
     }
 }

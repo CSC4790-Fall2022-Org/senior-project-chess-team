@@ -86,7 +86,7 @@ export default function GamePage({ setIsLoggedIn }) {
                     Send the below code to your friend to join the game
                 </p>
                 <div style={{ display: "flex" }}>
-                    {gameId}
+                <p style={text}>{gameId}</p>
                     <button
                         style={copyButton}
                         onClick={() => {

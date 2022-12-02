@@ -83,25 +83,13 @@ export class ChatBox extends React.Component {
         });
         return (
             <section class="msger">
-                <header class="msger-header">
-                    <div class="msger-header-title">
-                        Chat
-                        <div class="msg-info-time">{Date().slice(16, 21)}</div>
-                    </div>
-                </header>
+
 
                 <div class="chat">
                     <div class="chatBox">
                         {messageLines.map((message, index) => (
                             <span key={index}>{message}</span>
                         ))}
-
-                        {/* <div class="msg-bubble">
-                        <div class="msg-info">
-                            <div class="msg-info-name">${name}</div>
-                            <div class="msg-info-time">${formatDate(new Date())}</div>
-                        </div>
-                    </div> */}
                     </div>
                 </div>
                 <div class='inputArea'>

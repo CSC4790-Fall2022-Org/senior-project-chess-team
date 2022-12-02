@@ -13,6 +13,9 @@ import {
 import Promotion from "./promotion.js";
 import Effects from "./effects.js";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export class Game extends React.Component {
     constructor(props) {
         // console.log("constructor for game")
@@ -59,25 +62,11 @@ export class Game extends React.Component {
     // TODO: put UI for loss and handling loss stuff here
     youLose(board) {
         this.receivedMove(board)
-        // console.log("you lose")
-        // window.alert("You lose");
-        var ask = window.confirm("You lose, Ok to play again.");
-        if (ask) {
-            window.alert("Come on, now");
-    
-            window.location.href = "http://localhost:3000/";
-        }
+        this.props.playerLost()
     }
     youWin(board) {
         this.receivedMove(board)
-        // console.log("you lose")
-        // window.alert("You lose");
-        var ask = window.confirm("You win, Ok to play again.");
-        if (ask) {
-            window.alert("bye");
-    
-            window.location.href = "http://localhost:3000/";
-        }
+        this.props.playerWon()
     }
 
     receivedMove(board) {
@@ -163,6 +152,8 @@ export class Game extends React.Component {
         return board;
     }
 
+    
+
     render() {
         let boardSquares = [];
         for (let i = 0; i < 8; i++) {
@@ -190,6 +181,7 @@ export class Game extends React.Component {
                 {this.state.promotionMove !== null
                  && <Promotion selection={this.sendPromotionMove} boardState={this.state.boardState}/>}
                 <div class="chessboard">{boardSquares}</div>
+                
             </div>
             // ******* Make background component? *******
             // <div class="background">
@@ -200,3 +192,5 @@ export class Game extends React.Component {
         );
     }
 }
+
+

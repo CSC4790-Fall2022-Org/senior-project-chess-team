@@ -10,3 +10,44 @@
   top:10px;
   left: 75%;
 }
+
+.navbar {
+  height: 40px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #102321;
+  
+}
+
+.LogoHomePage{
+  width: 140%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  top:-5px;
+  left: -15%;
+  }
+  .LogoutHomePage{
+    width: 100%;
+    position: relative;
+    top:-5px;
+    }
+  .LogoHomePageDiv{
+    width: 10%; 
+    border-bottom: #FFFFFF;
+    }
+    .LogoutHomePageDiv{
+      float: right;
+      width: 10%;
+    }
+  
+    li a:hover:not(.active) {
+      background-color: #102321;
+    }
+    
+    .active {
+      background-color: #396c63;
+    }

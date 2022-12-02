@@ -158,6 +158,9 @@ export default function GamePage({ setIsLoggedIn }) {
             </ToastContainer>
 
             <div class="gamePage">
+            <div class="howToPlayContainer">
+
+            </div>
                 {color !== "" ? (
                     <Game
                         isWhite={color === "white"}
@@ -192,6 +195,7 @@ export default function GamePage({ setIsLoggedIn }) {
                     </div>
                     <div class="opponentHand">{opponentHand}</div>
                 </div>
+                
                 <ToastContainer
                     enableMultiContainer
                     containerId={'Errors'}
@@ -212,47 +216,6 @@ export default function GamePage({ setIsLoggedIn }) {
     
 }
 
-const TransparentOverlay = ({ id, setShowOverlay }) => {
-    return (
-        <div style={transparentStyle}>
-            <button
-                style={closeOverlayButton}
-                onClick={() => setShowOverlay(false)}
-            >
-                X
-            </button>
-            <div style={centerBox}>
-                <p style={text}>
-                    Send the below code to your friend to join the game
-                </p>
-                <div style={{ display: "flex" }}>
-                    <p style={text}>{id}</p>
-                    <button
-                        style={copyButton}
-                        onClick={() => {
-                            navigator.clipboard.writeText(id);
-                        }}
-                    >
-                        Copy
-                    </button>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const transparentStyle = {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(10, 10, 10, .8)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: "2",
-};
 
 const centerBox = {
     display: "flex",
@@ -270,15 +233,5 @@ const copyButton = {
     minWidth: "50px",
     flex: "1 0",
     z: 100,
-};
-
-const closeOverlayButton = {
-    position: "absolute",
-    top: "5%",
-    right: 0,
-    width: "50px",
-    height: "50px",
-    color: "white",
-    background: "transparent",
-    border: "none",
+    marginLeft: '5px',
 };

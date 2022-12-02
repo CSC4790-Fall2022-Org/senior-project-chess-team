@@ -21,6 +21,7 @@ body {
     flex-grow: 5;
     max-width: 90vh;
     min-width: 320px;
+    order: 1;
 }
 /* figure out what would be the best pixel size would be and draw the pieces to apply here */
 

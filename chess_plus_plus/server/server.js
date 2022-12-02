@@ -96,6 +96,7 @@ io.on('connection', socket => {
   socket.on('playerMove', (arg) => {
     updated_game_info = handleMove(arg)
     if (updated_game_info === null) {
+      
       return
     }
     updated_game = updated_game_info[0]
@@ -129,8 +130,8 @@ io.on('connection', socket => {
     console.log('trying to use card')
     updated_game = handleUseCard(arg, userName)
     if (typeof updated_game === 'string') {
-      socket.emit('error', {text: updated_game})
-      return
+      sendError(socket, updated_game)
+      return;
     }
     updatePlayers(updated_game)
     // make a function to emit a new hand to a specific player. 
@@ -209,4 +210,6 @@ const updatePlayers = game => {
 }
 
 
-
+const sendError = (socket, text) => {
+  socket.emit('error', {text: text})
+}

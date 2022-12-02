@@ -20,6 +20,7 @@ export default function GamePage({ setIsLoggedIn }) {
     const [cards, setCards] = useState([]);
     const [showOverlay, setShowOverlay] = useState(true);
 
+    const gameId = searchParams.get('id')
     useEffect(() => {
         const newSocket = io(serverURL(), {
             path: "/game/socket.io",
@@ -48,6 +49,7 @@ export default function GamePage({ setIsLoggedIn }) {
             pauseOnHover: true,
             draggable: true,
             theme: "colored",
+            containerId: 'Errors'
             }));
 
         newSocket.on("updateHand", (cards) => {
@@ -65,6 +67,38 @@ export default function GamePage({ setIsLoggedIn }) {
         console.log("game page rerendered");
     });
 
+    useEffect(() => {
+        toast(showGameId, {
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            containerId: 'gameId',
+            })
+    }, [showOverlay])
+
+    const showGameId = () => (
+        <div style={centerBox}>
+                <p >
+                    Send the below code to your friend to join the game
+                </p>
+                <div style={{ display: "flex" }}>
+                    <p style={text}>{gameId}</p>
+                    <button
+                        style={copyButton}
+                        onClick={() => {
+                            navigator.clipboard.writeText(gameId);
+                        }}
+                    >
+                        Copy
+                    </button>
+                </div>
+            </div>
+    )
+
     let opponentHand = [...Array(numOpponentCards.current)].map((e, i) => (
         <div className="opponentCard" />
     ));
@@ -73,12 +107,9 @@ export default function GamePage({ setIsLoggedIn }) {
         <>
             <Banner setIsLoggedIn={setIsLoggedIn} />
 
-            {showOverlay && (
-                <TransparentOverlay
-                    id={searchParams.get("id")}
-                    setShowOverlay={setShowOverlay}
-                />
-            )}
+            <ToastContainer enableMultiContainer containerId={'gameId'} position={toast.POSITION.TOP_CENTER}>
+                <button>click me</button>
+            </ToastContainer>
 
             <div class="gamePage">
                 {color !== "" ? (
@@ -114,8 +145,9 @@ export default function GamePage({ setIsLoggedIn }) {
                     <div class="opponentHand">{opponentHand}</div>
                 </div>
                 <ToastContainer
+                    enableMultiContainer
+                    containerId={'Errors'}
                     position="top-right"
-                    autoClose={4000}
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick
@@ -180,9 +212,7 @@ const centerBox = {
 };
 
 const text = {
-    fontSize: "32px",
-    color: "white",
-    marginBottom: "auto",
+    fontSize: "18px",
 };
 
 const copyButton = {

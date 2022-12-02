@@ -72,6 +72,7 @@ export class Game extends React.Component {
         this.receivedMove(board)
         // console.log("you lose")
         // window.alert("You lose");
+        this.props.toast.success('You win! Do you want to play again?')
         var ask = window.confirm("You win, Ok to play again.");
         if (ask) {
             window.alert("bye");

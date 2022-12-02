@@ -238,8 +238,21 @@ const createGameRoom = userId => {
 
 const { v4: uuidv4 } = require('uuid');
 const { CardProvider } = require('../randomness/cardProvider.js');
+
+
 const generateGameId = () => {
-    return uuidv4(); // make this shorter
+    let id = getRandomId()
+    while (!isUniqueId(id)) {
+        id = getRandomId()
+    }
+    return id; // make this shorter
+}
+
+const getRandomId = () => {
+    return uuidv4().substring(0, 8);
+}
+const isUniqueId = id => {
+    return getById(id) == null
 }
 
 const getById = id => {

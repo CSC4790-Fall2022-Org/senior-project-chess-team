@@ -71,11 +71,11 @@ export default function GamePage({ setIsLoggedIn }) {
         toast(showGameId, {
             autoClose: false,
             hideProgressBar: false,
-            closeOnClick: true,
+            closeOnClick: false,
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "colored",
+            theme: "dark",
             containerId: 'gameId',
             })
     }, [showOverlay])
@@ -99,10 +99,56 @@ export default function GamePage({ setIsLoggedIn }) {
             </div>
     )
 
+    const playerWon = () => {
+        console.log('we won entered')
+        toast.success(winnerToast, {
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'gameId',
+            })
+    }
+
+    const playerLost = () => {
+        console.log('we lost entered')
+        toast.error(loserToast, {
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            containerId: 'gameId',
+            })
+
+    }
     let opponentHand = [...Array(numOpponentCards.current)].map((e, i) => (
         <div className="opponentCard" />
     ));
     console.log(numOpponentCards, opponentHand);
+
+    const returnToHome = () => {
+        window.location.href = window.location.hostname
+    }
+    
+    const winnerToast = () => (
+        <div display={{display: 'flex', flexDirection: 'row'}}>
+            <p>You win!</p>
+            <button onClick={returnToHome}>Return to home</button>
+        </div>
+    )
+    
+    const loserToast = () => (
+        <div display={{display: 'flex', flexDirection: 'row'}}>
+            <p>You lost! Better luck next time.</p>
+            <button onClick={returnToHome}>Return to home</button>
+        </div>
+    )
     return (
         <>
             <Banner setIsLoggedIn={setIsLoggedIn} />
@@ -117,6 +163,8 @@ export default function GamePage({ setIsLoggedIn }) {
                         isWhite={color === "white"}
                         ws={socket.current}
                         id={searchParams.get("id")}
+                        playerWon={playerWon}
+                        playerLost={playerLost}
                     />
                 ) : (
                     <p>Waiting for response...</p>
@@ -160,6 +208,8 @@ export default function GamePage({ setIsLoggedIn }) {
             </div>
         </>
     );
+
+    
 }
 
 const TransparentOverlay = ({ id, setShowOverlay }) => {

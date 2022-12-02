@@ -4,6 +4,7 @@ const cardProvider = require('../randomness/cardProvider')
 
 var activeGames = {}
 
+const MAX_NUMBER_CARDS_IN_HAND = 3
 function resetFrozenPiecesForMovingPlayer(board, playerColor) {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
@@ -118,16 +119,16 @@ function Game(gameId, whiteUserId, blackUserId) {
         if (!this.checkIfMoveToSpecialSquare(isWhite, square)) {
             return 
         }
+        const hand = isWhite ? this.whiteCards : this.blackCards
+        if (MAX_NUMBER_CARDS_IN_HAND ===  hand.length) {
+            // below is read in server : updateHands to send error messages
+            hand[MAX_NUMBER_CARDS_IN_HAND] = `You may only have ${MAX_NUMBER_CARDS_IN_HAND} cards at a time.`
+            return
+        }
         const newCard = this.cardProvider.getCard();
-        if (isWhite) {
-            newCard.id = nextId(this.whiteCards)
-            this.whiteCards.push(newCard)
-        }
-        else {
-            newCard.id = nextId(this.blackCards)
-
-            this.blackCards.push(newCard)
-        }
+        newCard.id = nextId(hand)
+        hand.push(newCard)
+        
     }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;

@@ -174,11 +174,23 @@ server.listen(port, () => {
 
 const updateHands = game => {
   // if (game.whiteUserSocketId !== null) {
+    if (typeof game.whiteCards.at(-1) === 'string') {
+      io.to(game.whiteUserSocketId).emit('error', {text: game.whiteCards.at(-1)})
+      game.whiteCards.pop()
+    }
+
+    if (typeof game.blackCards.at(-1) === 'string') {
+      io.to(game.blackUserSocketId).emit('error', {text: game.blackCards.at(-1)})
+      game.blackCards.pop()
+    }
+
+
     io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
 
   // }
   // if (game.blackUserSocketId !== null)
   // {
+    
   io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards, opponentCardCount: game.whiteCards.length})
 
   // }

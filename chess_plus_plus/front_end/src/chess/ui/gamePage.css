@@ -53,6 +53,17 @@
   
 }
 
+.gamePageBannerWrapper {
+  position: relative;
+}
+
+.forfeitButton {
+  position: absolute;
+  top: 10px;
+  margin: auto;
+  left: 50%;
+}
+
 .howToPlayContainer {
   order: 1;
   width: 225px;

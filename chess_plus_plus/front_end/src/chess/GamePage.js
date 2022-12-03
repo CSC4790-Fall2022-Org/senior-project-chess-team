@@ -149,9 +149,18 @@ export default function GamePage({ setIsLoggedIn }) {
             <button onClick={returnToHome}>Return to home</button>
         </div>
     )
+
+    const forfeitGame = () => {
+        socket.current.emit('forfeit', {
+            game_id: gameId,
+        })
+    }
     return (
         <>
-            <Banner setIsLoggedIn={setIsLoggedIn} />
+            <div class="gamePageBannerWrapper">
+                <Banner setIsLoggedIn={setIsLoggedIn} />
+                <button class='forfeitButton' onClick={forfeitGame}>forfeit</button>
+            </div>
 
             <ToastContainer enableMultiContainer containerId={'gameId'} position={toast.POSITION.TOP_CENTER}>
                 <button>click me</button>

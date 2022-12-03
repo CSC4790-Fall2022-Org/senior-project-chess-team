@@ -163,6 +163,23 @@ io.on('connection', socket => {
       }
     }
   })
+
+  socket.on('forfeit', arg => {
+    const gameId = arg.game_id
+    const userGame = games.getById(gameId)
+
+    if (userGame.color(userName) === 'white') {
+      io.to(userGame.whiteUserSocketId).emit('loss', {'board': userGame.whiteBoard})
+      io.to(userGame.blackUserSocketId).emit('win', {'board': userGame.blackBoard})
+      
+    }
+    else {
+      io.to(userGame.whiteUserSocketId).emit('win', {'board': userGame.whiteBoard})
+      io.to(userGame.blackUserSocketId).emit('loss', {'board': userGame.blackBoard})
+      
+    }
+    io.to(userGame.white)
+  })
   socket.on('disconnect', () => {
     console.log('disconnected')
   })

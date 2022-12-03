@@ -82,7 +82,7 @@ function SignInPage({ setIsLoggedIn }) {
         sessionStorage.setItem(`codeVerifier-${state}`, codeVerifier);
         const codeChallenge = Base64Url.stringify(SHA256(codeVerifier));
         window.location.replace(
-            `${cognitoDomainName}/login?client_id=${clientId}&state=${state}&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=http://localhost:3000/login`
+            `${cognitoDomainName}/login?client_id=${clientId}&state=${state}&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&code_challenge_method=S256&code_challenge=${codeChallenge}&redirect_uri=${window.location.href}`
         );
     };
 

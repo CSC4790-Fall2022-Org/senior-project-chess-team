@@ -137,26 +137,35 @@ function RulePage({ setIsLoggedIn }) {
                                 can come with several different power-ups that
                                 alter the strategy of the game.
                             </li>
-                            <li>Card Types:</li>
-                            <br></br>
+                            <li>
+                                Card Types:
+                                <ul>
+                                    <li>
+                                        Frozen Cross - Freeze a random row and
+                                        column of pieces on the board (including
+                                        your own)
+                                    </li>
+                                    <li>
+                                        Frozen Piece - Freeze a random enemy
+                                        piece
+                                    </li>
+                                    <li>
+                                        Switch Hands - Swap cards with your
+                                        opponent
+                                    </li>
+                                    <li>
+                                        Resurrection - Resurrect a random piece
+                                        from your dead pieces
+                                    </li>
+                                    <li>
+                                        Demotion - Demote a random enemy piece
+                                        by one rank (ex: demote a rook to a
+                                        bishop)
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
-                    <ul>
-                        <li>
-                            Frozen Cross - Freeze a random row and column of
-                            pieces on the board (including your own)
-                        </li>
-                        <li>Frozen Piece - Freeze a random enemy piece</li>
-                        <li>Switch Hands - Swap cards with your opponent</li>
-                        <li>
-                            Resurrection - Resurrect a random piece from your
-                            dead pieces
-                        </li>
-                        <li>
-                            Demotion - Demote a random enemy piece by one rank
-                            (ex: demote a rook to a bishop)
-                        </li>
-                    </ul>
                 </ol>
             </div>
         </>

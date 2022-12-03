@@ -155,16 +155,34 @@ export default function GamePage({ setIsLoggedIn }) {
             game_id: gameId,
         })
     }
+
+    const showForfeitToast = () => {
+        const message = (
+            <>
+            Are you sure you'd like to forfeit?
+            <button onClick={forfeitGame} style={{width: '50%', right: '0px'}}>I'm sure</button>
+            </>
+        )
+        toast.warn(message, {
+            containerId: 'gameId',
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+    }
     return (
         <>
             <div class="gamePageBannerWrapper">
                 <Banner setIsLoggedIn={setIsLoggedIn} />
-                <button class='forfeitButton' onClick={forfeitGame}>forfeit</button>
+                <button class='forfeitButton' onClick={showForfeitToast}>forfeit</button>
             </div>
 
-            <ToastContainer enableMultiContainer containerId={'gameId'} position={toast.POSITION.TOP_CENTER}>
-                <button>click me</button>
-            </ToastContainer>
+            <ToastContainer enableMultiContainer containerId={'gameId'} position={toast.POSITION.TOP_CENTER}/>
 
             <div class="gamePage">
             <div class="howToPlayContainer">

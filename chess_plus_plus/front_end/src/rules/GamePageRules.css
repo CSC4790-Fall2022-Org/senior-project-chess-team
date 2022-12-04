@@ -82,3 +82,8 @@ ul.tabsBar li:hover {
     height: 125px;
     align-self: center;
 }
+
+.cardExample {
+    width: 150px;
+    height: 150px;
+}

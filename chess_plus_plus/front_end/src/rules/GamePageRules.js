@@ -9,6 +9,12 @@ import kingExample from '../chess/files/KingMoves.png'
 import knightExample from '../chess/files/KnightMoves.png'
 import queenExample from '../chess/files/QueenMoves.png'
 import rookExample from '../chess/files/RookMoves.png'
+
+import freezeCardImage from '../cards/cardImages/snowflake.png'
+import frozenCrossImage from '../cards/cardImages/cross.png'
+import reviveImage from '../cards/cardImages/revive.png'
+import swapImage from '../cards/cardImages/swap.png'
+import demoteImage from '../cards/cardImages/demote.png'
 function GamePageRules() {
     const [tab, setTab] = useState(1);
 
@@ -116,7 +122,37 @@ const PieceRules = () => {
 
 const CardRules = () => {
     return (
-        <p style={{textAlign: 'center'}}>Cards</p>
+        <div class='gameRules'>
+            <p class='subheader'>Freeze</p>
+            <div class='ruleExample'>
+                <img class='cardExample' src={freezeCardImage} />
+                <p  class="rule">Freeze a random enemy piece for 1 turn</p>
+            </div>
+
+            <p class='subheader'>Frozen cross</p>
+            <div class='ruleExample'>
+            <img class='cardExample' src={frozenCrossImage} />
+                <p  class="rule"> Freeze a random row and column </p>
+            </div>
+
+            <p class='subheader'>Resurrect</p>
+            <div class='ruleExample'>
+            <img class='cardExample' src={reviveImage} />
+                <p  class="rule"> Revive a random piece from the dead </p>
+            </div>
+
+            <p class='subheader'>Demote Piece</p>
+            <div class='ruleExample'>
+            <img class='cardExample' src={demoteImage} />
+                <p  class="rule"> Demote a random enemy piece by 1 rank</p>
+            </div>
+
+            <p class='subheader'>Swap Hands</p>
+            <div class='ruleExample'>
+            <img class='cardExample' src={swapImage} />
+                <p  class="rule"> Swap hands with your opponent </p>
+            </div>
+        </div>
     )
 }
 export default GamePageRules;

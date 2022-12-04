@@ -47,3 +47,13 @@ ul.tabsBar li:hover {
     flex: 1 0 0;
 }
 
+.ruleExample {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    text-align: center;
+}
+#checkExample {
+    width: 150px;
+    height: 150px;
+}

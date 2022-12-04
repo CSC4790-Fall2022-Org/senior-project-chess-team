@@ -1,5 +1,8 @@
 import { useState } from "react";
 import './GamePageRules.css'
+
+import checkExample from '../chess/files/checkExample.png'
+import checkmateExample from '../chess/files/checkmateExample.png'
 function GamePageRules() {
     const [tab, setTab] = useState(1);
 
@@ -23,7 +26,18 @@ function GamePageRules() {
 
 const GeneralRules = () => {
     return (
-        <p style={{textAlign: 'center'}}>General</p>
+        <div class='Rules'>
+            <p class='subheader'>Check</p>
+            <div class='ruleExample'>
+                <img id="checkExample" src={checkExample} alt='special square'/>
+                <p  class="rule"> When a king is attacked. Black has 3 ways to exit check. You must make a move that removes your king from Check. You may not make a move that puts yourself in Check. </p>
+            </div>
+            <p class='subheader'>Checkmate</p>
+            <div class='ruleExample'>
+                <img id="checkExample" src={checkmateExample} alt='special square'/>
+                <p  class="rule"> When a king is attacked and the player has no valid moves. White is in checkmate and loses the game.</p>
+            </div>
+        </div>
         
 
     )

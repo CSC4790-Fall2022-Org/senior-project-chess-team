@@ -1,6 +1,6 @@
 const { Knight, Rook, Pawn, Bishop, Queen, King } = require('../../games/pieces/subpieces.js');
 const {Card} = require('./card.js')
-const { getRandomEnemySquare, getRandomNumber } = require('../squareSelector')
+const { getRandomEnemySquare, getRandomEnemySquareNoPawns, getRandomNumber } = require('../squareSelector')
 
 function getLowestAvailableSquare(boardState) {
     for (let i = 7; i >= 0; i--) {
@@ -38,10 +38,42 @@ class FreezeCard extends Card {
     }
 }
 
+class DemotePieceCard extends Card {
+    constructor() {
+        super('Demote Piece', 1);
+        this.description = 'Demote a random enemy piece by 1 rank'
+    }
+
+    action(boardState, target) {
+        // manipulate the boardstate in some way. 
+        console.log('Used demotepiececard')
+        // For now pick a random target square
+        target = getRandomEnemySquareNoPawns(boardState);
+        console.log('target square', target)
+        let piece = boardState.board[target[0]][target[1]]
+        switch(piece.type) {
+            case 'Rook':
+                boardState.board[target[0]][target[1]] = new Bishop(!boardState.playerIsWhite, false)
+                break
+            case 'Knight':
+                boardState.board[target[0]][target[1]] = new Pawn(!boardState.playerIsWhite, false)
+                break
+            case 'Bishop':
+                boardState.board[target[0]][target[1]] = new Knight(!boardState.playerIsWhite, false)
+                break
+            case 'Queen':
+                boardState.board[target[0]][target[1]] = new Rook(!boardState.playerIsWhite, false)
+                break
+            default:
+                break
+        }
+    }
+}
+
 class FrozenCrossCard extends Card {
     constructor() {
         super('Frozen Cross', 3);
-        this.description = 'Freeze a random row and column of pieces (including your own!)'
+        this.description = 'Freeze a random row and column'
     }
 
     action(boardState, target) {
@@ -84,7 +116,7 @@ class SwapHandsCard extends Card {
 class ResurrectCard extends Card {
     constructor() {
         super('Resurrect', 1);
-        this.description = 'Revive a random piece from your graveyard of captured pieces'
+        this.description = 'Revive a random piece from the dead'
     }
 
     action(boardState, target) {
@@ -131,6 +163,7 @@ let cards = [
     new FreezeCard(),
     new ResurrectCard(),
     new SwapHandsCard(),
-    new FrozenCrossCard()
+    new FrozenCrossCard(),
+    new DemotePieceCard()
 ]
 exports.cards = cards

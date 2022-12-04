@@ -53,7 +53,12 @@ ul.tabsBar li:hover {
     row-gap: 5px;
     text-align: center;
 }
-#checkExample {
+.checkExample {
+    width: 150px;
+    height: 150px;
+}
+
+.pieceExample {
     width: 150px;
     height: 150px;
 }

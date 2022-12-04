@@ -65,8 +65,8 @@
 }
 
 .howToPlayContainer {
-  order: 1;
-  width: 225px;
+  order: 4;
+  width: 100%;
   min-height: 450px;
   display: flex;
   flex-direction: column;
@@ -78,12 +78,7 @@
   align-self: stretch;
   gap: 10px;
 }
-@media (max-width: 990px) {
-  .gamePage > .howToPlayContainer{
-    order: 4;
-    width: 100%;
-  }
-}
+
 
 @media (max-width: 730px) {
   .gamePage > .LargeContainer{

@@ -3,10 +3,6 @@ import { renderMatches } from 'react-router-dom';
 import Message from '../ui/message.js'
 import '../ui/chat.css'
 
-function clearInput(){
-    document.getElementById("messageText").value = '';
-}
-
 export class ChatBox extends React.Component {
     constructor(props) {
         super();
@@ -15,13 +11,18 @@ export class ChatBox extends React.Component {
             message : ""
         }
         this.updateMessages = this.updateMessages.bind(this);
+        this.checkIfEnterKey = this.checkIfEnterKey.bind(this);
+    }
+
+    checkIfEnterKey(event) {
+        if (event.keyCode === 13) {
+            this.sendMessage()
+        }
     }
 
     messageChanged(event) {
-        let currMessage = event.target.value;
-        if (currMessage)
         this.setState({
-          message: currMessage
+          message: event.target.value
         });
     }
 
@@ -35,7 +36,9 @@ export class ChatBox extends React.Component {
                 date : new Date().toLocaleDateString
             })
         );
-        clearInput();
+        this.setState({
+            message: ""
+          });
         console.log('message sent on frontend')
 
     }
@@ -62,6 +65,7 @@ export class ChatBox extends React.Component {
 
     componentDidMount() {
         this.props.ws.on('updateMessages', this.updateMessages);
+        document.addEventListener("keydown", this.checkIfEnterKey, false);
     }
     componentDidUpdate() {
         console.log("chat updated");
@@ -69,6 +73,7 @@ export class ChatBox extends React.Component {
 
     componentWillUnmount() {
         this.props.ws.removeListener('updateMessages');
+        document.removeEventListener("keydown", this.checkIfEnterKey, false);
     }
 
     render() {

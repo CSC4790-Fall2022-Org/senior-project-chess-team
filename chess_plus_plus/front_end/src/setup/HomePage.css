@@ -28,7 +28,8 @@
   margin-left: 10%;
   box-shadow: 5px 5px 2px #396c63;
   border-radius: 15px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .PlayNowImage{
@@ -49,11 +50,12 @@
 
 .Rules{
   margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;  
+  align-items: flex-end;
+  row-gap: 10px;
+  flex: 1 0 0;
 }
 
 p {
@@ -118,4 +120,42 @@ li a {
 .HomePageButton:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+.rule {
+  font-size: 18px;
+}
+
+#specialSquareRuleImage {
+  width: 50px;
+}
+
+#specialPowerupsRule {
+  flex: 0 0 50px;
+  height: 50px;
+  background-size: 'cover';
+  background-image: url('../chess/files/frozenSquare.jpg');
+}
+.Rules > div {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-self: flex-start;
+  justify-content: flex-start;
+  flex: 1 0 0;
+}
+
+#kingImage {
+  flex: 0 0 50px;
+  height: 50px;
+  background-image: url("https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20King.png");
+}
+
+#useCardsRule {
+  background-image: url("../chess/files/cardBack.png");
+  flex: 0 0 50px;
+  height: 72px; 
+  background-size:contain;
 }

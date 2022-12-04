@@ -42,9 +42,17 @@ ul.tabsBar li:hover {
 }
 
 .gamePageRules {
-    align-self: stretch;
+    align-self: center;
     width: 100%;
     flex: 1 0 0;
+    flex-direction: column;
+    text-align: center;
+}
+
+.gameRules {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .ruleExample {

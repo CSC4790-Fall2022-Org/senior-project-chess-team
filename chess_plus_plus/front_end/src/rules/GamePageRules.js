@@ -27,7 +27,7 @@ function GamePageRules() {
 
 const GeneralRules = () => {
     return (
-        <div class='Rules'>
+        <div class='gameRules'>
             <p class='subheader'>Check</p>
             <div class='ruleExample'>
                 <img class="checkExample" src={checkExample} alt='special square'/>
@@ -44,11 +44,11 @@ const GeneralRules = () => {
 
 const PieceRules = () => {
     return (
-        <div class='Rules'>
+        <div class='gameRules'>
             <p class='subheader'>Pawn</p>
             <div class='ruleExample'>
                 <img class="pieceExample" src={pawnExample} alt='special square'/>
-                <p  class="rule"> txt</p>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
             </div>
             
         </div>

@@ -17,6 +17,10 @@ function HomePage({ setIsLoggedIn }) {
         setIsLoggedIn(false);
         localStorage.removeItem('id_token');
     }
+
+    const openRules = () => {
+        window.location.href = 'rules'
+    }
     //document.getElementById('textInput').className="show";
 
     const createGame = async () => {
@@ -66,6 +70,7 @@ function HomePage({ setIsLoggedIn }) {
                         <img class="PlayNowImage" src={PlayNowImage}></img>
                         <button onClick={createGame} class="HomePageButton">Create Game</button>
                         <button class="HomePageButton" onClick={() => setShowJoinGameInput(true)}>Join Game</button>
+                        <button class="HomePageButton" onClick={openRules}>Rules</button>
                         {showJoinGameInput && <JoinGameInput closeInput={setShowJoinGameInput} />}
                         <p>{showJoinGameInput}</p>
                     </div>

@@ -17,7 +17,6 @@ function Banner({setIsLoggedIn}) {
         <ul class ="navbar">
             <li class="LogoHomePageDiv"><a class="active" href="/"><img src={logo} class="LogoHomePage"></img></a></li>
             <li class="LogoutHomePageDiv"><a onClick={pseudoLogout}><img src={logout} class="LogoutHomePage"></img></a></li>
-            <li class="RulesPageButton"><p onClick={openRules}>Rules</p></li>
         </ul>
     </div>
     )

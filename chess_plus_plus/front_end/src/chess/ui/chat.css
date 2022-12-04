@@ -20,6 +20,22 @@
     flex-direction: column;
     align-items: stretch;
 }
+
+.chatBox::-webkit-scrollbar {
+    width: 16px;
+  }
+  
+  .chatBox::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 100px;
+  }
+  
+  .chatBox::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-color: #4d897f;
+    background-clip: content-box;
+  }
 .chat{
     height: 72%;
     max-height: 72%;
@@ -67,7 +83,7 @@
     height: 10%;
     padding-top: 2%;
     display: flex;
-    border-radius: 2.5%;
+    border-radius: 5%;
     border: transparent;
     background-color: transparent;
 }
@@ -116,7 +132,6 @@ input::placeholder {
     width: 100%;
     overflow-x: auto;
     word-wrap: break-word;
-    border: 1px solid #000;
     display: inline-block;
     vertical-align: top;
     background-color: #396c63;

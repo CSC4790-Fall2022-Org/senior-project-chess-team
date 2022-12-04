@@ -108,12 +108,7 @@ export class ChatBox extends React.Component {
                     value={this.state.message}
                     onChange={this.messageChanged.bind(this)}
                 ></input>
-                <button
-                    class="msgr-send-btn"
-                    onClick={this.sendMessage.bind(this)}
-                >
-                    send
-                </button>
+
                 </div>
 
             </section>

@@ -22,7 +22,7 @@
 }
 
 .LogoHomePage{
-  width: 140%;
+  width: 130%;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -31,12 +31,13 @@
   left: -15%;
   }
   .LogoutHomePage{
-    width: 100%;
+    width: 140%;
     position: relative;
-    top:-5px;
+    top: -3px;
+    left:-50%;
     }
   .LogoHomePageDiv{
-    width: 10%; 
+    width: 15%; 
     border-bottom: #FFFFFF;
     }
     .LogoutHomePageDiv{

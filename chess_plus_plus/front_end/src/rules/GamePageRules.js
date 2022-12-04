@@ -48,7 +48,7 @@ const PieceRules = () => {
             <p class='subheader'>Pawn</p>
             <div class='ruleExample'>
                 <img class="pieceExample" src={pawnExample} alt='special square'/>
-                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet.</p>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
             </div>
             
         </div>

@@ -221,7 +221,7 @@ export default function GamePage({ setIsLoggedIn }) {
                             />
                         )}
                     </div>
-                    <div class="opponentHand">{opponentHand}</div>
+                    <div title = "Your opponent has one power-up" class="opponentHand">{opponentHand}</div>
                 </div>
                 
                 <ToastContainer

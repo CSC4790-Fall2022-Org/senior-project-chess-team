@@ -9,7 +9,7 @@ function Card({name, description, id, playCard}) {
     // determine image based on name
     return (
         <div>
-            <div class='card' onClick={() => playCard(id)}>
+            <div title = {name} class='card' onClick={() => playCard(id)}>
                 <img src={getSource(name)} />
             </div>
         </div>

@@ -3,8 +3,13 @@ ul.tabsBar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #39a2db;
+    border: 1px solid black;
     border-radius: 2rem;
+    width: 100%;
+}
+
+.tabs {
+    width: 100%;
 }
 
 ul.tabsBar li {
@@ -14,6 +19,7 @@ ul.tabsBar li {
     text-align: center;
     cursor: pointer;
     transition: all 0.8s;
+    background: #396c63;
 }
 
 ul.tabsBar li:nth-child(1) {
@@ -28,7 +34,7 @@ ul.tabsBar li:nth-last-child(1) {
 }
 
 ul.tabsBar li.active {
-    background: #39a2db
+    background: #4d897f;
 }
 
 ul.tabsBar li:hover {

@@ -137,32 +137,36 @@ function RulePage({ setIsLoggedIn }) {
                                 can come with several different power-ups that
                                 alter the strategy of the game.
                             </li>
-                            <li>
+                            <li> 
                                 Card Types:
-                                <ul>
+                                <ol>
                                     <li>
                                         Frozen Cross - Freeze a random row and
                                         column of pieces on the board (including
                                         your own)
                                     </li>
+                                    <br/>
                                     <li>
                                         Frozen Piece - Freeze a random enemy
-                                        piece
+                                        piece {" "}
                                     </li>
+                                    <br/>
                                     <li>
                                         Switch Hands - Swap cards with your
-                                        opponent
+                                        opponent {" "}
                                     </li>
+                                    <br/>
                                     <li>
                                         Resurrection - Resurrect a random piece
-                                        from your dead pieces
+                                        from your dead pieces {" "} 
                                     </li>
+                                    <br/>
                                     <li>
                                         Demotion - Demote a random enemy piece
                                         by one rank (ex: demote a rook to a
                                         bishop)
                                     </li>
-                                </ul>
+                                </ol>
                             </li>
                         </ul>
                     </li>

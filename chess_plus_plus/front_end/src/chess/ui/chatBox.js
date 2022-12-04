@@ -18,8 +18,10 @@ export class ChatBox extends React.Component {
     }
 
     messageChanged(event) {
+        let currMessage = event.target.value;
+        if (currMessage)
         this.setState({
-          message: event.target.value
+          message: currMessage
         });
     }
 

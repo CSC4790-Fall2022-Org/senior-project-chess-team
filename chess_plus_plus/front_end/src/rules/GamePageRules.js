@@ -1,7 +1,7 @@
 import { useState } from "react";
 import './GamePageRules.css'
 function GamePageRules() {
-    const [tab, setTab] = useState(2);
+    const [tab, setTab] = useState(1);
 
     return (
         <div class="gamePageRules">
@@ -24,6 +24,8 @@ function GamePageRules() {
 const GeneralRules = () => {
     return (
         <p style={{textAlign: 'center'}}>General</p>
+        
+
     )
 }
 

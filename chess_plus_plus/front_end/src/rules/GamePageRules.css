@@ -1,0 +1,64 @@
+ul.tabsBar {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid black;
+    border-radius: 2rem;
+    width: 100%;
+}
+
+.tabs {
+    width: 100%;
+}
+
+ul.tabsBar li {
+    width: 33%;
+    padding: 1rem;
+    list-style: none;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.8s;
+    background: #396c63;
+}
+
+ul.tabsBar li:nth-child(1) {
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+}
+
+ul.tabsBar li:nth-last-child(1) {
+    border-radius: 0;
+    border-bottom-right-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+
+ul.tabsBar li.active {
+    background: #4d897f;
+}
+
+ul.tabsBar li:hover {
+    background: rgba(50, 224, 196, 0.15)
+}
+
+.gamePageRules {
+    align-self: stretch;
+    width: 100%;
+    flex: 1 0 0;
+}
+
+.ruleExample {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    text-align: center;
+}
+.checkExample {
+    width: 150px;
+    height: 150px;
+}
+
+.pieceExample {
+    width: 150px;
+    height: 150px;
+}

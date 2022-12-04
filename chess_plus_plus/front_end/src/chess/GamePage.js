@@ -11,6 +11,7 @@ import logo from "../chess/files/Logo.png";
 import logout from "../chess/files/signOut.png";
 import Hand from "../cards/Hand";
 import Banner from "./ui/banner";
+import GamePageRules from "../rules/GamePageRules";
 
 export default function GamePage({ setIsLoggedIn }) {
     const socket = useRef(null);
@@ -186,7 +187,7 @@ export default function GamePage({ setIsLoggedIn }) {
 
             <div class="gamePage">
             <div class="howToPlayContainer">
-
+                <GamePageRules />
             </div>
                 {color !== "" ? (
                     <Game

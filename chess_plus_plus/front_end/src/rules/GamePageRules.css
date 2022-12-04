@@ -53,6 +53,7 @@ ul.tabsBar li:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    row-gap: 10px;
 }
 
 .ruleExample {
@@ -69,4 +70,15 @@ ul.tabsBar li:hover {
 .pieceExample {
     width: 150px;
     height: 150px;
+}
+
+.imageRow {
+    display: flex;
+    column-gap: 5px;
+}
+
+.pieceDisplay {
+    width: 125px;
+    height: 125px;
+    align-self: center;
 }

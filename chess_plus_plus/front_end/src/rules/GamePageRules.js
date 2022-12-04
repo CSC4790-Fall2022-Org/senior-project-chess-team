@@ -47,7 +47,61 @@ const PieceRules = () => {
         <div class='gameRules'>
             <p class='subheader'>Pawn</p>
             <div class='ruleExample'>
-                <img class="pieceExample" src={pawnExample} alt='special square'/>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Pawn.png" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Pawn.png" />
+                </div>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
+            </div>
+
+            <p class='subheader'>Knight</p>
+            <div class='ruleExample'>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src="https://upload.wikimedia.org/wikipedia/commons/0/09/Chess_Glt45.svg" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://upload.wikimedia.org/wikipedia/commons/9/97/Chess_Gdt45.svg" />
+                </div>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
+            </div>
+
+            <p class='subheader'>Bishop</p>
+            <div class='ruleExample'>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Bishop%20new.png" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Bishop%20new.png" />
+                </div>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
+            </div>
+
+            <p class='subheader'>Rook</p>
+            <div class='ruleExample'>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Rook.png" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Rook.png" />
+                </div>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
+            </div>
+
+            <p class='subheader'>Queen</p>
+            <div class='ruleExample'>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src= "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Queen.png" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Queen.png" />
+                </div>
+                <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
+            </div>
+
+            <p class='subheader'>King</p>
+            <div class='ruleExample'>
+                <div class='imageRow'>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20King.png" />
+                    <img class="pieceExample" src={pawnExample} alt='special square'/>
+                    <img class='pieceDisplay' src="https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20King.png" />
+                </div>
                 <p  class="rule">A pawn may only capture other pieces diagonally. It may move one square forwards, and two if it has not moved yet. Pawns may not move through pieces.</p>
             </div>
             

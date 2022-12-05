@@ -27,7 +27,7 @@ function App() {
         <Route path='/' element={isLoggedIn ? <HomePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/login' />} />
         <Route path='/login' element={isLoggedIn ? <Navigate replace to='/' /> : <SignInPage setIsLoggedIn={setIsLoggedIn} />} />
         <Route path='/game' element={isLoggedIn ? <GamePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/'/>} />
-        <Route path='/rules' element={isLoggedIn ? <RulePage/> : <Navigate replace to='/' />}/>
+        <Route path='/rules' element={isLoggedIn ? <RulePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/' />}/>
         <Route path='*' element={isLoggedIn ? <Navigate replace to='/' /> : <Navigate replace to='/login' />} />
 
     </Routes>

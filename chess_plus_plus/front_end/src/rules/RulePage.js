@@ -3,7 +3,7 @@ import "./RulePage.css";
 function RulePage({ setIsLoggedIn }) {
     return (
         <>
-            <Banner />
+            <Banner setIsLoggedIn={setIsLoggedIn}/>
             <div>
                 <h1>Rules and Starting</h1>
                 <ol class="rulesList">

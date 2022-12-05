@@ -19,7 +19,9 @@ function HomePage({ setIsLoggedIn }) {
     }
 
     const openRules = () => {
-        window.location.href = 'rules'
+        // window.location.href = 'rules'
+        window.open('http://localhost:3000/rules',
+        '_blank')
     }
     //document.getElementById('textInput').className="show";
 

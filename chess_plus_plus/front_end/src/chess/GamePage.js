@@ -65,7 +65,9 @@ export default function GamePage({ setIsLoggedIn }) {
     }, [socket, searchParams]);
 
     const openRules = () => {
-        window.location.href = 'rules'
+        // window.location.href = 'rules'
+        window.open('http://localhost:3000/rules',
+        '_blank')
     }
 
     useEffect(() => {

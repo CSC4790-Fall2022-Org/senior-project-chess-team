@@ -215,7 +215,7 @@ export default function GamePage({ setIsLoggedIn }) {
                         <p></p>
                     )}
                     <div class = "randomButtons">
-                        <button class='forfeitButton' onClick={showForfeitToast}>forfeit</button>
+                        <button class='forfeitButton' onClick={showForfeitToast}>Forfeit</button>
                         <button class='forfeitButton' onClick={openRules}>Rules</button>
                     </div>
                     <div class="PowerUps" style={{ width: "100%" }}>
@@ -228,7 +228,7 @@ export default function GamePage({ setIsLoggedIn }) {
                             />
                         )}
                     </div>
-                    <div title = "Your opponent has one power-up" class="opponentHand">{opponentHand}</div>
+                    <div class="opponentHand">{opponentHand}</div>
                 </div>
                 
                 <ToastContainer

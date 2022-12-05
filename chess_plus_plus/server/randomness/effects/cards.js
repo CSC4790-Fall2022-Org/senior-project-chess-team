@@ -87,12 +87,12 @@ class FrozenCrossCard extends Card {
         //     boardState.whiteDeadPieces.push(boardState.board[target[0]][target[1]].type)
         // }
         for (let j = 0; j < 8; j++) {
-            if (boardState.board[row][j] !== null) {
+            if (boardState.board[row][j] !== null && boardState.board[row][j].type != 'King') {
                 boardState.board[row][j].isFrozen = true;
             }
         }
         for (let i = 0; i < 8; i++) {
-            if (boardState.board[i][col] !== null) {
+            if (boardState.board[i][col] !== null && boardState.board[row][j].type != 'King') {
                 boardState.board[i][col].isFrozen = true;
             }
         }

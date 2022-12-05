@@ -43,7 +43,7 @@ export default function GamePage({ setIsLoggedIn }) {
         });
 
         newSocket.on("error", (text) => toast.error(text.text, {
-            position: "top-right",
+            position: "top-center",
             autoClose: 4000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -234,7 +234,7 @@ export default function GamePage({ setIsLoggedIn }) {
                 <ToastContainer
                     enableMultiContainer
                     containerId={'Errors'}
-                    position="top-right"
+                    position="top-center"
                     hideProgressBar={false}
                     newestOnTop={false}
                     closeOnClick

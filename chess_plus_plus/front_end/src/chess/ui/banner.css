@@ -38,11 +38,15 @@
     }
   .LogoHomePageDiv{
     width: 15%; 
+    max-height: 40px;
+    min-width: 150px;
     border-bottom: #FFFFFF;
     }
     .LogoutHomePageDiv{
       float: right;
       width: 10%;
+    max-height: 40px;
+    min-width: 150px;
     }
   
     li a:hover:not(.active) {
@@ -51,4 +55,13 @@
     
     .active {
       background-color: #396c63;
+    }
+
+    li a {
+      max-height: 40px;
+      box-sizing: border-box;
+    }
+
+    li a img {
+      height: 25px;
     }

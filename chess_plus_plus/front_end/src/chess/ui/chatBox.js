@@ -105,6 +105,7 @@ export class ChatBox extends React.Component {
                     type="text"
                     class="msger-input"
                     id="messageText"
+                    placeholder="Send a message..."
                     value={this.state.message}
                     onChange={this.messageChanged.bind(this)}
                 ></input>

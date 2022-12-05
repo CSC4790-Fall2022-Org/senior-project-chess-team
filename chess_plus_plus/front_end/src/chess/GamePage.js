@@ -64,6 +64,10 @@ export default function GamePage({ setIsLoggedIn }) {
         };
     }, [socket, searchParams]);
 
+    const openRules = () => {
+        window.location.href = 'rules'
+    }
+
     useEffect(() => {
         console.log("game page rerendered");
     });
@@ -180,7 +184,6 @@ export default function GamePage({ setIsLoggedIn }) {
         <>
             <div class="gamePageBannerWrapper">
                 <Banner setIsLoggedIn={setIsLoggedIn} />
-                <button class='forfeitButton' onClick={showForfeitToast}>forfeit</button>
             </div>
 
             <ToastContainer enableMultiContainer containerId={'gameId'} position={toast.POSITION.TOP_CENTER}/>
@@ -211,6 +214,10 @@ export default function GamePage({ setIsLoggedIn }) {
                     ) : (
                         <p></p>
                     )}
+                    <div class = "randomButtons">
+                        <button class='forfeitButton' onClick={showForfeitToast}>forfeit</button>
+                        <button class='forfeitButton' onClick={openRules}>Rules</button>
+                    </div>
                     <div class="PowerUps" style={{ width: "100%" }}>
                         {color !== "" && (
                             <Hand

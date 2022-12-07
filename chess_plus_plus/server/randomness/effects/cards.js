@@ -72,7 +72,7 @@ class DemotePieceCard extends Card {
 
 class FrozenCrossCard extends Card {
     constructor() {
-        super('Frozen Cross', 3);
+        super('Frozen Cross', 2);
         this.description = 'Freeze a random row and column'
     }
 

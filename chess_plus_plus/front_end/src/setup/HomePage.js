@@ -20,7 +20,7 @@ function HomePage({ setIsLoggedIn }) {
 
     const openRules = () => {
         // window.location.href = 'rules'
-        window.open('http://localhost:3000/rules',
+        window.open(`${window.location.origin}/rules`,
         '_blank')
     }
     //document.getElementById('textInput').className="show";

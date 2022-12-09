@@ -1,6 +1,6 @@
 # Required Software
 - Docker (with compose) <--- easiest way
-<br />(below required if not running with docker)
+<br />(below dependencies are required if not running with docker) <br />
 - Node v. 16.17
 - npm (any version should be fine)
 
@@ -8,7 +8,7 @@ NOTE: If you receieve an error about the Docker daemon not being started, make s
 
 # Running the application
 1. In your terminal, navigate to the chess_plus_plus directory
-2. From that directory, run docker compose build. This will rebuild the images.
+2. From that directory, run docker compose build. This will build the images.
 3. From that directory, run docker compose up. Will run the images that were just built.
 
 # To run without Docker
@@ -19,10 +19,8 @@ NOTE: If you receieve an error about the Docker daemon not being started, make s
 5. Run npm install
 6. Run node server.js
 
-NOTE: This is a slightly older version than what was demod in class. That version began working about an hour before demo, which was after release 2 was created. 
-
 # Viewing application  
-Navigate to localhost:3000/ with your local browser.
+Navigate to localhost:3000/ with your browser of choice.
 
 If you would like to play a game against yourself, you will need one regular tab and one incognito tab.
 Simply sign into different accounts on the different tabs.

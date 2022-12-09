@@ -1,0 +1,47 @@
+.rules {
+    padding-left: 30px;
+    line-height: 1cm;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+ul{
+    list-style-type: lower-roman;
+}
+
+.title{
+    padding-top: 24pt;
+    text-decoration: underline;
+    display: inline-block;
+    line-height: 0.85;
+    font-size: 4ex;
+}
+
+.ruleList{
+    padding-left: 30px;
+}
+
+.pieceDisplay{
+    width: auto;
+    height: auto;
+}
+
+li{
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+li ul li{
+    font-size: 12pt;
+    font-weight: normal;
+}
+
+.cards{
+    font-size: 12pt;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+ol li ul li ol{
+    padding-left: 10px;
+    list-style-type: square;
+}

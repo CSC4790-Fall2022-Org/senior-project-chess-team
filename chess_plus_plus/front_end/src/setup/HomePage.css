@@ -1,27 +1,5 @@
 
 
-.LogoHomePage{
-width: 140%;
-position: relative;
-margin-left: auto;
-margin-right: auto;
-display: block;
-top:-5px;
-left: -15%;
-}
-.LogoutHomePage{
-  width: 100%;
-  position: relative;
-  top:-5px;
-  }
-.LogoHomePageDiv{
-  width: 10%; 
-  border-bottom: #FFFFFF;
-  }
-  .LogoutHomePageDiv{
-    float: right;
-    width: 10%;
-  }
 
 
 .joinGame{
@@ -50,7 +28,8 @@ left: -15%;
   margin-left: 10%;
   box-shadow: 5px 5px 2px #396c63;
   border-radius: 15px;
-
+  display: flex;
+  flex-direction: column;
 }
 
 .PlayNowImage{
@@ -67,27 +46,20 @@ left: -15%;
   display: block;
   width: 35%;
 }
-.navbar {
-  height: 40px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #102321;
-  
-}
+
 
 .Rules{
   margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;  
+  align-items: flex-end;
+  row-gap: 10px;
+  flex: 1 0 0;
 }
 
 p {
-  color:#ffbd59;
+  color:rgb(255, 189, 89);
   font-size: 32px;
 }
 
@@ -104,13 +76,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover:not(.active) {
-  background-color: #102321;
-}
 
-.active {
-  background-color: #396c63;
-}
 
 .HomePageButton {
   appearance: none;
@@ -155,11 +121,41 @@ li a:hover:not(.active) {
   box-shadow: none;
   transform: translateY(0);
 }
-.input{
-  position: relative;
-  margin-left: 10%;
-  margin-top: 5%;
-  width: 70%;
-  height: 10px;
-  padding: 10px;
+
+.rule {
+  font-size: 18px;
+}
+
+#specialSquareRuleImage {
+  width: 50px;
+}
+
+#specialPowerupsRule {
+  flex: 0 0 50px;
+  height: 50px;
+  background-size: 'cover';
+  background-image: url('../chess/files/frozenSquare.jpg');
+}
+.Rules > div {
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  align-self: flex-start;
+  justify-content: flex-start;
+  flex: 1 0 0;
+}
+
+#kingImage {
+  flex: 0 0 50px;
+  height: 50px;
+  background-image: url("https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20King.png");
+}
+
+#useCardsRule {
+  background-image: url("../chess/files/cardBack.png");
+  flex: 0 0 50px;
+  height: 72px; 
+  background-size:contain;
 }

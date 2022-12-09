@@ -1,20 +1,27 @@
-import { hasCustomState } from '@aws-amplify/auth/lib-esm/types/Auth.js';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { createGameRoom } from "../api/gameRoom.js";
-import logo from '../chess/files/Logo.png';
-import logout from '../chess/files/signOut.png';
 import PlayNowImage from '../chess/files/PlayNowImage.png';
 import HowToPlayImage from '../chess/files/HowToPlayImage.png';
+import SpecialSquareImage from '../chess/files/SquareWhite.png'
 import './HomePage.css';
-
+import JoinGameInput from './JoinGameInput.js';
+import Banner from '../chess/ui/banner.js';
+import Card from '../cards/Card.js';
+import Effects from '../chess/ui/effects.js';
 function HomePage({ setIsLoggedIn }) {
-
-    const [text, setText] = useState('');
+    const [showJoinGameInput, setShowJoinGameInput] = useState(false);
+    
     const navigate = useNavigate();
     const pseudoLogout = () => {
         setIsLoggedIn(false);
         localStorage.removeItem('id_token');
+    }
+
+    const openRules = () => {
+        // window.location.href = 'rules'
+        window.open(`${window.location.origin}/rules`,
+        '_blank')
     }
     //document.getElementById('textInput').className="show";
 
@@ -28,41 +35,47 @@ function HomePage({ setIsLoggedIn }) {
         }
     }
 
-    const joinGame = () => {
-        navigate(`/game?id=${text}`);
-    }
-
-    const handleTextAreaChange = t => {
-        setText(t.target.value);
-    }
     return (
         <>
             <div class="overlay">
                 <body>
-                    <ul class ="navbar">
-                        <li class="LogoHomePageDiv"><a class="active" href="#home"><img src={logo} class="LogoHomePage"></img></a></li>
-                        <li class="LogoutHomePageDiv"><a onClick={pseudoLogout}><img src={logout} class="LogoutHomePage"></img></a></li>
-                    </ul>
+                <Banner setIsLoggedIn={setIsLoggedIn} />
 
                     <div class="HowToPlay">
                         <img class="HowToPlayImage" src={HowToPlayImage}></img>
-                        <ul class = "Rules">
-                            <p>-Move Piece</p>
-                            <p>-Get Card</p>
-                            <p>-Win</p>
-                        </ul>
+                        <div class = "Rules">
+                            <div>
+                                <img id="specialSquareRuleImage" src={SpecialSquareImage} alt='special square'/>
+                                <p  class="rule">-Move to this square to get a card </p>
+                            </div>
+                            <div>
+                                <Card name="Freeze" description={"Freezes a random enemy piece"} />
+                                <p class='rule'>-Click on a card to use it</p>
+                            </div>
+                            <div>
+                                <div id="specialPowerupsRule" />
+                                <p class='rule'>-Cards are special powerups that change the tide of battle</p>
+                            </div>
+                            <div>
+                                <div id="useCardsRule" />
+                                <p class='rule'>-Don't be afraid to use your cards! You can only hold on to 3 at a time</p>
+                            </div>
+                            <div>
+                                <div id="kingImage" />
+                                <p class='rule'>-Win by placing your opponent's King in checkmate!</p>
+                            </div>
+
+                        </div>
                     </div>
 
                     <div class="play">
                         <img class="PlayNowImage" src={PlayNowImage}></img>
                         <button onClick={createGame} class="HomePageButton">Create Game</button>
-                        <button class="HomePageButton" onClick={joinGame}>Join Game</button>
-                        <form onSubmit={joinGame} onChange={handleTextAreaChange}>
-                            <textarea class="input" />
-                        </form>
-                        <button class="HomePageButton">Settings</button>
+                        <button class="HomePageButton" onClick={() => setShowJoinGameInput(true)}>Join Game</button>
+                        <button class="HomePageButton" onClick={openRules}>Rules</button>
+                        {showJoinGameInput && <JoinGameInput closeInput={setShowJoinGameInput} />}
+                        <p>{showJoinGameInput}</p>
                     </div>
-                    
                 </body>
             </div>
             

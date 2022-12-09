@@ -3,11 +3,6 @@ import { renderMatches } from 'react-router-dom';
 import Message from '../ui/message.js'
 import '../ui/chat.css'
 
-
-function clearInput(){
-    document.getElementById("messageText").value = '';
-}
-
 export class ChatBox extends React.Component {
     constructor(props) {
         super();
@@ -16,6 +11,13 @@ export class ChatBox extends React.Component {
             message : ""
         }
         this.updateMessages = this.updateMessages.bind(this);
+        this.checkIfEnterKey = this.checkIfEnterKey.bind(this);
+    }
+
+    checkIfEnterKey(event) {
+        if (event.keyCode === 13) {
+            this.sendMessage()
+        }
     }
 
     messageChanged(event) {
@@ -24,44 +26,22 @@ export class ChatBox extends React.Component {
         });
     }
 
-    
     sendMessage() {
         var message = this.state.message;
         this.props.ws.emit('sendMessage',
             JSON.stringify({
                 message: message,
                 isWhite: this.props.isWhite,
-                game_id : this.props.id
+                game_id : this.props.id,
+                date : new Date().toLocaleDateString
             })
         );
-        clearInput();
+        this.setState({
+            message: ""
+          });
         console.log('message sent on frontend')
 
     }
-
-
-    // getInitialMessages(initialMessages) {
-    //     console.log("updating initial messages")
-    //     let newMessages = []
-    //     if (initialMessages.length > 0) {
-    //         initialMessages.messages.forEach( (message) => {
-    //             console.log(message);
-    //             newMessages.push({
-    //                     isMyMessage : message.isWhite === this.props.isWhite,
-    //                     message : message.message,
-    //                     username : message.username
-    //                 }
-    //             )
-    //         }
-    //         )
-    //     }
-    //     console.log(newMessages)
-    //     return newMessages
-    // }
-
-    
- 
-
 
     updateMessages(updatedMessages) {
         console.log("updating messages")
@@ -71,7 +51,8 @@ export class ChatBox extends React.Component {
             newMessages.push({
                     isMyMessage : message.isWhite === this.props.isWhite,
                     message : message.message,
-                    username : message.username
+                    username : message.username,
+                    date : message.date
                 }
             )
         }
@@ -84,6 +65,7 @@ export class ChatBox extends React.Component {
 
     componentDidMount() {
         this.props.ws.on('updateMessages', this.updateMessages);
+        document.addEventListener("keydown", this.checkIfEnterKey, false);
     }
     componentDidUpdate() {
         console.log("chat updated");
@@ -91,6 +73,7 @@ export class ChatBox extends React.Component {
 
     componentWillUnmount() {
         this.props.ws.removeListener('updateMessages');
+        document.removeEventListener("keydown", this.checkIfEnterKey, false);
     }
 
     render() {
@@ -101,27 +84,35 @@ export class ChatBox extends React.Component {
                     isMyMessage={message.isMyMessage}
                     message={message.message}
                     username={message.username}
+                    date={message.date}
                 ></Message>
             )
         });
         return (
+            <section class="msger">
 
-            <div class= "temp">
 
-                <div class="chatBox" >
-                    {messageLines.map((message, index) => (
-                        <span key={index}>
-                            { message }
-                        </span>
-                    ))}
+                <div class="chat">
+                    <div class="chatBox">
+                        {messageLines.map((message, index) => (
+                            <span key={index}>{message}</span>
+                        ))}
+                    </div>
                 </div>
-                <div>
-                    <input class ="typeBox" type="text" placeholder="Send a message..." id= "messageText" value={this.state.message} onChange={this.messageChanged.bind(this)}></input>
-                    <button class = "sendButton" onClick={this.sendMessage.bind(this)} >send</button>
-                </div>
-                    
+                <div class='inputArea'>
 
-            </div>
-        )
+                <input
+                    type="text"
+                    class="msger-input"
+                    id="messageText"
+                    placeholder="Send a message..."
+                    value={this.state.message}
+                    onChange={this.messageChanged.bind(this)}
+                ></input>
+
+                </div>
+
+            </section>
+        );
     }
 }

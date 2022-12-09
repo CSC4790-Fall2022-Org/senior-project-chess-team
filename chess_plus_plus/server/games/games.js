@@ -4,6 +4,7 @@ const cardProvider = require('../randomness/cardProvider')
 
 var activeGames = {}
 
+const MAX_NUMBER_CARDS_IN_HAND = 3
 function resetFrozenPiecesForMovingPlayer(board, playerColor) {
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
@@ -118,25 +119,20 @@ function Game(gameId, whiteUserId, blackUserId) {
         if (!this.checkIfMoveToSpecialSquare(isWhite, square)) {
             return 
         }
+        const hand = isWhite ? this.whiteCards : this.blackCards
+        if (MAX_NUMBER_CARDS_IN_HAND ===  hand.length) {
+            // below is read in server : updateHands to send error messages
+            hand[MAX_NUMBER_CARDS_IN_HAND] = `You may only have ${MAX_NUMBER_CARDS_IN_HAND} cards at a time.`
+            return
+        }
         const newCard = this.cardProvider.getCard();
-        console.log(newCard)
-        if (isWhite) {
-            newCard.id = nextId(this.whiteCards)
-            console.log(newCard)
-            this.whiteCards.push(newCard)
-        }
-        else {
-            newCard.id = nextId(this.blackCards)
-            console.log(newCard)
-
-            this.blackCards.push(newCard)
-        }
+        newCard.id = nextId(hand)
+        hand.push(newCard)
+        
     }
     this.opponentInCheckMate = (isWhite) => {
         let board = isWhite ? this.blackBoard : this.whiteBoard;
         // First check for check to save time
-        console.log("white check status:", board.whiteKingInCheck)
-        console.log("black check status:", board.blackKingInCheck)
         if (isWhite ? board.blackKingInCheck : board.whiteKingInCheck) {
             // Then check for subset of check (checkmate) when they cant move
             if (!board.playerCanMove()) {
@@ -175,6 +171,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     }
 
     this.playCard = (color, cardId) => {
+        // console.log('entering play card', this.whiteBoard.board)
         let idx;
         if (color === 'white') {
             idx = findCardWithId(this.whiteCards, cardId)
@@ -187,7 +184,9 @@ function Game(gameId, whiteUserId, blackUserId) {
             }
             this.blackBoard.blackDeadPieces = this.whiteBoard.blackDeadPieces;
             this.blackBoard.whiteDeadPieces = this.whiteBoard.whiteDeadPieces;
+            // console.log('in playcard, white:', this.whiteBoard.board)
             this.blackBoard.board = rotated(this.whiteBoard.board)
+
             this.whiteUsedCardThisTurn = true
         }
         else {
@@ -212,6 +211,7 @@ function Game(gameId, whiteUserId, blackUserId) {
     this.hasUsedCard = name => {
         return this.color(name) === 'white' ? this.whiteUsedCardThisTurn : this.blackUsedCardThisTurn
     }
+
 }
 
 const rotated = board => {
@@ -221,6 +221,7 @@ const rotated = board => {
     }
 
     new_board.reverse().forEach(function(arr) { arr.reverse })
+
     return new_board
 
 }
@@ -238,8 +239,21 @@ const createGameRoom = userId => {
 
 const { v4: uuidv4 } = require('uuid');
 const { CardProvider } = require('../randomness/cardProvider.js');
+
+
 const generateGameId = () => {
-    return uuidv4(); // make this shorter
+    let id = getRandomId()
+    while (!isUniqueId(id)) {
+        id = getRandomId()
+    }
+    return id; // make this shorter
+}
+
+const getRandomId = () => {
+    return uuidv4().substring(0, 8);
+}
+const isUniqueId = id => {
+    return getById(id) == null
 }
 
 const getById = id => {

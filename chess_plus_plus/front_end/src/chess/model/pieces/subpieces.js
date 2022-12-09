@@ -13,10 +13,10 @@ export class Pawn extends Piece {
         this.type = "Pawn";
         if (this.isWhite === true) {
             this.imageUrl = 
-                "https://upload.wikimedia.org/wikipedia/commons/3/36/Real_White_Pawn.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Pawn.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/5/5f/Real_Black_Pawn.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Pawn.png";
         }
     }
 
@@ -33,9 +33,18 @@ export class Pawn extends Piece {
             }
         }
         // check for starting pawn
-        if (i === 6) {
-            if (board[i - 2][j] === null) {
-                moves.add(pairToMoveStr(i - 2, j));
+        if (!this.hasMoved) {
+            // my pawn
+            if (this.isWhite === playerIsWhite) {
+                if (board[i - 1][j] === null && board[i - 2][j] === null) {
+                    moves.add(pairToMoveStr(i - 2, j));
+                }
+            }
+            // enemy pawn
+            else {
+                if (board[i + 1][j] === null && board[i + 2][j] === null) {
+                    moves.add(pairToMoveStr(i + 2, j));
+                }
             }
         }
         // INCLUDE EN PASSANT LATER? how tf we do that
@@ -93,10 +102,10 @@ export class Rook extends Piece {
         this.type = 'Rook';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/d/de/Real_White_Rook.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Rook.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/2/22/Black_Rook.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Rook.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -205,10 +214,10 @@ export class Bishop extends Piece {
         this.type = 'Bishop';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/c/c4/White_Bishop_new.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Bishop%20new.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/9/96/Black_Bishop_new.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Bishop%20new.png";
         }
     }
 
@@ -283,10 +292,10 @@ export class Queen extends Piece {
         this.type = 'Queen';
         if (this.isWhite) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/6/60/Real_real_White_Queen.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20Queen.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/2/28/Real_real_real_Black_Queen.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20Queen.png";
         }
     }
     updatePossibleMoves(i, j, board, playerIsWhite) {
@@ -353,7 +362,6 @@ export class Queen extends Piece {
             }
         }
 
-        // ROOK CODE
         // up
         for (let k = i - 1; k >= 0; k--) {
             if (board[k][j] === null) {
@@ -408,10 +416,10 @@ export class King extends Piece {
         this.type = 'King';
         if (this.isWhite === true) {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/3/3c/White_King.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/White%20King.png";
         } else {
             this.imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/9/95/Black_King.png";
+                "https://github.com/zanglmh/chessPiecesHolder/raw/main/Black%20King.png";
         }
     }
 

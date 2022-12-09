@@ -1,15 +1,18 @@
 .card {
+    width: 45px;
+    height: 80px;
+    padding: 2px;
+    margin-top: 25%;
+    transition: all .2s ease-in-out;
+}
+/* Try to keep the dimensions the same as card above.*/
+.opponentCard {
     width: 50px;
     height: 100px;
-    background-color: rgb(131, 130, 121);
-    border-radius: 5px;
-    padding: 1px;
-    border: 2px solid black;
-    transition: all .2s ease-in-out;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    color: azure;
+    background-image: url('../chess/files/questionMark.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: all .2s ease-in-out;
 }
 
 #title {
@@ -30,13 +33,15 @@
 }
 
 .hand {
-    width: 48%;
-    height: 150px;
-    position: absolute;
     margin-left: 0%;
-    top: 20%;
     display: flex;
     flex-flow: wrap row;
     background-color: #396c63;
     border-radius: 2.5%;
+    border-color: black;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
 }

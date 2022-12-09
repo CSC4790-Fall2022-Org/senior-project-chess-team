@@ -10,3 +10,58 @@
   top:10px;
   left: 75%;
 }
+
+.navbar {
+  height: 40px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #102321;
+  
+}
+
+.LogoHomePage{
+  width: 130%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  top:-3px;
+  left: -15%;
+  }
+  .LogoutHomePage{
+    width: 140%;
+    position: relative;
+    top: -3px;
+    left:-50%;
+    }
+  .LogoHomePageDiv{
+    width: 15%; 
+    max-height: 40px;
+    min-width: 150px;
+    border-bottom: #FFFFFF;
+    }
+    .LogoutHomePageDiv{
+      float: right;
+      width: 10%;
+    max-height: 40px;
+    min-width: 150px;
+    }
+  
+    li a:hover:not(.active) {
+      background-color: #102321;
+    }
+    
+    .active {
+      background-color: #396c63;
+    }
+
+    li a {
+      max-height: 40px;
+      box-sizing: border-box;
+    }
+
+    li a img {
+      height: 25px;
+    }

@@ -1,19 +1,100 @@
+@font-face {
+    font-family: 'TF2 Build';
+    /* src: url("font/TF2.ttf"); */
+    src: url("font/tf2build.ttf");
+}
+
+@font-face {
+    font-family: 'TF2 professor';
+    src: url("font/tf2professor.ttf");
+}
+
+.msger {
+    flex: 2 0 0;
+    max-height: 50%;
+    width: 100%;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.chatBox::-webkit-scrollbar {
+    width: 16px;
+  }
+  
+  .chatBox::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 100px;
+  }
+  
+  .chatBox::-webkit-scrollbar-thumb {
+    border: 5px solid transparent;
+    border-radius: 100px;
+    background-color: #4d897f;
+    background-clip: content-box;
+  }
+.chat{
+    height: 72%;
+    max-height: 72%;
+    width: 100%;
+    align-self: stretch;
+    /* Putting the chat right to the board? */
+}
+
+.msger > * {
+    height: 100%;
+    max-height: 72%;
+    margin: 0px;
+    padding: 1px;
+}
+.msger-header {
+    font-family: 'TF2 Build';
+    font-size: 40px;
+    display: flex;
+    align-self: stretch;
+    justify-content: space-between;
+    padding: 10px;
+    border: 1px solid #000;
+    background: rgb(236, 208, 208);
+    color: rgb(21, 2, 2);
+    height: 20%;
+    box-sizing: border-box;
+  }
+
+  .msg-info-time{
+    font-family: 'TF2 Build';
+    text-align: center;
+    font-size: 20px;
+  }
+
 .myMessage {
     text-align: right;
+    font-family: 'TF2 professor';
+    font-size: 40px;
     padding-right: 5%;
+    color: black;
     padding-bottom: 4%;
 }
+
+.inputArea {
+    height: 10%;
+    padding-top: 2%;
+    display: flex;
+    border-radius: 5%;
+    border: transparent;
+    background-color: transparent;
+}
 .temp{
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
     width: 100%;
-    position: absolute;
+    display: block;
     bottom:0;
     border-radius: 15px;
+    flex: 2 0 0;
+    min-height: 50%;
+    max-height: 50%;
 }
 .sendButton{
-    position: relative;
     left:93%;
     margin-top: 1%;
 }
@@ -21,12 +102,12 @@
     background-color: transparent;
     margin-top: 1%;
     border:none;
-    position:absolute;
     bottom:.25;
     left: 1.5%;
     right: 0%;
     outline-width: 0;
     color:#b5d6cf;
+    
 }
 
 input::placeholder {
@@ -36,18 +117,43 @@ input::placeholder {
 
 .oppMessage {
     text-align: left;
+    font-family: 'TF2 professor';
+    font-size: 40px;
     padding-left: 5%;
-    color: red;
+    color: blue;
     padding-bottom: 4%;
 }
 
 .chatBox {
-    background-color: #396c63;
-    height: 150px;
+    height: 100%;
+    max-height: 400px;
+    width: 100%;
     overflow-x: auto;
     word-wrap: break-word;
-    color: #b5b8d6;
+    display: inline-block;
+    vertical-align: top;
+    background-color: #396c63;
     border-radius: 2.5%;
-    
 }
 
+.msgr-send-btn {
+    margin-left: 10px;
+    background: rgb(49, 122, 247);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    right: 0px;
+    transition: background 0.23s;
+}
+
+.msgr-send-btn:hover {
+    background: #5593ea;
+  }
+
+  .msger-input {
+    flex: 2;
+    background-color: #396c63;
+    border-radius: 2.5%;
+    border-color: transparent;
+    
+  }

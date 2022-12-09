@@ -1,27 +1,30 @@
 
 
 .gamePage {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 2fr 1fr;
-    grid-column-gap: 5px;
-    justify-content: start; 
+    display: flex;
+    justify-content: flex-end; 
+    align-items: flex-start;
     background-color: #b5d6cf;  
+    flex-wrap: wrap;
+    margin: 1%;
+    row-gap: 1vh;
+    column-gap: 1vh;
 }
+
 .LargeContainer{
-  display: block;
-  background-color: #4d897f;
-  position: relative;
-  width: 90%;
+  order: 3;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(77, 137, 127);
   min-width: 200px;
-  margin-right: 5%;
-  height: 500px;
   border: 12px solid #4d897f;
-  border-radius: 5px;
-  margin-top: 100px;
   box-shadow: 5px 5px 2px #396c63;
   border-radius: 15px;
-
+  flex: 1 1 0;
+  align-items: stretch;
+  min-height: 450px;
+  align-self: stretch;
+  gap: 10px;
 }
 
 
@@ -32,17 +35,72 @@
     margin-right: auto;
 }
 .PowerUps{
-  margin-top: 20%;
-}
-
-.opponentCard{
-  width: 48%;
-  height: 150px;
-  position: absolute;
-  left: 52%;
-  top:20%;
-  display: flex;
-  flex-flow: wrap row;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   background-color: #396c63;
   border-radius: 2.5%;
+  width: 100%;
+  flex: 1 0 0;
+
+}
+
+.opponentHand{
+  display: flex;
+  flex-flow: wrap row;
+  align-items: center;
+  background-color: #396c63;
+  border-radius: 2.5%;
+  width: 100%;
+  flex: 1 0 0;
+    
+}
+
+.gamePageBannerWrapper {
+  position: relative;
+}
+
+.forfeitButton {
+  border: 1px solid black;
+  background-color:#396c63;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  width: 80px;
+  border-radius: 2.5px;
+
+
+}
+
+.randomButtons{
+  display: flex;
+  align-items: center;
+  border-radius: 2.5%;
+  width: 100%;
+  max-height: 40px;
+  flex: 1 0 0;
+  margin-top: -10px;
+}
+
+.howToPlayContainer {
+  order: 4;
+  width: 100%;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(77, 137, 127);
+  border: 12px solid #4d897f;
+  box-shadow: 5px 5px 2px #396c63;
+  border-radius: 15px;
+  align-items: stretch;
+  align-self: stretch;
+  gap: 10px;
+}
+
+
+@media (max-width: 730px) {
+  .gamePage > .LargeContainer{
+    min-width: 90%;
+  }
+
 }

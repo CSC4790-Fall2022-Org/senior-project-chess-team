@@ -2,9 +2,10 @@ import './App.css';
 import React, { useEffect, useState  } from 'react';
 import SignInPage from './setup/SignInPage';
 import HomePage from './setup/HomePage';
-import RealHomePage from './setup/RealHomePage';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import GamePage from './chess/GamePage';
+import Banner from './chess/ui/banner';
+import RulePage from './rules/RulePage';
 
 function App() {
 
@@ -25,7 +26,8 @@ function App() {
         <Route path='*' element={isLoggedIn ? <Navigate replace to='/' /> : <Navigate replace to='/login' />} />
         <Route path='/' element={isLoggedIn ? <HomePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/login' />} />
         <Route path='/login' element={isLoggedIn ? <Navigate replace to='/' /> : <SignInPage setIsLoggedIn={setIsLoggedIn} />} />
-        <Route path='/game' element={isLoggedIn ? <GamePage /> : <Navigate replace to='/'/>} />
+        <Route path='/game' element={isLoggedIn ? <GamePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/'/>} />
+        <Route path='/rules' element={isLoggedIn ? <RulePage setIsLoggedIn={setIsLoggedIn}/> : <Navigate replace to='/' />}/>
         <Route path='*' element={isLoggedIn ? <Navigate replace to='/' /> : <Navigate replace to='/login' />} />
 
     </Routes>

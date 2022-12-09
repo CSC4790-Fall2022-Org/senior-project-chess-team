@@ -32,7 +32,7 @@ export default function Piece(props) {
             <DragPreviewImage connect={preview} src={imageUrl} />
             <div class={props.state.boardState.playerIsWhite === piece.isWhite ? 'my-piece' : 'opp-piece'}
             style={{backgroundImage: `url(${imageUrl})`, opacity: `${isDragging ? 0 : 1}`, gridColumn: 1,
-            gridRow: 1, width: '80px', height: '80px'}}
+            gridRow: 1, width: '100%', height: '100%'}}
             ref={props.state.boardState.playerIsWhite === piece.isWhite ? drag : null}>
             </div> 
         </DndProvider>

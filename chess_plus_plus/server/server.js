@@ -96,6 +96,7 @@ io.on('connection', socket => {
   socket.on('playerMove', (arg) => {
     updated_game_info = handleMove(arg)
     if (updated_game_info === null) {
+      
       return
     }
     updated_game = updated_game_info[0]
@@ -129,8 +130,8 @@ io.on('connection', socket => {
     console.log('trying to use card')
     updated_game = handleUseCard(arg, userName)
     if (typeof updated_game === 'string') {
-      socket.emit('error', {text: updated_game})
-      return
+      sendError(socket, updated_game)
+      return;
     }
     updatePlayers(updated_game)
     // make a function to emit a new hand to a specific player. 
@@ -162,6 +163,23 @@ io.on('connection', socket => {
       }
     }
   })
+
+  socket.on('forfeit', arg => {
+    const gameId = arg.game_id
+    const userGame = games.getById(gameId)
+
+    if (userGame.color(userName) === 'white') {
+      io.to(userGame.whiteUserSocketId).emit('loss', {'board': userGame.whiteBoard})
+      io.to(userGame.blackUserSocketId).emit('win', {'board': userGame.blackBoard})
+      
+    }
+    else {
+      io.to(userGame.whiteUserSocketId).emit('win', {'board': userGame.whiteBoard})
+      io.to(userGame.blackUserSocketId).emit('loss', {'board': userGame.blackBoard})
+      
+    }
+    io.to(userGame.white)
+  })
   socket.on('disconnect', () => {
     console.log('disconnected')
   })
@@ -173,11 +191,23 @@ server.listen(port, () => {
 
 const updateHands = game => {
   // if (game.whiteUserSocketId !== null) {
+    if (typeof game.whiteCards.at(-1) === 'string') {
+      io.to(game.whiteUserSocketId).emit('error', {text: game.whiteCards.at(-1)})
+      game.whiteCards.pop()
+    }
+
+    if (typeof game.blackCards.at(-1) === 'string') {
+      io.to(game.blackUserSocketId).emit('error', {text: game.blackCards.at(-1)})
+      game.blackCards.pop()
+    }
+
+
     io.to(game.whiteUserSocketId).emit('updateHand', {cards: game.whiteCards, opponentCardCount: game.blackCards.length})
 
   // }
   // if (game.blackUserSocketId !== null)
   // {
+    
   io.to(game.blackUserSocketId).emit('updateHand', {cards: game.blackCards, opponentCardCount: game.whiteCards.length})
 
   // }
@@ -209,4 +239,6 @@ const updatePlayers = game => {
 }
 
 
-
+const sendError = (socket, text) => {
+  socket.emit('error', {text: text})
+}
